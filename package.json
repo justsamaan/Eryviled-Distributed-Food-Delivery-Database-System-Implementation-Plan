@@ -1,0 +1,14 @@
+{
+  "name": "distributed-food-delivery-dbms",
+  "version": "1.0.0",
+  "description": "Distributed Food Delivery Database System - Advanced DBMS Portfolio Project",
+  "scripts": {
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
+    "server": "npm run start --prefix server",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
