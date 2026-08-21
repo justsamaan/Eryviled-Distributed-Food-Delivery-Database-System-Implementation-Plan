@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/Eryviled-/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/Eryviled-Distributed-Food-Delivery-Database-System-Implementation-Plan/' : '/',
   plugins: [react()],
   server: {
     port: 3000,
