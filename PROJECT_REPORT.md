@@ -95,3 +95,29 @@ High-frequency read queries (such as restaurant menu browsing) are wrapped with 
 - **Direct DB Latency**: **34.8 ms**
 - **Speedup Factor**: **24.8x Faster**
 - **Cache Invalidation**: Automatically invalidates cached menu keys whenever a restaurant owner updates items or an order status changes.
+
+---
+
+## 6. AI-Driven Database Intelligence & Personalization
+
+To modernise the architecture, the system integrates a **Neural Intelligence Layer** that performs heuristic-based NLP and predictive analytics directly over the relational dataset.
+
+### 1. AI Sentiment Analysis (Natural Language Processing)
+The system features an **NLP Sentiment Engine** that analyzes customer feedback in the `reviews` table. It computes a sentiment score and label (`POSITIVE`, `NEGATIVE`, `NEUTRAL`) based on keyword heuristics and keyword extraction.
+- **Table Integration**: `ai_review_insights` stores analysis results linked 1:1 to reviews.
+- **Use Case**: Admins can monitor "Restaurant Health" via sentiment distribution charts and word clouds.
+
+### 2. AI Text-to-SQL Assistant (Analytical Compilation)
+The **SQL Studio** is enhanced with an AI Assistant that translates Natural Language questions into valid SQL queries.
+- **Implementation**: A robust compiler maps intent (e.g., "revenue", "stockout") and entities (e.g., "city", "restaurant") to the 15-table schema.
+- **Outcome**: Allows non-technical stakeholders to query complex analytical data without knowing SQL syntax.
+
+### 3. AI Personalized Recommendation Engine (Advanced SQL)
+A **Collaborative Filtering** recommendation model is implemented as a single, complex **Advanced SQL Query** using Common Table Expressions (CTEs).
+- **Algorithm**: The query calculates a "Match Score" by finding users with similar category preferences and recommending highly-rated items from those categories that the current user has not yet ordered.
+- **Implementation**: Demonstrates the power of database engines in executing complex ML-like scoring logic without leaving the SQL environment.
+
+---
+
+## 7. Conclusion
+Eryviled demonstrates that a modern food delivery platform requires more than simple CRUD operations. By combining **Normalized Schema Design**, **ACID Transactions**, **High-Performance Indexing**, **Redis Caching**, **Table Partitioning**, and **AI-Driven Intelligence**, we have built a scalable, consistent, and intelligent database system ready for production-grade workloads.

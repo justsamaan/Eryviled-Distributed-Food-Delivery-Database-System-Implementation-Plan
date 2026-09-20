@@ -187,7 +187,17 @@ CREATE TABLE IF NOT EXISTS reviews (
     FOREIGN KEY (restaurant_id) REFERENCES restaurants(restaurant_id)
 );
 
--- 15. AUDIT LOGS TABLE (Database Trigger & Transaction Audit Trail)
+-- 15. AI REVIEW INSIGHTS (Review Sentiment Analysis Store)
+CREATE TABLE IF NOT EXISTS ai_review_insights (
+    insight_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    review_id INTEGER UNIQUE NOT NULL,
+    sentiment_label VARCHAR(10) CHECK (sentiment_label IN ('POSITIVE', 'NEUTRAL', 'NEGATIVE')),
+    sentiment_score DECIMAL(3, 2),
+    key_themes TEXT,
+    FOREIGN KEY (review_id) REFERENCES reviews(review_id) ON DELETE CASCADE
+);
+
+-- 16. AUDIT LOGS TABLE (Database Trigger & Transaction Audit Trail)
 CREATE TABLE IF NOT EXISTS audit_logs (
     log_id INTEGER PRIMARY KEY AUTOINCREMENT,
     table_name VARCHAR(100) NOT NULL,

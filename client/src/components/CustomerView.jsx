@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Store, ShoppingBag, Plus, Minus, CheckCircle, Tag, ArrowRight, ShieldCheck } from 'lucide-react';
+import AiConcierge from './AiConcierge';
 
 export default function CustomerView() {
   const [restaurants, setRestaurants] = useState([]);
@@ -324,6 +325,9 @@ export default function CustomerView() {
         </div>
 
       </div>
+
+      {/* AI Intelligence Concierge & Personalized Recommendations */}
+      <AiConcierge customerId={1} />
 
     </div>
   );

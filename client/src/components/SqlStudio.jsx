@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Terminal, Play, Cpu, CheckCircle, AlertTriangle, GitCommit } from 'lucide-react';
+import { Terminal, Play, Cpu, CheckCircle, AlertTriangle, GitCommit, BrainCircuit, Sparkles } from 'lucide-react';
 
 export default function SqlStudio() {
   const PRESET_QUERIES = [
@@ -80,6 +80,31 @@ ORDER BY i.available_stock ASC;`
   const [customSql, setCustomSql] = useState(PRESET_QUERIES[0].sql);
   const [explainResult, setExplainResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [aiExplanation, setAiExplanation] = useState('');
+  const [aiLoading, setAiLoading] = useState(false);
+
+  const handleAiTranslate = async () => {
+    if (!aiPrompt.trim()) return;
+    setAiLoading(true);
+    try {
+      const res = await fetch('/api/ai/text-to-sql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: aiPrompt })
+      });
+      const data = await res.json();
+      if (data.sql) {
+        setCustomSql(data.sql);
+        setAiExplanation(data.explanation);
+        setExplainResult(null);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const handleSelectPreset = (index) => {
     setActiveQueryIndex(index);
@@ -149,6 +174,41 @@ ORDER BY i.available_stock ASC;`
             </p>
           </div>
         </div>
+      </div>
+
+      {/* AI SQL Translation Assistant */}
+      <div className="glass-panel" style={{ padding: '1.25rem', border: '1px solid rgba(59, 130, 246, 0.3)', background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.4) 100%)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1rem' }}>
+          <BrainCircuit size={20} className="text-blue-400" />
+          <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#60a5fa', textTransform: 'uppercase', letterSpacing: '0.05em' }}>AI Natural Language to SQL Assistant</span>
+        </div>
+
+        <div style={{ display: 'flex', gap: '0.75rem' }}>
+          <input
+            type="text"
+            value={aiPrompt}
+            onChange={(e) => setAiPrompt(e.target.value)}
+            placeholder="Ask anything: 'show me total revenue by city' or 'which items are out of stock?'"
+            style={{ flex: 1, padding: '0.6rem 1rem', background: '#030712', border: '1px solid var(--border-color)', borderRadius: '8px', color: '#fff', fontSize: '0.85rem', outline: 'none' }}
+          />
+          <button
+            onClick={handleAiTranslate}
+            disabled={aiLoading}
+            className="btn btn-primary"
+            style={{ padding: '0.6rem 1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+          >
+            <Sparkles size={16} />
+            <span>{aiLoading ? 'Thinking...' : 'AI Compile'}</span>
+          </button>
+        </div>
+
+        {aiExplanation && (
+          <div style={{ marginTop: '0.75rem', padding: '0.6rem 0.8rem', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '6px', borderLeft: '3px solid #3b82f6' }}>
+            <p style={{ fontSize: '0.75rem', color: '#93c5fd', fontStyle: 'italic' }}>
+              <strong>AI Reasoning:</strong> {aiExplanation}
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Preset Query Buttons */}

@@ -27,6 +27,7 @@ erDiagram
     ORDERS ||--o| REVIEWS : "reviewed by"
     CUSTOMERS ||--o{ REVIEWS : "writes"
     RESTAURANTS ||--o{ REVIEWS : "rated in"
+    REVIEWS ||--o| AI_REVIEW_INSIGHTS : "analyzed by"
 
     USERS {
         int user_id PK
@@ -106,5 +107,13 @@ erDiagram
         int order_id FK, UK
         int partner_id FK
         string delivery_status
+    }
+
+    AI_REVIEW_INSIGHTS {
+        int insight_id PK
+        int review_id FK, UK
+        string sentiment_label
+        decimal sentiment_score
+        string key_themes
     }
 ```

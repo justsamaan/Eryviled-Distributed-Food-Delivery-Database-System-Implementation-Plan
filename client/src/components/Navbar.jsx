@@ -1,5 +1,5 @@
 import React from 'react';
-import { Database, Terminal, ShieldAlert, Layers, ShoppingBag, BookOpen, Activity } from 'lucide-react';
+import { Database, Terminal, ShieldAlert, Layers, ShoppingBag, BookOpen, Activity, BrainCircuit } from 'lucide-react';
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
@@ -8,6 +8,7 @@ export default function Navbar({ activeTab, setActiveTab }) {
     { id: 'concurrencyLab', label: 'Concurrency Lab', icon: ShieldAlert },
     { id: 'partitioning', label: 'Partition Inspector', icon: Layers },
     { id: 'customerApp', label: 'Food Delivery App', icon: ShoppingBag },
+    { id: 'aiHub', label: 'AI Intelligence Hub', icon: BrainCircuit },
     { id: 'documentation', label: 'ERD & Docs', icon: BookOpen },
   ];
 

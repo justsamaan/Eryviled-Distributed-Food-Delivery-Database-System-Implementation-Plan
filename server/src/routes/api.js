@@ -4,6 +4,9 @@ const { query, execute } = require('../db/connection');
 const cacheService = require('../services/cacheService');
 const { runExplainAnalyze } = require('../services/explainService');
 const { simulateRaceCondition } = require('../services/concurrencyService');
+const aiSentimentService = require('../services/aiSentimentService');
+const aiSqlService = require('../services/aiSqlService');
+const aiRecommendationService = require('../services/aiRecommendationService');
 
 // 1. HEALTH CHECK
 router.get('/health', (req, res) => {
@@ -207,6 +210,70 @@ router.post('/concurrency/simulate', async (req, res) => {
 router.get('/audit-logs', async (req, res) => {
   try {
     const result = await query('SELECT * FROM audit_logs ORDER BY executed_at DESC LIMIT 20');
+    res.json({ data: result.rows });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 9. AI INTELLIGENCE & ANALYTICS
+// AI Text-to-SQL Compilation
+router.post('/ai/text-to-sql', async (req, res) => {
+  const { prompt } = req.body;
+  if (!prompt) return res.status(400).json({ error: 'Natural language prompt is required.' });
+
+  try {
+    const translation = aiSqlService.translateToSql(prompt);
+    const result = await query(translation.sql);
+    res.json({
+      ...translation,
+      rows: result.rows,
+      latencyMs: result.executionTimeMs
+    });
+  } catch (err) {
+    res.status(500).json({ error: `AI SQL Compilation Error: ${err.message}` });
+  }
+});
+
+// AI Review Sentiment Analysis
+router.get('/ai/sentiment-summary', async (req, res) => {
+  try {
+    const summary = await query(`
+      SELECT
+        sentiment_label,
+        COUNT(*) as count,
+        AVG(sentiment_score) as avg_score
+      FROM ai_review_insights
+      GROUP BY sentiment_label
+    `);
+
+    const keywords = await query('SELECT key_themes FROM ai_review_insights');
+    const allKeywords = keywords.rows
+      .map(r => r.key_themes)
+      .filter(Boolean)
+      .join(', ')
+      .split(', ')
+      .reduce((acc, word) => {
+        const w = word.trim().toLowerCase();
+        if (w) acc[w] = (acc[w] || 0) + 1;
+        return acc;
+      }, {});
+
+    res.json({
+      distribution: summary.rows,
+      topKeywords: Object.entries(allKeywords)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10)
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// AI Personalised Recommendations
+router.get('/ai/recommendations/:customerId', async (req, res) => {
+  try {
+    const result = await aiRecommendationService.getRecommendations(req.params.customerId);
     res.json({ data: result.rows });
   } catch (err) {
     res.status(500).json({ error: err.message });

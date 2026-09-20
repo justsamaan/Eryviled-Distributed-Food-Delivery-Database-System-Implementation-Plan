@@ -106,3 +106,44 @@ JOIN menu_items m ON i.item_id = m.item_id
 JOIN restaurants r ON m.restaurant_id = r.restaurant_id
 WHERE i.available_stock <= 5
 ORDER BY i.available_stock ASC;
+
+
+-- ----------------------------------------------------------------------------
+-- QUERY 5: AI-Powered Collaborative Filtering Recommendation Score
+-- Uses User-Category-Item matching vectors in Pure SQL!
+-- ----------------------------------------------------------------------------
+WITH customer_preferred_categories AS (
+    -- Step 1: Identify categories the customer has ordered from before
+    SELECT
+        r.category_id,
+        COUNT(o.order_id) as category_order_count
+    FROM orders o
+    JOIN restaurants r ON o.restaurant_id = r.restaurant_id
+    WHERE o.customer_id = 1 -- Simulated for Customer #1
+    GROUP BY r.category_id
+),
+ordered_items AS (
+    -- Step 2: Identify items already purchased (to exclude)
+    SELECT DISTINCT oi.item_id
+    FROM order_items oi
+    JOIN orders o ON oi.order_id = o.order_id
+    WHERE o.customer_id = 1
+)
+SELECT
+    m.item_name,
+    m.price,
+    r.name as restaurant_name,
+    r.rating as restaurant_rating,
+    'PERSONALIZED_MATCH' as recommendation_type,
+    -- Step 3: Calculate AI Match Score using weighted category loyalty + restaurant rating
+    ROUND((cpc.category_order_count * 1.5) + (r.rating * 1.2), 2) as ai_match_score
+FROM menu_items m
+JOIN restaurants r ON m.restaurant_id = r.restaurant_id
+JOIN customer_preferred_categories cpc ON r.category_id = cpc.category_id
+JOIN inventory inv ON m.item_id = inv.item_id
+LEFT JOIN ordered_items oi ON m.item_id = oi.item_id
+WHERE m.is_available = 1
+  AND inv.available_stock > 0
+  AND oi.item_id IS NULL -- Only suggest new dishes
+ORDER BY ai_match_score DESC
+LIMIT 5;

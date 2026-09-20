@@ -31,7 +31,8 @@ function initDb() {
         await runSqlScript('02_indexes.sql');
         await runSqlScript('03_partitioning.sql');
         await runSqlScript('06_seed_data.sql');
-        console.log('Database initialized successfully with 15 normalized tables & seed data!');
+        await runSqlScript('07_ai_seed.sql');
+        console.log('Database initialized successfully with 16 normalized tables & AI seed data!');
         resolve();
       } catch (err) {
         reject(err);
