@@ -183,6 +183,10 @@ router.post('/orders', async (req, res) => {
   }
 });
 
+const aiIndexAdvisor = require('../services/aiIndexAdvisor');
+const aiOptimizer = require('../services/aiOptimizer');
+
+// ... [existing imports]
 // 6. RUN SQL EXPLAIN ANALYZE
 router.post('/sql/explain', async (req, res) => {
   const { sql } = req.body;
@@ -190,7 +194,17 @@ router.post('/sql/explain', async (req, res) => {
 
   try {
     const result = await runExplainAnalyze(sql);
-    res.json(result);
+    const indexRecs = aiIndexAdvisor.suggestIndexes(sql);
+    const optimization = aiOptimizer.optimizeQuery(sql);
+
+    res.json({
+      ...result,
+      aiInsights: {
+        indexRecommendations: indexRecs,
+        optimizedSql: optimization.optimizedSql,
+        optimizationExplanation: optimization.explanation
+      }
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

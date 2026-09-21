@@ -355,6 +355,47 @@ ORDER BY i.available_stock ASC;`
             )}
           </div>
 
+          {/* AI Database Tuning & Optimization Advisor */}
+          {explainResult.aiInsights && (
+            <div className="glass-panel" style={{ padding: '1.25rem', border: '1px solid rgba(16, 185, 129, 0.3)', background: 'linear-gradient(135deg, rgba(6, 78, 59, 0.2) 0%, rgba(15, 23, 42, 0.4) 100%)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1rem' }}>
+                <BrainCircuit size={20} className="text-emerald-400" />
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#34d399' }}>
+                  AI-Based Database Index & Query Advisor
+                </h3>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* AI Index Recommendations */}
+                <div className="bg-gray-900/60 p-4 rounded-xl border border-gray-800">
+                  <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#93c5fd', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
+                    Recommended B-Tree Indexes
+                  </p>
+                  <div className="space-y-2">
+                    {explainResult.aiInsights.indexRecommendations.map((rec, i) => (
+                      <div key={i} className="p-2 bg-black/40 rounded border border-gray-800 font-mono text-xs text-emerald-400">
+                        {rec}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* AI Query Optimizer Rewrite */}
+                <div className="bg-gray-900/60 p-4 rounded-xl border border-gray-800">
+                  <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#93c5fd', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
+                    AI Optimized Query Rewrite
+                  </p>
+                  <pre className="p-2 bg-black/40 rounded border border-gray-800 font-mono text-xs text-blue-400 overflow-x-auto">
+                    {explainResult.aiInsights.optimizedSql}
+                  </pre>
+                  <p style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '0.5rem', fontStyle: 'italic' }}>
+                    {explainResult.aiInsights.optimizationExplanation}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
         </div>
       )}
 

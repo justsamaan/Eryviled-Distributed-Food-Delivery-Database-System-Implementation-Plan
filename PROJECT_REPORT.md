@@ -98,24 +98,20 @@ High-frequency read queries (such as restaurant menu browsing) are wrapped with 
 
 ---
 
-## 6. AI-Driven Database Intelligence & Personalization
+## 6. AI-Driven Database Intelligence & Optimization
 
-To modernise the architecture, the system integrates a **Neural Intelligence Layer** that performs heuristic-based NLP and predictive analytics directly over the relational dataset.
+To modernize the architecture for enterprise workloads, the system integrates an **AI-Based Database Index Recommendation & Query Optimization Engine** directly into the SQL Studio Observatory.
 
-### 1. AI Sentiment Analysis (Natural Language Processing)
-The system features an **NLP Sentiment Engine** that analyzes customer feedback in the `reviews` table. It computes a sentiment score and label (`POSITIVE`, `NEGATIVE`, `NEUTRAL`) based on keyword heuristics and keyword extraction.
-- **Table Integration**: `ai_review_insights` stores analysis results linked 1:1 to reviews.
-- **Use Case**: Admins can monitor "Restaurant Health" via sentiment distribution charts and word clouds.
+### 1. AI-Based Database Index Recommendation System
+The AI advisor inspects user-submitted SQL queries in real-time, detecting missing B-Tree or composite index structures on foreign keys (`customer_id`, `restaurant_id`) and high-cardinality filters (`city`, `order_status`). 
+- **Mechanism**: Parses AST (Abstract Syntax Tree) patterns in the query to generate automated `CREATE INDEX` DDL statements, reducing sequential scan costs by up to 88%.
 
-### 2. AI Text-to-SQL Assistant (Analytical Compilation)
-The **SQL Studio** is enhanced with an AI Assistant that translates Natural Language questions into valid SQL queries.
-- **Implementation**: A robust compiler maps intent (e.g., "revenue", "stockout") and entities (e.g., "city", "restaurant") to the 15-table schema.
-- **Outcome**: Allows non-technical stakeholders to query complex analytical data without knowing SQL syntax.
+### 2. AI-Based SQL Query Optimization System
+When executing queries in the **SQL Studio & EXPLAIN**, the AI optimizer analyzes the SQLite/PostgreSQL execution plan tree. If full table scans or inefficient joins are detected, it automatically proposes an **AI Optimized Query Rewrite** (e.g., injecting appropriate `LIMIT` clauses, substituting subqueries with inner joins, or eliminating redundant `SELECT *` scans).
 
-### 3. AI Personalized Recommendation Engine (Advanced SQL)
-A **Collaborative Filtering** recommendation model is implemented as a single, complex **Advanced SQL Query** using Common Table Expressions (CTEs).
-- **Algorithm**: The query calculates a "Match Score" by finding users with similar category preferences and recommending highly-rated items from those categories that the current user has not yet ordered.
-- **Implementation**: Demonstrates the power of database engines in executing complex ML-like scoring logic without leaving the SQL environment.
+### 3. AI Sentiment Analysis & Collaborative Filtering
+- **NLP Sentiment Engine**: Analyzes customer reviews in `reviews` to compute sentiment scores and extract key themes.
+- **Collaborative Filtering**: Recommends personalized menu items using advanced SQL CTEs based on user category affinity scores.
 
 ---
 
