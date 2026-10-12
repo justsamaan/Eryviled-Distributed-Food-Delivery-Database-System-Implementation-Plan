@@ -232,7 +232,7 @@ export default function AiRecommendationLab() {
               <button className="btn btn-primary" onClick={handleTrainModel} disabled={training} style={{ opacity: training ? 0.65 : 1 }}>
                 <RefreshCw size={15} className={training ? 'animate-spin' : ''} /> {training ? 'Training model…' : modelStatus?.trained ? 'Retrain ETA model' : 'Train ETA model'}
               </button>
-              <button className="btn" onClick={refreshModelStatus} style={{ border: '1px solid var(--border-color)', background: '#f0efe7', color: '#263328' }}>Refresh status</button>
+              <button className="btn" onClick={() => { refreshModelStatus(); fetchDatasetStats(); }} style={{ border: '1px solid var(--border-color)', background: '#f0efe7', color: '#263328' }}>Refresh API & dataset</button>
               <button className="btn" disabled={!modelStatus?.datasetRowsAvailable} onClick={() => { const base = (window.localStorage.getItem('eryviledApiBase') || import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, ''); if (!base) { setTrainingMessage('Set your backend URL in the top bar before downloading the dataset.'); return; } window.open(base + '/api/ai/dataset.csv', '_blank', 'noopener,noreferrer'); }} style={{ border: '1px solid var(--border-color)', background: '#f0efe7', color: '#263328' }}>
                 <FileText size={15} /> Download training CSV
               </button>
