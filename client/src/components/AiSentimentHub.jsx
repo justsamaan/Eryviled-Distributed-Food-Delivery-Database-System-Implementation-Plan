@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import apiFetch from '../api.js';
 import { BrainCircuit, MessageSquare, TrendingUp, TrendingDown, Minus, Quote, Zap } from 'lucide-react';
 
 export default function AiSentimentHub() {
@@ -12,7 +13,7 @@ export default function AiSentimentHub() {
   const loadSummary = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/ai/sentiment-summary');
+      const response = await apiFetch('/api/ai/sentiment-summary');
       const json = await response.json();
       if (!response.ok || !json || json.error) throw new Error(json?.error || 'Could not load sentiment summary');
       setData(json);
@@ -33,7 +34,7 @@ export default function AiSentimentHub() {
     setReviewLoading(true);
     setReviewResult(null);
     try {
-      const response = await fetch('/api/ai/analyze-review', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: reviewText }) });
+      const response = await apiFetch('/api/ai/analyze-review', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: reviewText }) });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Sentiment analysis failed');
       setReviewResult(result);
