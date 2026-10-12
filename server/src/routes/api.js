@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const router = express.Router();
 const { query, execute } = require('../db/connection');
 const cacheService = require('../services/cacheService');
@@ -6,6 +8,7 @@ const { runExplainAnalyze } = require('../services/explainService');
 const { simulateRaceCondition } = require('../services/concurrencyService');
 const aiRecommendationService = require('../services/aiRecommendationService');
 const aiPipelineService = require('../services/aiPipelineService');
+const aiSentimentService = require('../services/aiSentimentService');
 
 
 // 1. HEALTH CHECK
@@ -274,6 +277,49 @@ router.post('/ai/predict-eta', (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+
+/* AI MODEL OPERATIONS — training is explicit and returns held-out evaluation metrics. */
+router.get('/ai/model-status', (req, res) => {
+  try { res.json(aiPipelineService.getModelStatus()); }
+  catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+router.post('/ai/train-model', (req, res) => {
+  try { res.json({ success: true, ...aiPipelineService.trainEtaModel() }); }
+  catch (err) { res.status(400).json({ success: false, error: err.message }); }
+});
+
+router.get('/ai/dataset.csv', (req, res) => {
+  const datasetPath = path.join(__dirname, '..', '..', '..', 'data', 'food_delivery_dataset.csv');
+  if (!fs.existsSync(datasetPath)) return res.status(404).json({ error: 'Training dataset was not found on this server.' });
+  res.download(datasetPath, 'eryviled-food-delivery-dataset.csv');
+});
+
+router.get('/ai/sentiment-summary', async (req, res) => {
+  try {
+    const reviews = await query('SELECT review_id, comment, rating, restaurant_id FROM reviews ORDER BY review_id DESC LIMIT 1000');
+    const counts = { POSITIVE: 0, NEUTRAL: 0, NEGATIVE: 0 };
+    const keywords = {};
+    const analyzed = reviews.rows.map(review => {
+      const result = aiSentimentService.analyzeText(review.comment || '');
+      counts[result.label] = (counts[result.label] || 0) + 1;
+      result.themes.forEach(theme => { keywords[theme] = (keywords[theme] || 0) + 1; });
+      return { ...review, sentiment_label: result.label, sentiment_score: result.score, key_themes: result.themes };
+    });
+    const distribution = Object.entries(counts).map(([sentiment_label, count]) => ({ sentiment_label, count }));
+    const topKeywords = Object.entries(keywords).sort((a,b) => b[1]-a[1]).slice(0, 12);
+    res.json({ source: 'SQLITE_REVIEWS + AI_SENTIMENT_SERVICE', totalReviews: analyzed.length, distribution, topKeywords, reviews: analyzed.slice(0, 30) });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post('/ai/analyze-review', (req, res) => {
+  const text = String(req.body?.text || '').trim();
+  if (!text) return res.status(400).json({ error: 'Review text is required.' });
+  res.json({ ...aiSentimentService.analyzeText(text), source: 'AI_SENTIMENT_SERVICE' });
 });
 
 module.exports = router;
