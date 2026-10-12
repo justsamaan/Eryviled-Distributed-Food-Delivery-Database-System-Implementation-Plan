@@ -26,3 +26,9 @@ CREATE INDEX IF NOT EXISTS idx_address_location ON addresses(city, latitude, lon
 
 -- 5. Unique Index on Coupon Codes for Instant Hash Lookup (O(1))
 CREATE UNIQUE INDEX IF NOT EXISTS idx_coupon_code ON coupons(code);
+
+-- 6. AI Vector Search Indexes & Recommendation Cache Lookup
+CREATE INDEX IF NOT EXISTS idx_user_embed_user ON user_embeddings(user_id);
+CREATE INDEX IF NOT EXISTS idx_item_embed_item ON item_embeddings(item_id);
+CREATE INDEX IF NOT EXISTS idx_ai_rec_customer ON ai_recommendations(customer_id, match_score DESC);
+

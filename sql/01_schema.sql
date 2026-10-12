@@ -196,3 +196,43 @@ CREATE TABLE IF NOT EXISTS audit_logs (
     description TEXT NOT NULL,
     executed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- 16. USER EMBEDDINGS TABLE (AI Feature Vectors & Preference Embedding Models)
+CREATE TABLE IF NOT EXISTS user_embeddings (
+    user_id INTEGER PRIMARY KEY,
+    spice_level DECIMAL(3,2) DEFAULT 0.50,        -- 0.0 (Mild) to 1.0 (Extra Spicy)
+    health_score DECIMAL(3,2) DEFAULT 0.50,       -- 0.0 (Indulgent/Cheat) to 1.0 (Superfood)
+    price_sensitivity DECIMAL(3,2) DEFAULT 0.50,  -- 0.0 (Budget) to 1.0 (Fine Dining)
+    vegan_weight DECIMAL(3,2) DEFAULT 0.00,       -- 0.0 (Non-Veg) to 1.0 (Strict Vegan)
+    asian_preference DECIMAL(3,2) DEFAULT 0.50,   -- 0.0 (Low) to 1.0 (High Preference)
+    vector_json TEXT NOT NULL,                    -- 5-Dimensional Embedding Array [v1, v2, v3, v4, v5]
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+-- 17. ITEM EMBEDDINGS TABLE (Dish Feature Vectors & Flavor Architecture)
+CREATE TABLE IF NOT EXISTS item_embeddings (
+    item_id INTEGER PRIMARY KEY,
+    spiciness DECIMAL(3,2) DEFAULT 0.00,
+    healthiness DECIMAL(3,2) DEFAULT 0.50,
+    price_point DECIMAL(3,2) DEFAULT 0.50,
+    vegan_rating DECIMAL(3,2) DEFAULT 0.00,
+    asian_fusion DECIMAL(3,2) DEFAULT 0.00,
+    vector_json TEXT NOT NULL,                    -- 5-Dimensional Vector [w1, w2, w3, w4, w5]
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (item_id) REFERENCES menu_items(item_id) ON DELETE CASCADE
+);
+
+-- 18. AI RECOMMENDATIONS TABLE (Model Inference Cache & Personalization Log)
+CREATE TABLE IF NOT EXISTS ai_recommendations (
+    recommendation_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    customer_id INTEGER NOT NULL,
+    item_id INTEGER NOT NULL,
+    match_score DECIMAL(5,2) NOT NULL,            -- e.g. 98.45%
+    reasoning_tag VARCHAR(150) NOT NULL,          -- e.g. "98% Match based on Spicy & Vegan preferences"
+    algorithm_used VARCHAR(50) DEFAULT 'COSINE_SIMILARITY_HYBRID',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (item_id) REFERENCES menu_items(item_id) ON DELETE CASCADE
+);
+

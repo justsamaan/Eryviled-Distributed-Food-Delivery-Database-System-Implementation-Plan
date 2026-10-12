@@ -159,3 +159,38 @@ INSERT OR IGNORE INTO audit_logs (log_id, table_name, action_type, record_id, de
 (1, 'inventory', 'TRANSACTION_LOCK', 3, 'Acquired exclusive row-level lock on Pepperoni Pizza (item_id=3) for order checkout', '2026-08-21 14:00:00'),
 (2, 'orders', 'INSERT', 105, 'Created order header #105 for customer_id=5 total=$26.52', '2026-08-21 14:00:01'),
 (3, 'payments', 'INSERT', 5, 'Recorded payment #5 TXN_998120395 SUCCESSFUL amount=$26.52', '2026-08-21 14:00:02');
+
+-- 15. SEED USER EMBEDDINGS (5D Preference Vectors: [spice, health, price, vegan, asian])
+INSERT OR IGNORE INTO user_embeddings (user_id, spice_level, health_score, price_sensitivity, vegan_weight, asian_preference, vector_json) VALUES
+(1, 0.85, 0.40, 0.70, 0.10, 0.30, '[0.85, 0.40, 0.70, 0.10, 0.30]'), -- Alex (Loves Spicy & Gourmet)
+(2, 0.20, 0.90, 0.80, 0.95, 0.85, '[0.20, 0.90, 0.80, 0.95, 0.85]'), -- Sarah (Health-Conscious & Vegan Asian lover)
+(3, 0.90, 0.20, 0.30, 0.00, 0.10, '[0.90, 0.20, 0.30, 0.00, 0.10]'), -- Michael (Spicy Meat Lover, Budget)
+(4, 0.40, 0.75, 0.50, 0.60, 0.40, '[0.40, 0.75, 0.50, 0.60, 0.40]'), -- Emily (Balanced Organic)
+(5, 0.70, 0.50, 0.90, 0.00, 0.95, '[0.70, 0.50, 0.90, 0.00, 0.95]'), -- David (Asian Fusion & Premium Curry)
+(6, 0.30, 0.60, 0.40, 0.20, 0.20, '[0.30, 0.60, 0.40, 0.20, 0.20]'); -- Jessica (Italian & Mild)
+
+-- 16. SEED ITEM EMBEDDINGS (5D Dish Profile Vectors: [spiciness, healthiness, price_point, vegan_rating, asian_fusion])
+INSERT OR IGNORE INTO item_embeddings (item_id, spiciness, healthiness, price_point, vegan_rating, asian_fusion, vector_json) VALUES
+(1, 0.20, 0.50, 0.85, 0.30, 0.00, '[0.20, 0.50, 0.85, 0.30, 0.00]'), -- Truffle Mushroom Pizza
+(2, 0.10, 0.60, 0.60, 0.40, 0.00, '[0.10, 0.60, 0.60, 0.40, 0.00]'), -- Margherita Pizza
+(3, 0.75, 0.30, 0.70, 0.00, 0.00, '[0.75, 0.30, 0.70, 0.00, 0.00]'), -- Artisanal Pepperoni Pizza
+(4, 0.05, 0.80, 0.50, 0.20, 0.00, '[0.05, 0.80, 0.50, 0.20, 0.00]'), -- Burrata Salad
+(5, 0.40, 0.40, 0.65, 0.00, 0.95, '[0.40, 0.40, 0.65, 0.00, 0.95]'), -- Tonkotsu Ramen
+(6, 0.05, 0.85, 0.75, 0.00, 0.90, '[0.05, 0.85, 0.75, 0.00, 0.90]'), -- Salmon Nigiri Platter
+(7, 0.80, 0.70, 0.60, 0.00, 0.95, '[0.80, 0.70, 0.60, 0.00, 0.95]'), -- Spicy Tuna Dragon Roll
+(8, 0.20, 0.90, 0.30, 1.00, 0.90, '[0.20, 0.90, 0.30, 1.00, 0.90]'), -- Veggie Gyoza (Strict Vegan + Asian)
+(9, 0.15, 0.20, 0.55, 0.00, 0.00, '[0.15, 0.20, 0.55, 0.00, 0.00]'), -- Smash Cheeseburger
+(10, 0.10, 0.25, 0.30, 0.10, 0.00, '[0.10, 0.25, 0.30, 0.10, 0.00]'), -- Truffle Fries
+(11, 0.85, 0.30, 0.50, 0.00, 0.00, '[0.85, 0.30, 0.50, 0.00, 0.00]'), -- Spicy Buffalo Chicken
+(12, 0.70, 0.45, 0.70, 0.00, 0.80, '[0.70, 0.45, 0.70, 0.00, 0.80]'), -- Chicken Tikka Masala
+(13, 0.50, 0.65, 0.60, 0.20, 0.80, '[0.50, 0.65, 0.60, 0.20, 0.80]'), -- Paneer Butter Masala
+(14, 0.05, 0.40, 0.15, 0.10, 0.70, '[0.05, 0.40, 0.15, 0.10, 0.70]'), -- Garlic Butter Naan
+(15, 0.90, 0.40, 0.75, 0.00, 0.85, '[0.90, 0.40, 0.75, 0.00, 0.85]'); -- Hyderabadi Dum Biryani
+
+-- 17. SEED INITIAL AI RECOMMENDATIONS LOG
+INSERT OR IGNORE INTO ai_recommendations (recommendation_id, customer_id, item_id, match_score, reasoning_tag) VALUES
+(1, 1, 3, 98.45, '98% Match based on high Spicy (0.85) & Gourmet Pizza preference'),
+(2, 1, 15, 96.12, '96% Match based on Spicy Biryani flavor vector match'),
+(3, 2, 8, 99.20, '99% Match based on Vegan (0.95) & High Health Score (0.90)'),
+(4, 2, 6, 94.80, '95% Match based on Healthy Asian Salmon Nigiri preference');
+

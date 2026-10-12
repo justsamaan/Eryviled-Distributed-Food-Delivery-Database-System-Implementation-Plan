@@ -28,6 +28,11 @@ erDiagram
     CUSTOMERS ||--o{ REVIEWS : "writes"
     RESTAURANTS ||--o{ REVIEWS : "rated in"
 
+    CUSTOMERS ||--|| USER_EMBEDDINGS : "has preference vector"
+    MENU_ITEMS ||--|| ITEM_EMBEDDINGS : "has flavor vector"
+    CUSTOMERS ||--o{ AI_RECOMMENDATIONS : "receives"
+    MENU_ITEMS ||--o{ AI_RECOMMENDATIONS : "recommended in"
+
     USERS {
         int user_id PK
         string email UK
@@ -44,6 +49,32 @@ erDiagram
         string preferred_payment_method
     }
 
+    USER_EMBEDDINGS {
+        int user_id PK, FK
+        decimal spice_level
+        decimal health_score
+        decimal price_sensitivity
+        decimal vegan_weight
+        decimal asian_preference
+    }
+
+    ITEM_EMBEDDINGS {
+        int item_id PK, FK
+        decimal spiciness
+        decimal healthiness
+        decimal price_point
+        decimal vegan_rating
+        decimal asian_fusion
+    }
+
+    AI_RECOMMENDATIONS {
+        int recommendation_id PK
+        int customer_id FK
+        int item_id FK
+        decimal match_score
+        string reasoning_tag
+    }
+
     ADDRESSES {
         int address_id PK
         int user_id FK
@@ -52,6 +83,7 @@ erDiagram
         decimal latitude
         decimal longitude
     }
+
 
     RESTAURANTS {
         int restaurant_id PK

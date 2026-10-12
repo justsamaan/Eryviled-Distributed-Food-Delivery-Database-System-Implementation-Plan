@@ -4,6 +4,9 @@ const { query, execute } = require('../db/connection');
 const cacheService = require('../services/cacheService');
 const { runExplainAnalyze } = require('../services/explainService');
 const { simulateRaceCondition } = require('../services/concurrencyService');
+const aiRecommendationService = require('../services/aiRecommendationService');
+const aiPipelineService = require('../services/aiPipelineService');
+
 
 // 1. HEALTH CHECK
 router.get('/health', (req, res) => {
@@ -213,4 +216,65 @@ router.get('/audit-logs', async (req, res) => {
   }
 });
 
+// 9. AI VECTOR RECOMMENDATIONS API
+router.get('/ai-recommendations', async (req, res) => {
+  try {
+    const customerId = Number(req.query.customerId || 1);
+    const customPrefs = req.query.spiceLevel !== undefined ? {
+      spiceLevel: req.query.spiceLevel,
+      healthScore: req.query.healthScore,
+      priceSensitivity: req.query.priceSensitivity,
+      veganWeight: req.query.veganWeight,
+      asianPreference: req.query.asianPreference
+    } : null;
+
+    const recommendations = await aiRecommendationService.getAiRecommendationsForCustomer(customerId, customPrefs);
+    res.json(recommendations);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 10. AI PIPELINE - DATASET SUMMARY (STEP 1)
+router.get('/ai/dataset-stats', (req, res) => {
+  try {
+    const stats = aiPipelineService.getDatasetStats();
+    res.json(stats);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 11. AI PIPELINE - PREPROCESSING STEP (STEP 1)
+router.post('/ai/preprocess', (req, res) => {
+  try {
+    const preprocessed = aiPipelineService.preprocessSample(req.body);
+    res.json(preprocessed);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 12. AI PIPELINE - NLP TO SQL CHATBOT PROCESS (STEP 2: Input -> Query -> Output -> Chatbot -> Output)
+router.post('/ai/nlp-to-sql-chatbot', async (req, res) => {
+  try {
+    const prompt = req.body.prompt || "Show me delayed orders";
+    const result = await aiPipelineService.executeNlpToSqlChatbot(prompt);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 13. AI PIPELINE - PREDICTION OR OUTPUT (STEP 3: Delivery ETA Regressor & Risk Classifier)
+router.post('/ai/predict-eta', (req, res) => {
+  try {
+    const prediction = aiPipelineService.predictDeliveryTime(req.body);
+    res.json(prediction);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
+

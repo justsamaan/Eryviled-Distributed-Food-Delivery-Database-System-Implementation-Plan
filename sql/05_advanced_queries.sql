@@ -106,3 +106,55 @@ JOIN menu_items m ON i.item_id = m.item_id
 JOIN restaurants r ON m.restaurant_id = r.restaurant_id
 WHERE i.available_stock <= 5
 ORDER BY i.available_stock ASC;
+
+
+-- ----------------------------------------------------------------------------
+-- QUERY 5: AI-Based Personalization & Cosine Vector Similarity Ranker
+-- Calculates 5D vector dot product & normalized similarity between User & Dish Embeddings
+-- ----------------------------------------------------------------------------
+WITH vector_math AS (
+    SELECT 
+        u.user_id,
+        u.full_name AS customer_name,
+        m.item_id,
+        m.item_name,
+        r.name AS restaurant_name,
+        m.price,
+        m.dish_type,
+        -- Vector Dot Product: (u1*v1 + u2*v2 + u3*v3 + u4*v4 + u5*v5)
+        (ue.spice_level * ie.spiciness + 
+         ue.health_score * ie.healthiness + 
+         ue.price_sensitivity * ie.price_point + 
+         ue.vegan_weight * ie.vegan_rating + 
+         ue.asian_preference * ie.asian_fusion) AS dot_product,
+        -- Vector Norms
+        SQRT(ue.spice_level*ue.spice_level + ue.health_score*ue.health_score + ue.price_sensitivity*ue.price_sensitivity + ue.vegan_weight*ue.vegan_weight + ue.asian_preference*ue.asian_preference) AS u_norm,
+        SQRT(ie.spiciness*ie.spiciness + ie.healthiness*ie.healthiness + ie.price_point*ie.price_point + ie.vegan_rating*ie.vegan_rating + ie.asian_fusion*ie.asian_fusion) AS i_norm
+    FROM user_embeddings ue
+    JOIN users u ON ue.user_id = u.user_id
+    CROSS JOIN item_embeddings ie
+    JOIN menu_items m ON ie.item_id = m.item_id
+    JOIN restaurants r ON m.restaurant_id = r.restaurant_id
+    WHERE ue.user_id = 1 AND m.is_available = 1
+),
+cosine_scores AS (
+    SELECT 
+        customer_name,
+        item_name,
+        restaurant_name,
+        price,
+        dish_type,
+        ROUND((dot_product / (u_norm * i_norm)) * 100, 2) AS ai_match_percentage
+    FROM vector_math
+)
+SELECT 
+    customer_name,
+    item_name,
+    restaurant_name,
+    price,
+    dish_type,
+    ai_match_percentage || '%' AS personalization_match
+FROM cosine_scores
+ORDER BY ai_match_percentage DESC
+LIMIT 5;
+

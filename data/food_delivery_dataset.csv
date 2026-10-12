@@ -1,0 +1,501 @@
+order_id,customer_id,restaurant_id,restaurant_name,cuisine_type,order_value_usd,num_items,prep_time_minutes,delivery_distance_km,weather_condition,traffic_density,vehicle_type,driver_experience_years,time_of_day,delivery_time_minutes,is_delayed,customer_rating,customer_review
+1001,41,1,Bella Italia Pizzeria,Italian,65.73,1,12.8,2.71,Clear,High,Bike,3.7,Morning,28.7,0,3,"Decent food, arrived slightly later than expected."
+1002,46,5,Green Goddess Bowl Lab,Healthy,53.45,4,23.9,11.89,Clear,High,Car,2.4,Lunch,81.8,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1003,6,4,Taj Mahal Indian Spice,Indian,42.4,1,13.6,4.42,Clear,Medium,Bike,5.9,Dinner,31.8,0,5,"Standard delivery time, taste was okay."
+1004,37,2,Sakura Japanese & Ramen,Japanese,57.24,6,30.1,11.39,Stormy,High,Bike,2.6,Dinner,131.9,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1005,23,2,Sakura Japanese & Ramen,Japanese,69.29,6,32.3,9.68,Rainy,Low,Scooter,1.4,Dinner,67.4,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1006,54,1,Bella Italia Pizzeria,Italian,77.13,2,20.0,6.3,Clear,Jam,Electric_Bicycle,1.7,Dinner,68.4,1,3,"Storm delayed rider, order arrived 25 minutes late."
+1007,10,3,The Big Apple Burger Co.,American,42.04,2,18.1,4.4,Clear,High,Car,2.5,Lunch,41.8,0,3,"Average experience, rider had slight trouble finding the address."
+1008,11,4,Taj Mahal Indian Spice,Indian,50.38,5,25.1,14.45,Clear,Jam,Bike,4.2,Morning,124.8,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1009,50,3,The Big Apple Burger Co.,American,38.4,1,12.1,0.84,Rainy,High,Scooter,3.3,Morning,20.4,0,5,Amazing flavors and great packaging.
+1010,24,2,Sakura Japanese & Ramen,Japanese,104.66,5,29.4,13.38,Clear,Medium,Bike,5.6,Afternoon,84.3,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1011,6,4,Taj Mahal Indian Spice,Indian,80.16,1,15.1,2.52,Rainy,Jam,Scooter,2.0,Late_Night,36.1,0,4,"Decent food, arrived slightly later than expected."
+1012,46,3,The Big Apple Burger Co.,American,100.7,4,24.4,6.8,Clear,Low,Scooter,0.9,Morning,46.3,1,1,Pizza was cold because delivery was delayed.
+1013,1,1,Bella Italia Pizzeria,Italian,91.5,6,26.6,13.2,Foggy,Low,Scooter,2.0,Dinner,69.0,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1014,16,4,Taj Mahal Indian Spice,Indian,51.62,4,20.0,6.71,Clear,Medium,Bike,4.2,Morning,49.9,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1015,16,2,Sakura Japanese & Ramen,Japanese,59.71,2,14.7,3.31,Clear,High,Bike,2.9,Late_Night,32.3,0,3,"Decent food, arrived slightly later than expected."
+1016,60,2,Sakura Japanese & Ramen,Japanese,51.79,2,17.5,12.65,Foggy,Low,Bike,5.9,Afternoon,65.5,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1017,28,5,Green Goddess Bowl Lab,Healthy,96.82,6,26.0,4.86,Stormy,Medium,Bike,4.6,Morning,55.8,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1018,33,1,Bella Italia Pizzeria,Italian,31.18,2,14.1,12.61,Clear,Jam,Scooter,3.7,Morning,85.0,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1019,60,3,The Big Apple Burger Co.,American,67.85,2,16.1,4.44,Clear,Medium,Car,2.2,Morning,31.9,0,3,"Average experience, rider had slight trouble finding the address."
+1020,14,5,Green Goddess Bowl Lab,Healthy,41.58,3,19.2,1.74,Clear,Low,Car,5.1,Afternoon,26.4,0,5,"Food was fresh, perfectly seasoned, and arrived earlier than expected."
+1021,1,5,Green Goddess Bowl Lab,Healthy,90.34,3,17.2,12.83,Clear,High,Scooter,2.0,Late_Night,69.4,1,3,"Storm delayed rider, order arrived 25 minutes late."
+1022,17,1,Bella Italia Pizzeria,Italian,59.19,1,17.4,1.4,Clear,Low,Electric_Bicycle,1.4,Dinner,27.6,0,5,Food arrived fast and piping hot!
+1023,8,1,Bella Italia Pizzeria,Italian,108.14,6,29.2,12.23,Clear,Low,Scooter,0.7,Afternoon,64.1,1,3,Pizza was cold because delivery was delayed.
+1024,44,2,Sakura Japanese & Ramen,Japanese,59.27,6,31.0,12.91,Clear,Medium,Scooter,5.6,Lunch,71.5,1,3,Pizza was cold because delivery was delayed.
+1025,57,4,Taj Mahal Indian Spice,Indian,31.44,1,18.2,11.52,Clear,Medium,Scooter,2.0,Morning,57.5,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1026,23,3,The Big Apple Burger Co.,American,40.6,2,18.9,6.26,Clear,Low,Electric_Bicycle,2.4,Late_Night,43.4,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1027,2,1,Bella Italia Pizzeria,Italian,44.39,3,24.1,4.44,Clear,Medium,Electric_Bicycle,2.9,Late_Night,45.7,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1028,1,5,Green Goddess Bowl Lab,Healthy,88.4,5,29.5,10.9,Clear,Medium,Electric_Bicycle,3.9,Morning,78.5,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1029,43,4,Taj Mahal Indian Spice,Indian,58.05,3,18.8,2.54,Clear,Jam,Scooter,3.9,Afternoon,36.1,0,3,"Average experience, rider had slight trouble finding the address."
+1030,39,3,The Big Apple Burger Co.,American,66.95,4,24.6,7.8,Rainy,Jam,Scooter,4.1,Afternoon,80.6,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1031,6,2,Sakura Japanese & Ramen,Japanese,71.94,6,31.3,2.82,Clear,Jam,Bike,3.0,Late_Night,51.9,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1032,58,1,Bella Italia Pizzeria,Italian,53.35,4,25.6,10.33,Clear,Medium,Bike,3.0,Dinner,66.7,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1033,49,4,Taj Mahal Indian Spice,Indian,96.22,5,29.1,6.65,Foggy,Medium,Scooter,4.6,Dinner,56.0,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1034,41,2,Sakura Japanese & Ramen,Japanese,60.33,3,22.1,4.01,Clear,High,Bike,1.3,Lunch,42.2,1,1,Pizza was cold because delivery was delayed.
+1035,5,4,Taj Mahal Indian Spice,Indian,60.18,4,22.9,1.65,Rainy,Medium,Bike,5.2,Late_Night,35.5,0,4,"Standard delivery time, taste was okay."
+1036,35,5,Green Goddess Bowl Lab,Healthy,101.27,5,25.9,4.54,Clear,Medium,Car,4.5,Dinner,46.2,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1037,59,4,Taj Mahal Indian Spice,Indian,80.93,5,22.2,9.61,Clear,Medium,Bike,1.9,Afternoon,59.7,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1038,17,1,Bella Italia Pizzeria,Italian,41.18,4,23.5,14.5,Clear,Medium,Bike,4.6,Lunch,82.7,1,1,Pizza was cold because delivery was delayed.
+1039,16,2,Sakura Japanese & Ramen,Japanese,80.84,4,23.7,3.79,Rainy,High,Scooter,3.8,Morning,48.2,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1040,37,4,Taj Mahal Indian Spice,Indian,97.43,4,20.8,8.91,Rainy,Low,Electric_Bicycle,5.2,Late_Night,64.9,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1041,23,5,Green Goddess Bowl Lab,Healthy,80.35,4,19.8,9.67,Clear,Medium,Car,1.1,Afternoon,57.8,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1042,40,5,Green Goddess Bowl Lab,Healthy,68.36,4,25.8,8.92,Clear,Low,Bike,2.0,Dinner,53.2,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1043,22,1,Bella Italia Pizzeria,Italian,91.91,4,20.7,3.71,Rainy,Medium,Electric_Bicycle,3.6,Late_Night,47.7,1,2,Pizza was cold because delivery was delayed.
+1044,45,4,Taj Mahal Indian Spice,Indian,96.42,6,28.4,1.04,Clear,Medium,Scooter,2.2,Late_Night,35.9,0,4,"Standard delivery time, taste was okay."
+1045,28,5,Green Goddess Bowl Lab,Healthy,54.96,3,20.0,5.0,Clear,High,Electric_Bicycle,1.2,Late_Night,52.0,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1046,47,5,Green Goddess Bowl Lab,Healthy,82.9,5,29.8,12.21,Clear,Medium,Electric_Bicycle,0.6,Late_Night,82.1,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1047,36,3,The Big Apple Burger Co.,American,110.59,6,29.9,11.11,Clear,Low,Electric_Bicycle,3.1,Dinner,71.1,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1048,53,1,Bella Italia Pizzeria,Italian,70.0,4,23.8,10.2,Clear,High,Electric_Bicycle,1.0,Lunch,82.0,1,2,Pizza was cold because delivery was delayed.
+1049,50,5,Green Goddess Bowl Lab,Healthy,67.48,4,22.7,12.58,Stormy,Medium,Bike,3.9,Morning,108.0,1,2,Pizza was cold because delivery was delayed.
+1050,16,2,Sakura Japanese & Ramen,Japanese,51.08,5,22.0,6.97,Clear,Low,Scooter,2.1,Afternoon,43.8,1,2,Pizza was cold because delivery was delayed.
+1051,60,3,The Big Apple Burger Co.,American,88.98,6,31.2,3.51,Clear,Low,Scooter,5.5,Lunch,42.5,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1052,29,1,Bella Italia Pizzeria,Italian,82.01,4,24.8,13.71,Clear,Medium,Bike,3.8,Dinner,81.5,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1053,6,2,Sakura Japanese & Ramen,Japanese,103.99,6,29.4,13.83,Stormy,Medium,Electric_Bicycle,3.7,Lunch,128.8,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1054,41,4,Taj Mahal Indian Spice,Indian,49.17,1,14.1,5.2,Clear,Low,Car,4.3,Afternoon,29.5,0,4,"Average experience, rider had slight trouble finding the address."
+1055,3,4,Taj Mahal Indian Spice,Indian,39.69,1,13.4,14.09,Clear,Medium,Bike,4.1,Late_Night,71.3,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1056,41,4,Taj Mahal Indian Spice,Indian,32.92,1,15.2,13.51,Clear,Medium,Bike,0.7,Late_Night,70.9,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1057,36,1,Bella Italia Pizzeria,Italian,71.39,5,23.8,12.33,Clear,Jam,Scooter,3.2,Afternoon,92.0,1,3,Pizza was cold because delivery was delayed.
+1058,30,5,Green Goddess Bowl Lab,Healthy,50.4,2,21.0,7.76,Foggy,High,Electric_Bicycle,4.7,Dinner,77.2,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1059,53,1,Bella Italia Pizzeria,Italian,77.79,3,23.1,8.74,Rainy,High,Car,3.5,Afternoon,77.3,1,3,Pizza was cold because delivery was delayed.
+1060,45,2,Sakura Japanese & Ramen,Japanese,69.86,5,28.8,6.43,Clear,Medium,Car,2.6,Lunch,52.8,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1061,56,1,Bella Italia Pizzeria,Italian,46.08,4,26.5,1.01,Clear,High,Scooter,0.9,Afternoon,32.7,0,5,"Average experience, rider had slight trouble finding the address."
+1062,55,5,Green Goddess Bowl Lab,Healthy,98.2,4,24.2,12.96,Clear,Medium,Bike,1.8,Afternoon,75.8,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1063,7,1,Bella Italia Pizzeria,Italian,50.15,4,21.6,1.2,Clear,Low,Electric_Bicycle,2.6,Lunch,26.4,0,4,Amazing flavors and great packaging.
+1064,6,5,Green Goddess Bowl Lab,Healthy,77.8,4,21.1,13.31,Clear,Medium,Electric_Bicycle,3.0,Morning,82.4,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1065,44,5,Green Goddess Bowl Lab,Healthy,31.51,2,21.2,14.33,Clear,Jam,Electric_Bicycle,3.0,Afternoon,127.6,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1066,37,3,The Big Apple Burger Co.,American,71.01,6,32.6,9.82,Clear,Medium,Bike,5.5,Dinner,75.1,1,3,Pizza was cold because delivery was delayed.
+1067,39,3,The Big Apple Burger Co.,American,65.83,2,18.6,10.09,Rainy,Medium,Scooter,4.0,Morning,59.0,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1068,59,3,The Big Apple Burger Co.,American,79.1,3,17.8,2.61,Clear,Jam,Electric_Bicycle,5.1,Afternoon,42.4,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1069,48,3,The Big Apple Burger Co.,American,49.07,1,11.4,11.13,Clear,Medium,Car,5.8,Late_Night,52.5,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1070,24,3,The Big Apple Burger Co.,American,69.74,5,27.1,5.89,Rainy,Medium,Electric_Bicycle,5.5,Lunch,62.7,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1071,59,3,The Big Apple Burger Co.,American,77.91,6,25.9,13.76,Clear,Medium,Bike,1.8,Late_Night,77.8,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1072,38,2,Sakura Japanese & Ramen,Japanese,79.95,4,25.9,9.23,Foggy,Low,Electric_Bicycle,1.7,Dinner,67.7,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1073,44,3,The Big Apple Burger Co.,American,101.5,5,27.2,1.63,Clear,Jam,Car,1.0,Lunch,40.6,0,4,"Decent food, arrived slightly later than expected."
+1074,9,5,Green Goddess Bowl Lab,Healthy,31.19,2,19.7,3.64,Clear,High,Electric_Bicycle,4.8,Late_Night,41.5,0,5,"Decent food, arrived slightly later than expected."
+1075,9,5,Green Goddess Bowl Lab,Healthy,82.21,3,17.3,12.67,Clear,Medium,Scooter,3.7,Morning,60.2,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1076,31,4,Taj Mahal Indian Spice,Indian,64.81,3,17.3,7.7,Foggy,Low,Electric_Bicycle,3.0,Morning,50.6,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1077,28,1,Bella Italia Pizzeria,Italian,83.46,4,22.7,13.12,Clear,Low,Scooter,2.0,Late_Night,55.6,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1078,33,5,Green Goddess Bowl Lab,Healthy,46.05,4,24.8,12.48,Rainy,High,Scooter,2.9,Lunch,96.6,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1079,27,1,Bella Italia Pizzeria,Italian,59.53,3,21.7,5.93,Clear,Jam,Bike,1.0,Morning,65.1,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1080,38,5,Green Goddess Bowl Lab,Healthy,66.61,5,23.0,5.64,Rainy,High,Bike,5.8,Late_Night,63.6,1,1,Pizza was cold because delivery was delayed.
+1081,10,4,Taj Mahal Indian Spice,Indian,78.68,2,16.4,8.42,Clear,Low,Scooter,4.9,Late_Night,42.4,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1082,39,3,The Big Apple Burger Co.,American,31.51,1,16.4,5.03,Clear,Low,Scooter,3.6,Dinner,28.8,0,4,"Decent food, arrived slightly later than expected."
+1083,6,5,Green Goddess Bowl Lab,Healthy,49.95,2,17.2,2.96,Clear,Medium,Bike,5.4,Lunch,29.1,0,4,"Average experience, rider had slight trouble finding the address."
+1084,28,4,Taj Mahal Indian Spice,Indian,73.46,5,24.2,11.14,Clear,Medium,Electric_Bicycle,4.2,Late_Night,72.6,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1085,15,4,Taj Mahal Indian Spice,Indian,49.84,5,23.6,13.75,Rainy,High,Electric_Bicycle,2.3,Morning,124.7,1,2,Pizza was cold because delivery was delayed.
+1086,33,5,Green Goddess Bowl Lab,Healthy,102.18,6,25.4,12.61,Clear,Low,Bike,5.2,Late_Night,66.9,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1087,19,1,Bella Italia Pizzeria,Italian,41.27,4,21.8,11.78,Rainy,High,Electric_Bicycle,1.0,Morning,107.2,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1088,48,3,The Big Apple Burger Co.,American,47.32,2,14.9,7.79,Clear,Medium,Electric_Bicycle,2.4,Lunch,49.1,1,1,Pizza was cold because delivery was delayed.
+1089,12,5,Green Goddess Bowl Lab,Healthy,73.37,2,18.8,3.23,Rainy,Medium,Car,4.2,Late_Night,38.4,0,5,"Standard delivery time, taste was okay."
+1090,10,4,Taj Mahal Indian Spice,Indian,49.1,1,15.9,11.71,Clear,Medium,Bike,2.2,Dinner,61.8,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1091,5,1,Bella Italia Pizzeria,Italian,82.74,5,25.1,8.75,Stormy,High,Bike,3.0,Late_Night,101.9,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1092,29,1,Bella Italia Pizzeria,Italian,93.43,3,17.1,9.65,Clear,High,Car,3.4,Late_Night,64.5,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1093,25,4,Taj Mahal Indian Spice,Indian,74.91,3,16.8,9.44,Clear,Medium,Car,2.1,Late_Night,52.6,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1094,20,4,Taj Mahal Indian Spice,Indian,63.3,2,21.1,5.04,Clear,High,Scooter,4.2,Late_Night,45.1,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1095,2,3,The Big Apple Burger Co.,American,44.5,3,18.1,13.78,Clear,Low,Scooter,1.4,Afternoon,57.8,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1096,43,3,The Big Apple Burger Co.,American,54.49,5,25.0,3.02,Rainy,High,Scooter,4.5,Morning,45.3,1,2,Pizza was cold because delivery was delayed.
+1097,29,5,Green Goddess Bowl Lab,Healthy,79.4,3,22.7,4.01,Clear,Jam,Car,5.5,Lunch,54.0,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1098,50,4,Taj Mahal Indian Spice,Indian,78.68,5,29.7,11.99,Rainy,Low,Electric_Bicycle,0.8,Dinner,84.9,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1099,46,5,Green Goddess Bowl Lab,Healthy,37.89,1,16.9,4.54,Foggy,Low,Car,1.0,Lunch,38.6,0,4,"Standard delivery time, taste was okay."
+1100,33,3,The Big Apple Burger Co.,American,50.56,2,14.3,3.88,Clear,Low,Electric_Bicycle,4.9,Lunch,27.1,0,5,"Delicious meal, driver was very polite."
+1101,45,2,Sakura Japanese & Ramen,Japanese,81.62,6,29.7,13.21,Clear,Low,Scooter,3.5,Late_Night,65.9,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1102,16,4,Taj Mahal Indian Spice,Indian,101.43,6,28.5,2.32,Foggy,Medium,Bike,4.0,Late_Night,42.3,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1103,1,5,Green Goddess Bowl Lab,Healthy,48.17,3,19.7,9.9,Clear,Jam,Bike,5.7,Late_Night,90.5,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1104,3,4,Taj Mahal Indian Spice,Indian,48.97,3,16.5,11.6,Clear,High,Bike,4.7,Afternoon,76.2,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1105,53,2,Sakura Japanese & Ramen,Japanese,81.34,6,30.4,9.45,Rainy,Low,Car,0.7,Lunch,66.2,1,3,"Storm delayed rider, order arrived 25 minutes late."
+1106,53,5,Green Goddess Bowl Lab,Healthy,55.45,4,25.2,3.42,Clear,High,Electric_Bicycle,2.0,Afternoon,47.7,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1107,58,4,Taj Mahal Indian Spice,Indian,92.9,3,20.4,7.62,Foggy,Medium,Bike,4.5,Morning,58.4,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1108,6,3,The Big Apple Burger Co.,American,71.03,6,28.4,10.63,Clear,Medium,Car,0.7,Afternoon,68.5,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1109,5,4,Taj Mahal Indian Spice,Indian,64.8,3,22.4,2.99,Clear,High,Car,0.7,Morning,37.7,0,5,"Decent food, arrived slightly later than expected."
+1110,39,2,Sakura Japanese & Ramen,Japanese,80.45,6,27.8,6.88,Clear,Low,Electric_Bicycle,2.7,Afternoon,52.4,1,1,Pizza was cold because delivery was delayed.
+1111,32,5,Green Goddess Bowl Lab,Healthy,95.73,4,20.1,11.42,Rainy,Low,Electric_Bicycle,4.3,Dinner,72.6,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1112,6,3,The Big Apple Burger Co.,American,74.19,6,25.3,8.23,Foggy,High,Scooter,4.9,Late_Night,66.9,1,3,Pizza was cold because delivery was delayed.
+1113,16,4,Taj Mahal Indian Spice,Indian,42.51,1,15.4,7.2,Stormy,Low,Bike,0.9,Dinner,56.8,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1114,9,3,The Big Apple Burger Co.,American,57.52,6,28.5,7.89,Clear,High,Scooter,4.7,Lunch,61.2,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1115,54,1,Bella Italia Pizzeria,Italian,55.83,5,23.3,5.22,Rainy,Medium,Electric_Bicycle,5.2,Afternoon,55.3,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1116,33,2,Sakura Japanese & Ramen,Japanese,103.94,5,23.2,9.82,Rainy,Medium,Bike,5.0,Morning,73.0,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1117,42,2,Sakura Japanese & Ramen,Japanese,71.91,5,27.1,7.62,Rainy,Low,Electric_Bicycle,3.2,Dinner,63.5,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1118,30,2,Sakura Japanese & Ramen,Japanese,70.51,3,18.9,10.64,Rainy,High,Car,1.2,Afternoon,84.9,1,1,Pizza was cold because delivery was delayed.
+1119,30,1,Bella Italia Pizzeria,Italian,60.93,3,17.5,1.49,Foggy,High,Car,1.9,Lunch,32.0,0,3,"Decent food, arrived slightly later than expected."
+1120,32,5,Green Goddess Bowl Lab,Healthy,70.42,4,21.7,1.12,Foggy,Medium,Scooter,1.7,Afternoon,26.8,0,5,"Food was fresh, perfectly seasoned, and arrived earlier than expected."
+1121,57,4,Taj Mahal Indian Spice,Indian,66.24,3,23.2,6.7,Foggy,High,Car,2.5,Dinner,59.6,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1122,33,4,Taj Mahal Indian Spice,Indian,63.56,5,29.9,10.12,Clear,Jam,Car,2.6,Afternoon,93.8,1,1,Pizza was cold because delivery was delayed.
+1123,13,5,Green Goddess Bowl Lab,Healthy,70.98,5,22.3,1.33,Rainy,High,Car,1.3,Late_Night,33.7,0,4,"Average experience, rider had slight trouble finding the address."
+1124,48,3,The Big Apple Burger Co.,American,67.02,5,28.6,8.09,Rainy,Low,Bike,2.5,Morning,64.5,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1125,39,4,Taj Mahal Indian Spice,Indian,92.49,3,22.7,11.43,Clear,High,Car,1.4,Late_Night,76.4,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1126,13,1,Bella Italia Pizzeria,Italian,59.14,4,20.4,10.26,Clear,High,Car,5.3,Morning,72.6,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1127,43,4,Taj Mahal Indian Spice,Indian,69.49,5,29.7,7.1,Clear,Medium,Electric_Bicycle,3.9,Lunch,63.9,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1128,50,3,The Big Apple Burger Co.,American,65.64,6,30.4,5.14,Clear,Jam,Electric_Bicycle,2.1,Late_Night,73.4,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1129,53,3,The Big Apple Burger Co.,American,44.72,2,15.9,10.58,Clear,Medium,Electric_Bicycle,4.6,Lunch,59.2,1,2,Pizza was cold because delivery was delayed.
+1130,7,5,Green Goddess Bowl Lab,Healthy,88.8,6,26.7,9.98,Clear,Medium,Bike,1.1,Afternoon,67.4,1,1,Pizza was cold because delivery was delayed.
+1131,1,5,Green Goddess Bowl Lab,Healthy,51.82,2,21.1,12.83,Clear,Low,Electric_Bicycle,2.3,Morning,70.2,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1132,59,2,Sakura Japanese & Ramen,Japanese,93.82,4,20.6,13.4,Stormy,Medium,Car,1.5,Afternoon,103.9,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1133,60,3,The Big Apple Burger Co.,American,61.22,3,21.5,7.98,Foggy,Low,Car,2.0,Morning,49.9,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1134,48,3,The Big Apple Burger Co.,American,68.13,3,22.5,3.2,Foggy,High,Car,3.3,Morning,40.5,0,3,"Decent food, arrived slightly later than expected."
+1135,31,3,The Big Apple Burger Co.,American,27.42,2,16.7,6.92,Clear,Medium,Bike,1.9,Afternoon,47.4,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1136,44,5,Green Goddess Bowl Lab,Healthy,99.96,6,30.3,9.55,Foggy,Medium,Scooter,1.7,Lunch,67.8,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1137,27,5,Green Goddess Bowl Lab,Healthy,86.2,4,25.6,12.11,Rainy,Medium,Bike,3.4,Late_Night,90.5,1,1,Pizza was cold because delivery was delayed.
+1138,37,5,Green Goddess Bowl Lab,Healthy,37.04,2,20.4,6.85,Rainy,High,Car,1.0,Late_Night,64.7,1,1,Pizza was cold because delivery was delayed.
+1139,33,4,Taj Mahal Indian Spice,Indian,74.4,4,23.7,10.02,Clear,Low,Electric_Bicycle,5.0,Lunch,62.2,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1140,60,1,Bella Italia Pizzeria,Italian,41.94,4,22.5,11.33,Rainy,Jam,Car,2.6,Dinner,114.6,1,3,"Storm delayed rider, order arrived 25 minutes late."
+1141,25,1,Bella Italia Pizzeria,Italian,111.81,6,31.8,2.62,Foggy,Low,Car,3.4,Lunch,44.9,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1142,35,4,Taj Mahal Indian Spice,Indian,42.1,2,16.4,4.58,Foggy,High,Bike,0.7,Dinner,42.8,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1143,16,2,Sakura Japanese & Ramen,Japanese,26.65,1,11.1,8.99,Rainy,Low,Bike,2.7,Lunch,49.9,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1144,15,5,Green Goddess Bowl Lab,Healthy,68.73,3,22.6,12.01,Clear,High,Scooter,2.8,Afternoon,69.7,1,3,Pizza was cold because delivery was delayed.
+1145,41,4,Taj Mahal Indian Spice,Indian,76.73,5,29.8,13.7,Rainy,High,Electric_Bicycle,4.3,Dinner,128.4,1,2,Pizza was cold because delivery was delayed.
+1146,20,2,Sakura Japanese & Ramen,Japanese,95.8,4,23.7,14.06,Clear,Low,Scooter,1.9,Afternoon,63.1,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1147,6,5,Green Goddess Bowl Lab,Healthy,103.59,6,25.2,5.97,Rainy,Low,Bike,1.5,Late_Night,51.1,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1148,20,1,Bella Italia Pizzeria,Italian,84.17,2,21.3,2.41,Stormy,Medium,Scooter,4.3,Lunch,36.2,0,3,"Standard delivery time, taste was okay."
+1149,50,3,The Big Apple Burger Co.,American,68.44,4,24.4,5.03,Clear,High,Car,1.0,Dinner,50.9,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1150,37,2,Sakura Japanese & Ramen,Japanese,61.9,6,26.9,13.61,Clear,Medium,Scooter,1.6,Lunch,71.8,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1151,36,3,The Big Apple Burger Co.,American,80.06,3,20.3,10.71,Rainy,Medium,Electric_Bicycle,1.4,Late_Night,83.4,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1152,34,1,Bella Italia Pizzeria,Italian,78.16,1,16.1,11.27,Clear,High,Scooter,0.9,Lunch,61.8,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1153,4,5,Green Goddess Bowl Lab,Healthy,93.67,6,29.7,7.42,Clear,Low,Car,0.6,Late_Night,52.9,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1154,52,2,Sakura Japanese & Ramen,Japanese,76.5,1,15.0,4.1,Rainy,Low,Electric_Bicycle,2.0,Dinner,34.7,0,5,"Standard delivery time, taste was okay."
+1155,37,2,Sakura Japanese & Ramen,Japanese,66.78,6,30.3,12.42,Rainy,High,Bike,1.0,Dinner,111.2,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1156,32,4,Taj Mahal Indian Spice,Indian,100.85,6,29.3,12.55,Clear,Medium,Bike,1.8,Late_Night,80.1,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1157,44,3,The Big Apple Burger Co.,American,80.87,5,22.3,13.52,Clear,Jam,Scooter,4.6,Dinner,97.9,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1158,44,5,Green Goddess Bowl Lab,Healthy,56.91,3,22.3,11.63,Rainy,Low,Electric_Bicycle,0.8,Dinner,77.2,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1159,50,3,The Big Apple Burger Co.,American,59.18,1,17.1,6.97,Clear,Medium,Car,2.9,Late_Night,46.6,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1160,6,3,The Big Apple Burger Co.,American,50.18,2,19.9,2.91,Clear,Medium,Bike,0.5,Afternoon,35.2,0,4,"Decent food, arrived slightly later than expected."
+1161,9,1,Bella Italia Pizzeria,Italian,53.29,2,18.1,7.82,Clear,Low,Bike,3.8,Afternoon,47.7,1,2,Pizza was cold because delivery was delayed.
+1162,37,5,Green Goddess Bowl Lab,Healthy,68.8,2,15.0,4.48,Clear,Low,Scooter,2.9,Dinner,28.8,0,4,"Standard delivery time, taste was okay."
+1163,17,2,Sakura Japanese & Ramen,Japanese,91.13,6,29.6,3.48,Clear,Medium,Car,2.3,Late_Night,45.7,1,1,Pizza was cold because delivery was delayed.
+1164,20,3,The Big Apple Burger Co.,American,104.28,5,23.6,5.1,Stormy,Jam,Electric_Bicycle,4.5,Dinner,90.9,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1165,25,3,The Big Apple Burger Co.,American,62.27,4,26.7,3.54,Stormy,Low,Bike,5.7,Dinner,50.3,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1166,53,4,Taj Mahal Indian Spice,Indian,83.46,6,29.9,4.12,Rainy,High,Car,0.9,Late_Night,60.0,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1167,35,1,Bella Italia Pizzeria,Italian,76.3,3,22.9,8.94,Foggy,Low,Scooter,4.1,Afternoon,49.3,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1168,49,3,The Big Apple Burger Co.,American,46.46,4,20.0,3.84,Rainy,Medium,Scooter,3.0,Dinner,37.1,0,4,"Average experience, rider had slight trouble finding the address."
+1169,33,2,Sakura Japanese & Ramen,Japanese,94.36,3,20.3,4.85,Foggy,Low,Scooter,2.4,Afternoon,37.9,0,4,"Standard delivery time, taste was okay."
+1170,47,4,Taj Mahal Indian Spice,Indian,37.6,3,16.8,10.54,Clear,Medium,Bike,4.2,Lunch,62.8,1,2,Pizza was cold because delivery was delayed.
+1171,36,2,Sakura Japanese & Ramen,Japanese,67.65,3,24.1,3.98,Clear,Low,Car,2.7,Late_Night,38.1,0,3,"Decent food, arrived slightly later than expected."
+1172,14,3,The Big Apple Burger Co.,American,102.33,6,25.3,2.19,Foggy,Low,Electric_Bicycle,1.6,Morning,37.2,0,5,"Average experience, rider had slight trouble finding the address."
+1173,41,3,The Big Apple Burger Co.,American,70.21,5,25.1,2.36,Clear,Medium,Scooter,5.0,Afternoon,35.0,0,4,"Decent food, arrived slightly later than expected."
+1174,20,1,Bella Italia Pizzeria,Italian,49.77,2,14.7,6.12,Clear,Medium,Car,1.5,Late_Night,38.4,0,4,"Decent food, arrived slightly later than expected."
+1175,36,2,Sakura Japanese & Ramen,Japanese,57.62,4,20.7,12.34,Rainy,High,Bike,3.2,Lunch,106.3,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1176,27,4,Taj Mahal Indian Spice,Indian,50.2,4,23.7,11.7,Clear,Low,Scooter,3.5,Lunch,55.7,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1177,36,5,Green Goddess Bowl Lab,Healthy,55.44,1,12.9,8.24,Stormy,Medium,Bike,4.7,Dinner,69.8,1,2,Pizza was cold because delivery was delayed.
+1178,20,1,Bella Italia Pizzeria,Italian,56.03,4,26.1,1.99,Foggy,Low,Scooter,1.7,Late_Night,35.8,0,5,"Average experience, rider had slight trouble finding the address."
+1179,41,4,Taj Mahal Indian Spice,Indian,64.59,2,19.9,11.95,Rainy,Medium,Electric_Bicycle,3.8,Lunch,87.2,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1180,9,4,Taj Mahal Indian Spice,Indian,81.04,1,17.7,2.54,Foggy,Low,Electric_Bicycle,5.1,Dinner,30.0,0,4,"Standard delivery time, taste was okay."
+1181,41,4,Taj Mahal Indian Spice,Indian,67.57,4,24.3,12.86,Clear,Medium,Electric_Bicycle,4.3,Afternoon,79.3,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1182,47,4,Taj Mahal Indian Spice,Indian,93.51,6,27.7,1.67,Clear,Low,Car,5.0,Dinner,35.2,0,5,"Standard delivery time, taste was okay."
+1183,36,5,Green Goddess Bowl Lab,Healthy,61.53,2,17.5,5.51,Rainy,Low,Bike,3.9,Dinner,41.8,0,4,"Standard delivery time, taste was okay."
+1184,13,2,Sakura Japanese & Ramen,Japanese,71.41,6,31.8,12.81,Clear,Medium,Bike,2.5,Lunch,81.6,1,2,Pizza was cold because delivery was delayed.
+1185,28,1,Bella Italia Pizzeria,Italian,58.81,6,26.5,1.87,Clear,Medium,Car,0.6,Afternoon,38.9,0,3,"Decent food, arrived slightly later than expected."
+1186,15,4,Taj Mahal Indian Spice,Indian,65.08,1,11.6,5.09,Foggy,Low,Scooter,4.0,Lunch,28.1,0,4,"Average experience, rider had slight trouble finding the address."
+1187,42,2,Sakura Japanese & Ramen,Japanese,61.42,4,20.9,11.05,Foggy,Medium,Car,5.2,Morning,70.5,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1188,28,3,The Big Apple Burger Co.,American,42.11,2,18.8,4.2,Rainy,High,Electric_Bicycle,4.8,Morning,54.0,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1189,14,5,Green Goddess Bowl Lab,Healthy,77.58,5,28.0,4.85,Clear,High,Scooter,3.2,Morning,49.6,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1190,24,3,The Big Apple Burger Co.,American,50.6,2,20.3,6.57,Clear,Low,Car,5.7,Morning,39.8,0,3,"Standard delivery time, taste was okay."
+1191,14,1,Bella Italia Pizzeria,Italian,78.37,1,14.0,4.72,Rainy,High,Car,4.4,Morning,44.7,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1192,33,2,Sakura Japanese & Ramen,Japanese,59.72,2,16.7,9.49,Rainy,Medium,Bike,2.2,Dinner,67.0,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1193,16,1,Bella Italia Pizzeria,Italian,47.08,4,24.1,1.55,Rainy,Medium,Scooter,1.2,Lunch,36.2,0,4,"Average experience, rider had slight trouble finding the address."
+1194,17,2,Sakura Japanese & Ramen,Japanese,41.24,3,22.6,4.48,Foggy,High,Bike,2.3,Dinner,54.8,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1195,32,4,Taj Mahal Indian Spice,Indian,68.47,5,26.0,8.57,Clear,Low,Bike,5.4,Morning,53.9,1,3,Pizza was cold because delivery was delayed.
+1196,3,4,Taj Mahal Indian Spice,Indian,56.86,3,17.6,13.56,Foggy,Medium,Car,1.7,Lunch,75.4,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1197,53,1,Bella Italia Pizzeria,Italian,69.24,5,26.0,13.16,Clear,High,Bike,5.7,Morning,97.5,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1198,36,4,Taj Mahal Indian Spice,Indian,43.0,1,13.1,11.55,Rainy,Low,Electric_Bicycle,3.8,Dinner,66.2,1,2,Pizza was cold because delivery was delayed.
+1199,10,1,Bella Italia Pizzeria,Italian,41.46,4,23.5,9.51,Rainy,Low,Electric_Bicycle,0.5,Dinner,69.2,1,2,Pizza was cold because delivery was delayed.
+1200,27,4,Taj Mahal Indian Spice,Indian,79.83,1,11.9,4.63,Clear,Low,Car,4.4,Afternoon,27.2,0,5,"Food was fresh, perfectly seasoned, and arrived earlier than expected."
+1201,7,5,Green Goddess Bowl Lab,Healthy,65.87,2,16.8,8.91,Clear,Medium,Scooter,1.8,Afternoon,49.4,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1202,21,4,Taj Mahal Indian Spice,Indian,47.75,3,23.9,2.66,Rainy,Low,Bike,1.4,Dinner,36.5,0,3,"Standard delivery time, taste was okay."
+1203,50,2,Sakura Japanese & Ramen,Japanese,58.81,4,21.3,2.44,Clear,Medium,Bike,1.7,Afternoon,31.9,0,4,"Decent food, arrived slightly later than expected."
+1204,44,3,The Big Apple Burger Co.,American,83.53,3,17.8,13.84,Foggy,Medium,Scooter,1.0,Morning,67.4,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1205,4,2,Sakura Japanese & Ramen,Japanese,39.09,2,16.8,10.2,Foggy,Low,Electric_Bicycle,5.5,Morning,62.0,1,1,Pizza was cold because delivery was delayed.
+1206,6,3,The Big Apple Burger Co.,American,23.1,1,14.5,3.1,Clear,High,Car,3.2,Dinner,33.8,0,3,"Decent food, arrived slightly later than expected."
+1207,59,2,Sakura Japanese & Ramen,Japanese,50.57,3,23.5,1.27,Rainy,Low,Electric_Bicycle,3.2,Late_Night,33.7,0,4,"Average experience, rider had slight trouble finding the address."
+1208,57,5,Green Goddess Bowl Lab,Healthy,65.48,2,20.0,11.69,Stormy,High,Electric_Bicycle,3.1,Dinner,133.1,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1209,25,3,The Big Apple Burger Co.,American,28.59,2,18.4,1.2,Rainy,Low,Car,3.4,Late_Night,28.3,0,4,"Standard delivery time, taste was okay."
+1210,35,1,Bella Italia Pizzeria,Italian,62.12,2,21.5,6.12,Foggy,Jam,Scooter,1.5,Late_Night,62.5,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1211,59,5,Green Goddess Bowl Lab,Healthy,63.41,1,13.6,8.58,Clear,Jam,Car,3.5,Lunch,69.5,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1212,1,3,The Big Apple Burger Co.,American,58.79,5,23.0,10.62,Foggy,High,Electric_Bicycle,0.8,Lunch,96.3,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1213,55,5,Green Goddess Bowl Lab,Healthy,92.09,3,19.4,13.7,Clear,Low,Electric_Bicycle,2.3,Lunch,67.3,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1214,12,5,Green Goddess Bowl Lab,Healthy,107.27,6,29.7,5.69,Rainy,High,Car,2.2,Afternoon,66.2,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1215,55,5,Green Goddess Bowl Lab,Healthy,31.61,1,13.3,11.88,Rainy,Medium,Bike,5.7,Lunch,75.4,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1216,53,3,The Big Apple Burger Co.,American,40.7,4,20.9,10.3,Clear,High,Bike,0.8,Dinner,76.7,1,3,"Storm delayed rider, order arrived 25 minutes late."
+1217,32,4,Taj Mahal Indian Spice,Indian,66.81,3,17.2,7.37,Foggy,Medium,Scooter,1.4,Morning,48.0,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1218,5,3,The Big Apple Burger Co.,American,81.16,2,14.9,1.83,Foggy,Jam,Electric_Bicycle,3.8,Late_Night,35.5,0,4,"Standard delivery time, taste was okay."
+1219,42,2,Sakura Japanese & Ramen,Japanese,100.77,5,23.3,2.19,Clear,Low,Electric_Bicycle,4.1,Afternoon,35.2,0,5,"Decent food, arrived slightly later than expected."
+1220,4,3,The Big Apple Burger Co.,American,46.58,1,13.2,9.87,Rainy,Low,Bike,1.6,Afternoon,57.2,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1221,20,4,Taj Mahal Indian Spice,Indian,69.83,4,24.5,2.05,Clear,Low,Car,2.5,Dinner,31.1,0,5,"Average experience, rider had slight trouble finding the address."
+1222,4,2,Sakura Japanese & Ramen,Japanese,93.72,6,25.5,5.51,Clear,Jam,Scooter,3.5,Dinner,59.5,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1223,37,2,Sakura Japanese & Ramen,Japanese,58.23,4,22.4,12.5,Clear,Medium,Scooter,1.2,Dinner,66.4,1,2,Pizza was cold because delivery was delayed.
+1224,3,4,Taj Mahal Indian Spice,Indian,80.79,1,14.3,14.46,Rainy,High,Electric_Bicycle,2.3,Morning,119.6,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1225,55,3,The Big Apple Burger Co.,American,74.45,5,29.0,11.58,Rainy,Medium,Car,1.1,Lunch,80.6,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1226,37,1,Bella Italia Pizzeria,Italian,86.42,3,23.4,12.83,Clear,Medium,Car,0.7,Afternoon,69.0,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1227,3,4,Taj Mahal Indian Spice,Indian,75.62,3,16.8,7.31,Clear,Medium,Electric_Bicycle,5.0,Afternoon,51.8,1,2,Pizza was cold because delivery was delayed.
+1228,9,3,The Big Apple Burger Co.,American,80.03,6,31.4,4.49,Clear,Medium,Scooter,2.9,Dinner,46.6,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1229,53,1,Bella Italia Pizzeria,Italian,94.78,5,22.5,10.52,Clear,High,Bike,1.5,Lunch,79.1,1,3,Pizza was cold because delivery was delayed.
+1230,18,3,The Big Apple Burger Co.,American,70.81,4,24.3,2.5,Clear,Medium,Car,1.5,Dinner,38.2,0,4,"Decent food, arrived slightly later than expected."
+1231,54,3,The Big Apple Burger Co.,American,103.68,6,25.5,1.18,Clear,High,Scooter,5.2,Lunch,34.0,0,3,"Average experience, rider had slight trouble finding the address."
+1232,1,4,Taj Mahal Indian Spice,Indian,66.49,2,18.4,0.92,Clear,High,Electric_Bicycle,4.4,Afternoon,28.3,0,4,"Standard delivery time, taste was okay."
+1233,30,3,The Big Apple Burger Co.,American,55.47,2,19.0,12.09,Clear,Low,Electric_Bicycle,3.6,Late_Night,62.9,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1234,41,3,The Big Apple Burger Co.,American,49.43,3,22.1,13.03,Clear,Low,Scooter,5.4,Late_Night,57.3,1,1,Pizza was cold because delivery was delayed.
+1235,47,1,Bella Italia Pizzeria,Italian,83.34,6,27.2,13.22,Clear,High,Scooter,2.4,Lunch,82.5,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1236,33,3,The Big Apple Burger Co.,American,78.28,2,20.6,3.28,Clear,Low,Electric_Bicycle,4.5,Late_Night,34.5,0,3,"Average experience, rider had slight trouble finding the address."
+1237,58,3,The Big Apple Burger Co.,American,58.45,6,27.6,11.0,Clear,High,Electric_Bicycle,2.5,Late_Night,92.0,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1238,31,2,Sakura Japanese & Ramen,Japanese,53.81,5,27.4,8.06,Clear,High,Scooter,1.3,Lunch,61.0,1,3,"Storm delayed rider, order arrived 25 minutes late."
+1239,10,3,The Big Apple Burger Co.,American,64.0,6,25.4,5.36,Stormy,Medium,Bike,0.5,Afternoon,62.5,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1240,9,5,Green Goddess Bowl Lab,Healthy,78.64,4,22.4,14.02,Clear,Low,Scooter,4.5,Morning,58.8,1,2,Pizza was cold because delivery was delayed.
+1241,2,1,Bella Italia Pizzeria,Italian,97.75,6,26.6,12.81,Clear,Low,Electric_Bicycle,1.4,Morning,71.6,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1242,28,2,Sakura Japanese & Ramen,Japanese,94.26,3,20.3,11.08,Clear,Jam,Car,0.6,Lunch,93.3,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1243,38,5,Green Goddess Bowl Lab,Healthy,34.51,2,19.3,11.65,Clear,Medium,Bike,3.8,Morning,66.8,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1244,29,4,Taj Mahal Indian Spice,Indian,53.88,1,14.6,2.9,Rainy,Medium,Electric_Bicycle,2.8,Morning,34.0,0,4,"Average experience, rider had slight trouble finding the address."
+1245,45,2,Sakura Japanese & Ramen,Japanese,90.67,4,20.0,10.65,Clear,Low,Bike,3.2,Late_Night,54.4,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1246,19,2,Sakura Japanese & Ramen,Japanese,53.94,1,18.1,10.23,Clear,Low,Bike,4.2,Morning,55.1,1,2,Pizza was cold because delivery was delayed.
+1247,6,5,Green Goddess Bowl Lab,Healthy,64.64,1,11.6,4.31,Clear,Jam,Electric_Bicycle,2.0,Morning,45.7,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1248,28,1,Bella Italia Pizzeria,Italian,72.43,1,17.9,0.93,Clear,Medium,Electric_Bicycle,2.5,Dinner,27.0,0,5,Food arrived fast and piping hot!
+1249,24,3,The Big Apple Burger Co.,American,33.94,2,16.8,7.05,Rainy,Medium,Car,4.9,Lunch,50.2,1,3,Pizza was cold because delivery was delayed.
+1250,7,4,Taj Mahal Indian Spice,Indian,75.94,5,26.6,6.8,Rainy,High,Bike,5.2,Lunch,73.3,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1251,29,1,Bella Italia Pizzeria,Italian,36.46,1,13.3,10.45,Rainy,High,Scooter,5.9,Afternoon,69.9,1,1,Pizza was cold because delivery was delayed.
+1252,31,3,The Big Apple Burger Co.,American,94.25,6,27.9,12.29,Clear,Jam,Bike,0.6,Lunch,110.6,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1253,56,2,Sakura Japanese & Ramen,Japanese,66.34,1,13.4,5.33,Clear,Medium,Car,2.7,Lunch,32.0,0,3,"Standard delivery time, taste was okay."
+1254,29,3,The Big Apple Burger Co.,American,80.32,1,16.8,1.04,Clear,Low,Bike,5.0,Late_Night,25.5,0,5,"Food was fresh, perfectly seasoned, and arrived earlier than expected."
+1255,36,2,Sakura Japanese & Ramen,Japanese,93.96,6,32.4,5.78,Clear,Low,Car,2.3,Late_Night,51.7,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1256,49,2,Sakura Japanese & Ramen,Japanese,41.32,1,17.4,14.01,Clear,Medium,Bike,0.8,Lunch,72.0,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1257,7,3,The Big Apple Burger Co.,American,58.45,5,23.0,12.48,Clear,High,Scooter,4.4,Morning,78.7,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1258,50,4,Taj Mahal Indian Spice,Indian,80.17,4,26.8,2.64,Clear,Medium,Bike,3.5,Dinner,41.8,0,4,"Average experience, rider had slight trouble finding the address."
+1259,50,2,Sakura Japanese & Ramen,Japanese,88.29,6,30.6,2.56,Clear,Medium,Electric_Bicycle,3.3,Dinner,42.7,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1260,22,3,The Big Apple Burger Co.,American,89.09,4,20.3,9.05,Foggy,Medium,Electric_Bicycle,4.4,Late_Night,67.2,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1261,44,3,The Big Apple Burger Co.,American,61.09,6,30.5,14.16,Clear,Medium,Electric_Bicycle,4.4,Afternoon,90.1,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1262,57,4,Taj Mahal Indian Spice,Indian,52.39,1,11.0,2.79,Rainy,Low,Scooter,5.9,Afternoon,20.4,0,4,Very quick delivery despite rush hour.
+1263,14,5,Green Goddess Bowl Lab,Healthy,42.38,1,14.4,9.24,Rainy,Medium,Scooter,4.6,Late_Night,50.9,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1264,60,4,Taj Mahal Indian Spice,Indian,65.41,4,25.5,10.19,Stormy,Low,Electric_Bicycle,1.6,Dinner,87.5,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1265,49,5,Green Goddess Bowl Lab,Healthy,91.55,5,23.6,10.73,Clear,Medium,Bike,1.5,Lunch,68.4,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1266,9,2,Sakura Japanese & Ramen,Japanese,98.11,5,22.0,7.19,Foggy,Low,Electric_Bicycle,3.8,Late_Night,55.1,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1267,5,3,The Big Apple Burger Co.,American,59.92,5,23.5,1.73,Clear,Medium,Car,1.0,Lunch,33.4,0,4,"Average experience, rider had slight trouble finding the address."
+1268,34,4,Taj Mahal Indian Spice,Indian,96.74,5,29.8,0.92,Rainy,Medium,Scooter,5.8,Afternoon,35.4,0,4,"Decent food, arrived slightly later than expected."
+1269,25,3,The Big Apple Burger Co.,American,90.66,5,22.2,7.88,Rainy,Medium,Car,3.2,Afternoon,62.5,1,3,Pizza was cold because delivery was delayed.
+1270,50,5,Green Goddess Bowl Lab,Healthy,46.95,5,22.5,9.98,Rainy,High,Car,5.1,Lunch,86.2,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1271,42,1,Bella Italia Pizzeria,Italian,94.85,6,25.0,10.62,Clear,Low,Scooter,4.9,Late_Night,54.1,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1272,41,4,Taj Mahal Indian Spice,Indian,59.3,4,22.3,2.42,Clear,High,Bike,4.7,Late_Night,33.4,0,5,"Standard delivery time, taste was okay."
+1273,60,5,Green Goddess Bowl Lab,Healthy,38.18,1,16.3,9.11,Clear,Jam,Car,2.7,Morning,73.6,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1274,41,2,Sakura Japanese & Ramen,Japanese,74.81,3,23.7,11.69,Rainy,Medium,Bike,3.5,Late_Night,82.9,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1275,35,5,Green Goddess Bowl Lab,Healthy,39.09,1,16.8,13.18,Clear,Medium,Scooter,1.4,Lunch,60.2,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1276,55,5,Green Goddess Bowl Lab,Healthy,79.33,4,19.8,10.0,Clear,Low,Car,5.7,Afternoon,50.2,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1277,19,5,Green Goddess Bowl Lab,Healthy,75.41,1,13.3,6.97,Rainy,Medium,Scooter,3.6,Afternoon,45.8,1,1,Pizza was cold because delivery was delayed.
+1278,46,4,Taj Mahal Indian Spice,Indian,84.75,3,17.5,10.84,Foggy,Medium,Electric_Bicycle,4.8,Dinner,74.2,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1279,54,3,The Big Apple Burger Co.,American,81.37,2,15.2,10.85,Rainy,High,Bike,5.2,Morning,87.2,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1280,36,3,The Big Apple Burger Co.,American,101.03,5,26.3,9.76,Clear,Medium,Electric_Bicycle,1.2,Late_Night,69.3,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1281,43,2,Sakura Japanese & Ramen,Japanese,88.23,5,28.1,2.72,Clear,Medium,Scooter,4.5,Dinner,43.5,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1282,24,2,Sakura Japanese & Ramen,Japanese,61.28,1,14.9,11.64,Clear,Jam,Bike,0.7,Afternoon,94.7,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1283,54,3,The Big Apple Burger Co.,American,79.71,5,23.4,9.76,Clear,Medium,Bike,3.3,Dinner,65.2,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1284,32,4,Taj Mahal Indian Spice,Indian,46.9,5,29.1,6.83,Clear,Medium,Electric_Bicycle,1.7,Lunch,61.5,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1285,43,2,Sakura Japanese & Ramen,Japanese,89.48,4,25.0,7.4,Clear,Low,Scooter,4.1,Dinner,46.7,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1286,58,5,Green Goddess Bowl Lab,Healthy,30.41,2,15.7,3.27,Stormy,Medium,Bike,5.3,Afternoon,41.9,0,3,"Average experience, rider had slight trouble finding the address."
+1287,31,4,Taj Mahal Indian Spice,Indian,40.38,2,16.9,2.76,Clear,High,Electric_Bicycle,1.4,Afternoon,36.4,0,4,"Decent food, arrived slightly later than expected."
+1288,7,1,Bella Italia Pizzeria,Italian,58.89,2,20.9,10.18,Rainy,Medium,Scooter,3.1,Late_Night,64.1,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1289,6,4,Taj Mahal Indian Spice,Indian,60.95,6,29.6,12.14,Foggy,High,Car,3.4,Afternoon,98.2,1,3,"Storm delayed rider, order arrived 25 minutes late."
+1290,51,4,Taj Mahal Indian Spice,Indian,69.43,3,22.3,11.23,Rainy,Low,Scooter,1.9,Lunch,60.6,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1291,17,2,Sakura Japanese & Ramen,Japanese,63.76,1,17.1,8.72,Clear,Low,Scooter,4.3,Afternoon,42.5,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1292,55,5,Green Goddess Bowl Lab,Healthy,74.44,4,24.1,14.39,Clear,Low,Car,1.5,Late_Night,68.0,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1293,37,3,The Big Apple Burger Co.,American,77.29,6,25.9,12.63,Clear,Low,Scooter,1.1,Late_Night,58.4,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1294,11,4,Taj Mahal Indian Spice,Indian,53.32,6,25.5,2.79,Foggy,Medium,Bike,1.9,Afternoon,41.7,0,3,"Standard delivery time, taste was okay."
+1295,60,4,Taj Mahal Indian Spice,Indian,86.53,5,24.3,14.0,Clear,High,Scooter,4.0,Dinner,83.8,1,2,Pizza was cold because delivery was delayed.
+1296,3,5,Green Goddess Bowl Lab,Healthy,77.96,5,23.9,3.12,Clear,Low,Bike,5.9,Morning,35.5,0,4,"Standard delivery time, taste was okay."
+1297,43,4,Taj Mahal Indian Spice,Indian,75.75,4,23.3,10.9,Clear,Low,Electric_Bicycle,4.5,Late_Night,62.1,1,1,Pizza was cold because delivery was delayed.
+1298,30,4,Taj Mahal Indian Spice,Indian,46.78,5,23.4,7.74,Clear,Medium,Electric_Bicycle,5.7,Late_Night,63.7,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1299,45,4,Taj Mahal Indian Spice,Indian,74.35,4,25.4,11.18,Stormy,Medium,Car,5.4,Morning,93.6,1,2,Pizza was cold because delivery was delayed.
+1300,44,2,Sakura Japanese & Ramen,Japanese,58.66,3,19.2,8.14,Rainy,Low,Electric_Bicycle,1.0,Afternoon,58.2,1,3,"Storm delayed rider, order arrived 25 minutes late."
+1301,21,3,The Big Apple Burger Co.,American,81.55,2,15.8,13.78,Rainy,Jam,Car,4.6,Lunch,128.2,1,1,Pizza was cold because delivery was delayed.
+1302,54,5,Green Goddess Bowl Lab,Healthy,43.02,3,17.3,13.41,Rainy,Medium,Bike,4.7,Late_Night,86.8,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1303,40,3,The Big Apple Burger Co.,American,94.79,4,26.2,8.67,Clear,Low,Electric_Bicycle,2.7,Late_Night,55.9,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1304,33,3,The Big Apple Burger Co.,American,92.48,4,25.4,7.06,Clear,Medium,Electric_Bicycle,4.3,Morning,58.6,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1305,21,3,The Big Apple Burger Co.,American,99.07,5,23.5,4.4,Clear,Jam,Electric_Bicycle,2.5,Dinner,56.8,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1306,18,4,Taj Mahal Indian Spice,Indian,61.86,2,21.4,10.2,Rainy,High,Scooter,3.6,Dinner,77.7,1,2,Pizza was cold because delivery was delayed.
+1307,31,1,Bella Italia Pizzeria,Italian,52.71,2,14.7,13.04,Rainy,Medium,Electric_Bicycle,4.8,Afternoon,88.4,1,1,Pizza was cold because delivery was delayed.
+1308,4,2,Sakura Japanese & Ramen,Japanese,62.57,3,21.4,6.96,Clear,Medium,Electric_Bicycle,2.4,Dinner,52.4,1,3,Pizza was cold because delivery was delayed.
+1309,37,5,Green Goddess Bowl Lab,Healthy,92.6,6,26.2,11.49,Clear,Medium,Car,4.8,Dinner,69.1,1,2,Pizza was cold because delivery was delayed.
+1310,56,2,Sakura Japanese & Ramen,Japanese,102.27,6,27.5,9.45,Clear,High,Bike,0.9,Afternoon,77.8,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1311,46,3,The Big Apple Burger Co.,American,85.82,5,24.2,6.9,Foggy,Medium,Car,2.8,Lunch,57.3,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1312,14,2,Sakura Japanese & Ramen,Japanese,46.28,4,19.7,12.84,Clear,Low,Car,3.4,Morning,57.8,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1313,42,4,Taj Mahal Indian Spice,Indian,47.49,3,22.3,6.87,Clear,Medium,Scooter,0.7,Afternoon,46.7,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1314,36,4,Taj Mahal Indian Spice,Indian,86.14,2,19.2,3.23,Clear,Medium,Car,3.4,Late_Night,34.7,0,4,"Average experience, rider had slight trouble finding the address."
+1315,15,1,Bella Italia Pizzeria,Italian,58.78,4,22.5,2.93,Clear,Medium,Scooter,2.4,Dinner,34.2,0,4,"Standard delivery time, taste was okay."
+1316,1,4,Taj Mahal Indian Spice,Indian,69.92,3,22.8,8.31,Clear,High,Car,2.7,Lunch,62.7,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1317,15,3,The Big Apple Burger Co.,American,46.26,1,12.7,11.27,Foggy,High,Electric_Bicycle,2.1,Late_Night,87.8,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1318,8,4,Taj Mahal Indian Spice,Indian,74.12,5,27.6,7.54,Clear,Low,Bike,1.5,Morning,54.6,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1319,47,1,Bella Italia Pizzeria,Italian,32.5,2,13.7,3.78,Clear,High,Car,6.0,Dinner,35.4,0,4,"Decent food, arrived slightly later than expected."
+1320,4,3,The Big Apple Burger Co.,American,44.35,4,23.0,3.43,Rainy,High,Bike,1.2,Lunch,48.3,1,3,Pizza was cold because delivery was delayed.
+1321,48,1,Bella Italia Pizzeria,Italian,55.11,2,19.8,7.94,Stormy,Medium,Electric_Bicycle,5.6,Lunch,83.3,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1322,31,3,The Big Apple Burger Co.,American,48.99,2,14.0,9.93,Stormy,Low,Car,2.3,Lunch,65.3,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1323,51,2,Sakura Japanese & Ramen,Japanese,79.6,1,15.4,10.26,Rainy,Low,Bike,1.9,Dinner,55.1,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1324,4,3,The Big Apple Burger Co.,American,62.39,6,29.1,2.27,Clear,Medium,Electric_Bicycle,4.9,Dinner,40.4,0,3,"Standard delivery time, taste was okay."
+1325,23,2,Sakura Japanese & Ramen,Japanese,88.32,3,20.3,6.79,Clear,Medium,Scooter,3.6,Late_Night,43.6,1,2,Pizza was cold because delivery was delayed.
+1326,5,5,Green Goddess Bowl Lab,Healthy,54.41,2,20.2,8.22,Clear,High,Car,4.5,Morning,59.9,1,1,Pizza was cold because delivery was delayed.
+1327,21,1,Bella Italia Pizzeria,Italian,112.0,6,31.4,3.4,Rainy,High,Scooter,3.9,Afternoon,51.8,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1328,54,2,Sakura Japanese & Ramen,Japanese,80.28,2,15.2,7.45,Clear,Medium,Car,4.1,Late_Night,45.1,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1329,24,2,Sakura Japanese & Ramen,Japanese,90.29,5,22.1,13.42,Rainy,Jam,Bike,3.1,Morning,140.2,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1330,53,5,Green Goddess Bowl Lab,Healthy,65.77,3,22.3,12.23,Clear,Low,Bike,1.1,Lunch,59.4,1,1,Pizza was cold because delivery was delayed.
+1331,37,2,Sakura Japanese & Ramen,Japanese,92.2,5,25.3,2.25,Rainy,Medium,Car,4.4,Dinner,40.4,0,4,"Standard delivery time, taste was okay."
+1332,43,2,Sakura Japanese & Ramen,Japanese,107.4,5,25.5,5.63,Clear,Jam,Electric_Bicycle,5.1,Dinner,71.9,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1333,39,2,Sakura Japanese & Ramen,Japanese,79.78,5,25.0,8.34,Rainy,Medium,Car,3.0,Dinner,65.2,1,1,Pizza was cold because delivery was delayed.
+1334,57,3,The Big Apple Burger Co.,American,38.82,1,12.6,12.52,Clear,High,Electric_Bicycle,5.6,Late_Night,85.4,1,3,Pizza was cold because delivery was delayed.
+1335,7,1,Bella Italia Pizzeria,Italian,61.7,4,20.3,5.83,Clear,Low,Electric_Bicycle,1.0,Dinner,43.6,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1336,12,4,Taj Mahal Indian Spice,Indian,95.87,6,31.4,2.11,Rainy,Low,Car,0.9,Morning,44.2,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1337,27,1,Bella Italia Pizzeria,Italian,72.61,2,20.4,13.52,Rainy,Medium,Bike,2.2,Morning,88.0,1,2,Pizza was cold because delivery was delayed.
+1338,4,4,Taj Mahal Indian Spice,Indian,85.92,4,23.8,2.03,Clear,High,Scooter,1.2,Morning,34.7,0,4,"Average experience, rider had slight trouble finding the address."
+1339,26,3,The Big Apple Burger Co.,American,44.81,1,14.3,10.36,Rainy,Medium,Scooter,3.2,Late_Night,55.5,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1340,18,4,Taj Mahal Indian Spice,Indian,75.27,3,21.0,2.34,Clear,Medium,Scooter,2.3,Late_Night,30.4,0,4,"Decent food, arrived slightly later than expected."
+1341,23,5,Green Goddess Bowl Lab,Healthy,78.01,4,22.7,13.46,Clear,Medium,Scooter,4.7,Morning,68.9,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1342,1,3,The Big Apple Burger Co.,American,102.06,6,27.2,7.26,Clear,High,Scooter,1.6,Late_Night,61.4,1,2,Pizza was cold because delivery was delayed.
+1343,45,1,Bella Italia Pizzeria,Italian,75.56,4,24.5,1.4,Clear,Low,Electric_Bicycle,0.8,Morning,30.2,0,5,"Standard delivery time, taste was okay."
+1344,56,1,Bella Italia Pizzeria,Italian,38.34,1,17.9,6.1,Stormy,Medium,Bike,5.5,Dinner,59.5,1,2,Pizza was cold because delivery was delayed.
+1345,13,5,Green Goddess Bowl Lab,Healthy,74.2,4,24.9,1.34,Foggy,Medium,Car,2.7,Lunch,31.8,0,4,"Average experience, rider had slight trouble finding the address."
+1346,18,1,Bella Italia Pizzeria,Italian,68.72,6,27.9,14.5,Stormy,Jam,Electric_Bicycle,1.7,Afternoon,212.1,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1347,47,4,Taj Mahal Indian Spice,Indian,105.1,5,26.9,9.37,Clear,Low,Scooter,2.8,Afternoon,53.2,1,1,Pizza was cold because delivery was delayed.
+1348,38,5,Green Goddess Bowl Lab,Healthy,101.81,6,31.7,5.03,Rainy,Medium,Scooter,2.9,Lunch,56.9,1,2,Pizza was cold because delivery was delayed.
+1349,21,1,Bella Italia Pizzeria,Italian,79.01,5,27.8,3.32,Rainy,Low,Bike,4.7,Dinner,44.8,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1350,10,2,Sakura Japanese & Ramen,Japanese,28.52,1,11.0,14.31,Rainy,Medium,Scooter,3.8,Lunch,73.2,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1351,9,5,Green Goddess Bowl Lab,Healthy,75.09,5,27.2,3.32,Clear,Medium,Scooter,1.6,Morning,43.7,1,3,Pizza was cold because delivery was delayed.
+1352,48,2,Sakura Japanese & Ramen,Japanese,31.03,2,21.0,14.3,Foggy,Medium,Electric_Bicycle,5.3,Lunch,93.9,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1353,47,3,The Big Apple Burger Co.,American,77.3,4,25.1,8.94,Clear,High,Bike,3.4,Dinner,74.9,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1354,48,1,Bella Italia Pizzeria,Italian,70.13,5,28.1,13.99,Clear,Medium,Electric_Bicycle,4.8,Afternoon,87.6,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1355,45,5,Green Goddess Bowl Lab,Healthy,55.28,2,18.8,2.04,Clear,Low,Scooter,2.7,Afternoon,27.9,0,5,Amazing flavors and great packaging.
+1356,57,4,Taj Mahal Indian Spice,Indian,35.76,1,16.3,13.23,Rainy,High,Bike,1.0,Dinner,107.1,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1357,47,5,Green Goddess Bowl Lab,Healthy,104.43,5,25.0,6.01,Rainy,Jam,Scooter,1.4,Lunch,68.4,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1358,19,2,Sakura Japanese & Ramen,Japanese,75.31,1,18.5,0.85,Rainy,Low,Car,5.2,Late_Night,24.4,0,5,"Delicious meal, driver was very polite."
+1359,16,2,Sakura Japanese & Ramen,Japanese,86.73,5,25.6,6.85,Rainy,Low,Electric_Bicycle,3.9,Late_Night,60.0,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1360,3,2,Sakura Japanese & Ramen,Japanese,61.19,1,17.5,4.89,Foggy,Low,Car,6.0,Lunch,38.2,0,4,"Average experience, rider had slight trouble finding the address."
+1361,45,5,Green Goddess Bowl Lab,Healthy,94.53,5,23.4,7.04,Clear,Jam,Bike,4.7,Afternoon,72.6,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1362,19,4,Taj Mahal Indian Spice,Indian,34.44,2,20.5,5.31,Clear,Low,Scooter,3.9,Morning,37.3,0,5,"Average experience, rider had slight trouble finding the address."
+1363,6,4,Taj Mahal Indian Spice,Indian,95.01,6,32.3,14.31,Clear,Medium,Electric_Bicycle,1.9,Late_Night,96.4,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1364,32,2,Sakura Japanese & Ramen,Japanese,60.7,5,24.3,3.45,Clear,Medium,Bike,4.6,Lunch,42.3,1,3,"Storm delayed rider, order arrived 25 minutes late."
+1365,3,3,The Big Apple Burger Co.,American,67.69,3,21.5,0.95,Clear,Low,Bike,2.2,Late_Night,28.1,0,4,"Standard delivery time, taste was okay."
+1366,47,5,Green Goddess Bowl Lab,Healthy,105.07,5,28.7,3.46,Rainy,Jam,Car,5.5,Morning,58.9,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1367,58,5,Green Goddess Bowl Lab,Healthy,61.71,3,22.9,13.51,Clear,Medium,Electric_Bicycle,3.6,Morning,80.8,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1368,5,2,Sakura Japanese & Ramen,Japanese,84.79,3,19.1,5.94,Clear,Low,Car,1.5,Morning,37.4,0,4,"Average experience, rider had slight trouble finding the address."
+1369,55,3,The Big Apple Burger Co.,American,54.93,6,28.1,7.61,Clear,Medium,Electric_Bicycle,1.7,Afternoon,62.0,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1370,29,5,Green Goddess Bowl Lab,Healthy,69.24,1,18.0,2.91,Clear,Medium,Electric_Bicycle,4.8,Lunch,34.7,0,3,"Average experience, rider had slight trouble finding the address."
+1371,44,2,Sakura Japanese & Ramen,Japanese,71.2,2,17.3,10.58,Clear,Low,Bike,4.3,Late_Night,52.1,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1372,2,5,Green Goddess Bowl Lab,Healthy,72.47,3,18.1,3.55,Clear,Medium,Car,4.2,Afternoon,35.4,0,4,"Decent food, arrived slightly later than expected."
+1373,40,5,Green Goddess Bowl Lab,Healthy,52.74,5,26.3,8.33,Clear,Jam,Electric_Bicycle,3.7,Lunch,88.6,1,1,Pizza was cold because delivery was delayed.
+1374,2,4,Taj Mahal Indian Spice,Indian,56.08,6,27.9,1.98,Clear,High,Car,3.9,Afternoon,38.9,0,3,"Average experience, rider had slight trouble finding the address."
+1375,52,5,Green Goddess Bowl Lab,Healthy,79.89,1,16.8,7.18,Clear,High,Car,1.0,Afternoon,52.7,1,1,Pizza was cold because delivery was delayed.
+1376,10,5,Green Goddess Bowl Lab,Healthy,89.18,3,19.5,10.38,Rainy,High,Electric_Bicycle,3.0,Morning,94.3,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1377,30,2,Sakura Japanese & Ramen,Japanese,80.34,3,21.2,2.55,Clear,High,Bike,2.3,Morning,36.7,0,4,"Average experience, rider had slight trouble finding the address."
+1378,16,5,Green Goddess Bowl Lab,Healthy,86.41,2,16.7,5.47,Rainy,Medium,Car,3.6,Afternoon,44.3,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1379,48,5,Green Goddess Bowl Lab,Healthy,46.97,4,24.0,5.26,Clear,Medium,Electric_Bicycle,5.8,Morning,48.9,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1380,32,1,Bella Italia Pizzeria,Italian,33.77,1,11.9,8.76,Rainy,High,Scooter,4.1,Dinner,58.7,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1381,13,2,Sakura Japanese & Ramen,Japanese,106.52,6,27.2,11.68,Rainy,Jam,Car,4.4,Afternoon,121.5,1,2,Pizza was cold because delivery was delayed.
+1382,55,3,The Big Apple Burger Co.,American,43.02,1,15.2,1.53,Rainy,High,Electric_Bicycle,1.1,Afternoon,29.7,0,3,"Average experience, rider had slight trouble finding the address."
+1383,38,4,Taj Mahal Indian Spice,Indian,72.41,6,27.9,6.03,Clear,Medium,Car,1.3,Late_Night,54.2,1,1,Pizza was cold because delivery was delayed.
+1384,9,1,Bella Italia Pizzeria,Italian,60.05,1,12.0,12.92,Rainy,Jam,Scooter,1.0,Dinner,104.0,1,3,"Storm delayed rider, order arrived 25 minutes late."
+1385,40,2,Sakura Japanese & Ramen,Japanese,71.07,4,23.6,6.97,Clear,Low,Bike,3.7,Lunch,48.2,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1386,3,5,Green Goddess Bowl Lab,Healthy,83.0,4,20.1,7.4,Rainy,Low,Electric_Bicycle,3.1,Morning,59.1,1,2,Pizza was cold because delivery was delayed.
+1387,31,1,Bella Italia Pizzeria,Italian,91.65,6,31.2,5.08,Clear,Medium,Bike,3.1,Late_Night,53.8,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1388,19,2,Sakura Japanese & Ramen,Japanese,62.9,1,15.6,4.97,Rainy,Low,Car,3.7,Late_Night,34.8,0,5,"Average experience, rider had slight trouble finding the address."
+1389,40,1,Bella Italia Pizzeria,Italian,63.07,3,17.4,1.85,Rainy,Low,Electric_Bicycle,2.0,Afternoon,28.2,0,4,"Decent food, arrived slightly later than expected."
+1390,43,4,Taj Mahal Indian Spice,Indian,82.78,3,18.5,10.4,Clear,High,Bike,2.4,Morning,75.5,1,2,Pizza was cold because delivery was delayed.
+1391,54,4,Taj Mahal Indian Spice,Indian,86.99,4,21.1,6.83,Rainy,Low,Electric_Bicycle,0.8,Afternoon,55.6,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1392,31,5,Green Goddess Bowl Lab,Healthy,50.17,2,19.2,7.3,Clear,High,Bike,2.1,Dinner,59.1,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1393,7,5,Green Goddess Bowl Lab,Healthy,74.58,6,31.6,9.16,Rainy,Low,Electric_Bicycle,2.0,Morning,72.6,1,2,Pizza was cold because delivery was delayed.
+1394,47,5,Green Goddess Bowl Lab,Healthy,58.72,2,19.0,14.41,Clear,Low,Bike,5.1,Morning,64.6,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1395,23,2,Sakura Japanese & Ramen,Japanese,70.28,6,26.3,1.12,Clear,Jam,Scooter,5.7,Morning,38.5,0,3,"Average experience, rider had slight trouble finding the address."
+1396,49,5,Green Goddess Bowl Lab,Healthy,81.66,2,19.2,4.27,Clear,Jam,Car,5.6,Afternoon,51.2,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1397,17,2,Sakura Japanese & Ramen,Japanese,37.41,1,11.3,6.12,Stormy,Low,Electric_Bicycle,1.5,Morning,51.3,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1398,7,2,Sakura Japanese & Ramen,Japanese,93.39,5,23.7,9.61,Foggy,High,Bike,0.7,Morning,82.7,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1399,2,4,Taj Mahal Indian Spice,Indian,66.82,2,13.6,1.32,Clear,Low,Electric_Bicycle,5.5,Late_Night,19.3,0,5,"Delicious meal, driver was very polite."
+1400,55,1,Bella Italia Pizzeria,Italian,60.28,5,25.1,10.24,Rainy,Low,Electric_Bicycle,2.3,Afternoon,70.2,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1401,24,5,Green Goddess Bowl Lab,Healthy,38.41,3,20.1,11.3,Rainy,Low,Bike,5.8,Lunch,66.5,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1402,6,4,Taj Mahal Indian Spice,Indian,64.56,6,25.1,1.15,Stormy,Low,Car,0.8,Late_Night,34.8,0,4,"Standard delivery time, taste was okay."
+1403,2,1,Bella Italia Pizzeria,Italian,36.92,3,22.7,1.39,Clear,High,Car,5.7,Late_Night,28.4,0,3,"Decent food, arrived slightly later than expected."
+1404,32,1,Bella Italia Pizzeria,Italian,95.34,4,24.1,4.12,Rainy,Low,Bike,5.5,Morning,41.9,0,3,"Average experience, rider had slight trouble finding the address."
+1405,5,1,Bella Italia Pizzeria,Italian,50.83,1,17.2,3.82,Rainy,Medium,Car,2.3,Late_Night,36.1,0,3,"Decent food, arrived slightly later than expected."
+1406,38,2,Sakura Japanese & Ramen,Japanese,37.36,3,18.6,11.18,Clear,Medium,Scooter,2.9,Late_Night,57.8,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1407,50,2,Sakura Japanese & Ramen,Japanese,74.16,1,11.4,0.9,Foggy,High,Electric_Bicycle,2.8,Dinner,21.9,0,5,"Delicious meal, driver was very polite."
+1408,16,2,Sakura Japanese & Ramen,Japanese,88.69,5,26.8,10.63,Rainy,Low,Electric_Bicycle,2.4,Morning,78.6,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1409,40,3,The Big Apple Burger Co.,American,77.46,5,25.7,9.38,Clear,Low,Bike,4.9,Dinner,59.2,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1410,19,2,Sakura Japanese & Ramen,Japanese,55.33,4,24.1,12.99,Clear,Low,Bike,5.6,Lunch,68.4,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1411,5,2,Sakura Japanese & Ramen,Japanese,80.13,6,29.4,6.54,Rainy,High,Scooter,4.8,Afternoon,65.9,1,1,Pizza was cold because delivery was delayed.
+1412,5,4,Taj Mahal Indian Spice,Indian,76.05,5,29.1,2.79,Foggy,Medium,Car,2.6,Dinner,46.0,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1413,13,3,The Big Apple Burger Co.,American,28.96,2,18.1,4.64,Clear,Medium,Car,1.4,Afternoon,36.3,0,4,"Average experience, rider had slight trouble finding the address."
+1414,58,2,Sakura Japanese & Ramen,Japanese,105.68,5,28.8,1.98,Foggy,Medium,Scooter,3.8,Dinner,39.5,0,4,"Average experience, rider had slight trouble finding the address."
+1415,56,2,Sakura Japanese & Ramen,Japanese,46.97,2,18.2,13.02,Clear,Low,Bike,2.8,Morning,56.9,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1416,31,1,Bella Italia Pizzeria,Italian,70.21,4,19.9,11.12,Rainy,Medium,Scooter,1.2,Afternoon,66.5,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1417,31,3,The Big Apple Burger Co.,American,69.9,2,20.5,11.04,Clear,Medium,Scooter,5.3,Dinner,57.6,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1418,56,1,Bella Italia Pizzeria,Italian,94.5,4,21.9,1.25,Clear,Low,Scooter,4.8,Morning,27.2,0,5,Food arrived fast and piping hot!
+1419,33,3,The Big Apple Burger Co.,American,27.27,1,13.7,9.28,Clear,Low,Bike,3.6,Lunch,43.0,1,2,Pizza was cold because delivery was delayed.
+1420,49,2,Sakura Japanese & Ramen,Japanese,55.02,3,18.5,10.12,Clear,Low,Electric_Bicycle,3.0,Late_Night,57.4,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1421,29,5,Green Goddess Bowl Lab,Healthy,82.29,3,24.0,11.88,Foggy,Low,Car,1.0,Dinner,66.0,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1422,8,2,Sakura Japanese & Ramen,Japanese,49.18,4,20.8,13.84,Clear,Medium,Scooter,3.1,Dinner,69.3,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1423,13,1,Bella Italia Pizzeria,Italian,73.68,1,12.7,13.78,Rainy,Medium,Electric_Bicycle,4.1,Afternoon,89.9,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1424,20,5,Green Goddess Bowl Lab,Healthy,81.8,2,16.1,11.61,Clear,Medium,Electric_Bicycle,4.7,Morning,65.3,1,1,Pizza was cold because delivery was delayed.
+1425,40,2,Sakura Japanese & Ramen,Japanese,85.65,6,26.3,3.2,Rainy,Jam,Scooter,1.4,Morning,50.1,1,1,Pizza was cold because delivery was delayed.
+1426,14,5,Green Goddess Bowl Lab,Healthy,55.12,6,27.3,5.51,Clear,Medium,Scooter,3.4,Morning,49.3,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1427,50,2,Sakura Japanese & Ramen,Japanese,96.6,4,20.4,14.09,Clear,Medium,Electric_Bicycle,3.1,Afternoon,84.1,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1428,22,1,Bella Italia Pizzeria,Italian,82.22,6,25.1,10.09,Clear,Low,Scooter,3.0,Morning,47.5,1,2,Pizza was cold because delivery was delayed.
+1429,38,5,Green Goddess Bowl Lab,Healthy,74.66,2,19.7,3.48,Clear,High,Bike,5.9,Dinner,38.7,0,5,"Average experience, rider had slight trouble finding the address."
+1430,24,4,Taj Mahal Indian Spice,Indian,70.67,2,17.0,6.09,Clear,Medium,Electric_Bicycle,5.9,Late_Night,46.5,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1431,48,4,Taj Mahal Indian Spice,Indian,57.61,4,25.6,14.09,Clear,High,Scooter,5.1,Late_Night,84.1,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1432,5,5,Green Goddess Bowl Lab,Healthy,45.4,4,22.5,13.33,Clear,Medium,Scooter,1.6,Dinner,67.0,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1433,54,5,Green Goddess Bowl Lab,Healthy,63.64,3,22.3,3.88,Rainy,Low,Electric_Bicycle,5.8,Dinner,40.9,0,3,"Average experience, rider had slight trouble finding the address."
+1434,42,2,Sakura Japanese & Ramen,Japanese,27.78,1,13.0,14.42,Clear,High,Car,3.6,Afternoon,80.7,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1435,24,5,Green Goddess Bowl Lab,Healthy,88.09,6,31.6,3.03,Clear,Medium,Scooter,2.5,Morning,40.6,0,4,"Standard delivery time, taste was okay."
+1436,19,5,Green Goddess Bowl Lab,Healthy,110.12,6,28.9,11.3,Clear,Low,Scooter,3.5,Afternoon,62.1,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1437,18,3,The Big Apple Burger Co.,American,53.1,1,13.6,2.77,Clear,Low,Car,2.8,Lunch,24.1,0,4,"Food was fresh, perfectly seasoned, and arrived earlier than expected."
+1438,40,5,Green Goddess Bowl Lab,Healthy,89.97,5,27.6,11.8,Clear,Jam,Bike,5.0,Morning,109.8,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1439,9,4,Taj Mahal Indian Spice,Indian,78.41,5,29.8,3.16,Clear,High,Bike,1.7,Lunch,49.1,1,3,"Storm delayed rider, order arrived 25 minutes late."
+1440,45,1,Bella Italia Pizzeria,Italian,21.65,1,14.7,6.71,Clear,Low,Bike,3.1,Afternoon,37.9,0,4,"Decent food, arrived slightly later than expected."
+1441,49,1,Bella Italia Pizzeria,Italian,76.63,1,12.4,13.15,Clear,Medium,Bike,1.3,Afternoon,66.0,1,2,Pizza was cold because delivery was delayed.
+1442,33,5,Green Goddess Bowl Lab,Healthy,26.55,1,15.4,0.99,Clear,Low,Electric_Bicycle,1.4,Late_Night,21.4,0,5,Amazing flavors and great packaging.
+1443,59,5,Green Goddess Bowl Lab,Healthy,81.96,6,30.4,3.34,Rainy,Low,Electric_Bicycle,5.9,Dinner,47.6,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1444,30,1,Bella Italia Pizzeria,Italian,54.79,5,28.1,10.45,Clear,Low,Electric_Bicycle,3.2,Dinner,66.5,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1445,44,4,Taj Mahal Indian Spice,Indian,60.79,2,15.9,12.52,Clear,Low,Car,5.7,Afternoon,54.3,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1446,34,1,Bella Italia Pizzeria,Italian,29.25,1,14.0,8.89,Clear,Jam,Scooter,0.9,Lunch,63.9,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1447,8,2,Sakura Japanese & Ramen,Japanese,84.24,4,21.4,10.57,Clear,Low,Car,2.5,Late_Night,56.9,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1448,7,1,Bella Italia Pizzeria,Italian,63.35,3,18.2,13.71,Clear,High,Bike,3.2,Morning,90.8,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1449,10,3,The Big Apple Burger Co.,American,84.52,5,28.1,9.86,Clear,Medium,Car,1.6,Dinner,65.1,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1450,49,1,Bella Italia Pizzeria,Italian,93.69,4,20.2,6.97,Foggy,Medium,Bike,0.7,Late_Night,56.4,1,2,Pizza was cold because delivery was delayed.
+1451,32,4,Taj Mahal Indian Spice,Indian,46.06,2,16.7,11.27,Clear,Medium,Car,3.1,Lunch,57.3,1,3,"Significant delay during peak dinner rush, food needed reheating."
+1452,50,3,The Big Apple Burger Co.,American,37.25,3,21.1,2.56,Clear,High,Bike,4.7,Afternoon,38.0,0,4,"Standard delivery time, taste was okay."
+1453,27,3,The Big Apple Burger Co.,American,60.84,1,12.8,9.68,Clear,Jam,Bike,5.3,Morning,81.0,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1454,37,5,Green Goddess Bowl Lab,Healthy,56.26,4,24.8,8.86,Stormy,Medium,Car,2.3,Morning,80.7,1,1,Pizza was cold because delivery was delayed.
+1455,22,4,Taj Mahal Indian Spice,Indian,96.0,5,27.3,3.08,Clear,Jam,Scooter,3.2,Morning,46.9,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1456,52,2,Sakura Japanese & Ramen,Japanese,91.82,5,22.7,12.37,Clear,Medium,Bike,3.6,Late_Night,72.2,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1457,42,3,The Big Apple Burger Co.,American,95.55,5,25.5,8.2,Clear,Medium,Car,4.2,Late_Night,58.3,1,3,"Storm delayed rider, order arrived 25 minutes late."
+1458,14,4,Taj Mahal Indian Spice,Indian,90.67,3,20.7,9.22,Rainy,Medium,Bike,3.4,Afternoon,69.3,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1459,55,4,Taj Mahal Indian Spice,Indian,59.44,4,25.8,1.68,Clear,Medium,Electric_Bicycle,4.1,Afternoon,37.0,0,3,"Decent food, arrived slightly later than expected."
+1460,16,3,The Big Apple Burger Co.,American,69.61,4,27.1,6.58,Foggy,Low,Electric_Bicycle,1.3,Afternoon,58.5,1,1,Pizza was cold because delivery was delayed.
+1461,42,1,Bella Italia Pizzeria,Italian,82.64,6,25.0,12.58,Clear,Medium,Bike,5.5,Dinner,75.4,1,1,Pizza was cold because delivery was delayed.
+1462,16,1,Bella Italia Pizzeria,Italian,91.3,5,29.5,7.95,Rainy,Jam,Electric_Bicycle,3.2,Morning,105.3,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1463,22,5,Green Goddess Bowl Lab,Healthy,76.79,6,30.8,4.03,Clear,Low,Scooter,1.7,Afternoon,43.7,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1464,45,1,Bella Italia Pizzeria,Italian,66.79,3,20.2,4.17,Clear,High,Scooter,2.5,Afternoon,43.2,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1465,54,1,Bella Italia Pizzeria,Italian,108.96,6,30.2,4.27,Clear,Medium,Electric_Bicycle,5.5,Morning,51.7,1,1,"Storm delayed rider, order arrived 25 minutes late."
+1466,60,3,The Big Apple Burger Co.,American,39.01,3,23.0,4.03,Clear,High,Car,4.0,Dinner,47.1,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1467,53,4,Taj Mahal Indian Spice,Indian,84.95,4,26.6,5.36,Clear,Jam,Bike,5.0,Afternoon,64.3,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1468,30,1,Bella Italia Pizzeria,Italian,59.62,1,12.3,6.87,Rainy,Low,Scooter,4.0,Afternoon,39.1,0,3,"Decent food, arrived slightly later than expected."
+1469,34,2,Sakura Japanese & Ramen,Japanese,88.33,5,28.3,5.18,Clear,High,Electric_Bicycle,1.5,Late_Night,61.6,1,1,Pizza was cold because delivery was delayed.
+1470,26,4,Taj Mahal Indian Spice,Indian,60.19,5,29.6,13.45,Rainy,Medium,Bike,5.9,Lunch,97.0,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1471,26,5,Green Goddess Bowl Lab,Healthy,76.62,4,20.4,13.93,Clear,Medium,Bike,4.5,Dinner,79.5,1,2,Pizza was cold because delivery was delayed.
+1472,46,2,Sakura Japanese & Ramen,Japanese,84.71,2,20.1,4.45,Rainy,Medium,Car,5.2,Late_Night,41.2,0,5,"Average experience, rider had slight trouble finding the address."
+1473,44,2,Sakura Japanese & Ramen,Japanese,51.0,4,25.5,1.19,Stormy,Low,Car,5.5,Afternoon,34.4,0,4,"Standard delivery time, taste was okay."
+1474,45,4,Taj Mahal Indian Spice,Indian,65.95,6,27.9,6.6,Clear,Low,Bike,0.8,Lunch,50.6,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1475,1,3,The Big Apple Burger Co.,American,84.3,5,24.4,6.21,Clear,Jam,Bike,3.7,Afternoon,66.5,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1476,21,5,Green Goddess Bowl Lab,Healthy,48.65,4,20.1,1.41,Clear,High,Electric_Bicycle,4.6,Dinner,30.8,0,5,"Average experience, rider had slight trouble finding the address."
+1477,54,3,The Big Apple Burger Co.,American,65.59,5,29.1,5.12,Stormy,High,Scooter,3.6,Dinner,66.4,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1478,11,4,Taj Mahal Indian Spice,Indian,47.08,4,26.4,7.58,Clear,Jam,Car,3.0,Morning,77.3,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1479,23,1,Bella Italia Pizzeria,Italian,79.96,2,15.0,3.11,Clear,Low,Scooter,3.7,Morning,24.6,0,4,"Delicious meal, driver was very polite."
+1480,44,1,Bella Italia Pizzeria,Italian,35.08,3,21.9,10.12,Clear,Medium,Bike,5.1,Lunch,61.3,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1481,30,3,The Big Apple Burger Co.,American,86.64,5,24.6,1.4,Rainy,Medium,Scooter,1.7,Morning,33.9,0,4,"Average experience, rider had slight trouble finding the address."
+1482,39,4,Taj Mahal Indian Spice,Indian,44.83,1,12.2,14.02,Foggy,Low,Scooter,1.4,Dinner,57.4,1,2,Pizza was cold because delivery was delayed.
+1483,8,3,The Big Apple Burger Co.,American,88.87,4,25.1,13.43,Foggy,Medium,Electric_Bicycle,4.2,Afternoon,91.6,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1484,6,4,Taj Mahal Indian Spice,Indian,70.95,3,19.9,6.64,Clear,Medium,Car,4.2,Lunch,47.5,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1485,19,4,Taj Mahal Indian Spice,Indian,44.83,4,25.6,4.92,Stormy,Medium,Electric_Bicycle,5.1,Late_Night,62.0,1,3,Delivery took over an hour due to heavy rain and gridlock traffic.
+1486,33,4,Taj Mahal Indian Spice,Indian,45.76,4,24.5,8.59,Clear,Low,Bike,4.7,Morning,51.8,1,2,Pizza was cold because delivery was delayed.
+1487,51,2,Sakura Japanese & Ramen,Japanese,42.76,4,22.5,10.45,Clear,High,Car,3.9,Afternoon,74.9,1,1,Delivery took over an hour due to heavy rain and gridlock traffic.
+1488,48,5,Green Goddess Bowl Lab,Healthy,86.67,3,17.3,8.12,Clear,Low,Scooter,4.1,Dinner,39.5,0,5,"Average experience, rider had slight trouble finding the address."
+1489,39,4,Taj Mahal Indian Spice,Indian,71.23,3,24.2,5.74,Rainy,Medium,Car,4.9,Morning,52.7,1,1,Pizza was cold because delivery was delayed.
+1490,55,1,Bella Italia Pizzeria,Italian,56.35,2,14.8,4.11,Rainy,High,Scooter,1.0,Dinner,38.5,0,4,"Decent food, arrived slightly later than expected."
+1491,11,2,Sakura Japanese & Ramen,Japanese,95.86,6,32.5,7.26,Foggy,Medium,Scooter,2.1,Dinner,62.5,1,2,"Storm delayed rider, order arrived 25 minutes late."
+1492,55,4,Taj Mahal Indian Spice,Indian,88.3,6,30.6,14.49,Clear,Medium,Car,1.8,Morning,83.7,1,1,"Significant delay during peak dinner rush, food needed reheating."
+1493,36,1,Bella Italia Pizzeria,Italian,87.97,3,19.7,7.28,Clear,Jam,Electric_Bicycle,3.0,Dinner,74.9,1,1,Pizza was cold because delivery was delayed.
+1494,33,2,Sakura Japanese & Ramen,Japanese,101.95,5,24.7,9.05,Rainy,Medium,Scooter,5.4,Dinner,65.8,1,2,"Significant delay during peak dinner rush, food needed reheating."
+1495,51,4,Taj Mahal Indian Spice,Indian,64.93,2,15.9,11.06,Rainy,Low,Scooter,1.4,Dinner,48.6,1,1,Pizza was cold because delivery was delayed.
+1496,36,1,Bella Italia Pizzeria,Italian,42.39,1,12.9,10.07,Clear,High,Bike,4.9,Afternoon,68.4,1,2,Delivery took over an hour due to heavy rain and gridlock traffic.
+1497,36,2,Sakura Japanese & Ramen,Japanese,55.73,4,21.9,5.67,Clear,High,Electric_Bicycle,5.4,Late_Night,57.3,1,3,"Storm delayed rider, order arrived 25 minutes late."
+1498,54,1,Bella Italia Pizzeria,Italian,68.18,1,15.7,12.56,Clear,Medium,Bike,1.4,Morning,67.7,1,3,Pizza was cold because delivery was delayed.
+1499,47,3,The Big Apple Burger Co.,American,79.93,6,28.8,10.84,Clear,Medium,Electric_Bicycle,5.0,Morning,77.1,1,2,Pizza was cold because delivery was delayed.
+1500,54,4,Taj Mahal Indian Spice,Indian,50.99,3,17.8,4.44,Rainy,Medium,Scooter,1.3,Late_Night,39.0,0,3,"Standard delivery time, taste was okay."
