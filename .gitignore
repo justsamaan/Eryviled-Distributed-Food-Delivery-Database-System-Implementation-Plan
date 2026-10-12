@@ -22,3 +22,6 @@ yarn-error.log*
 # Environment variables
 .env
 .env.local
+
+# Generated model artifact (recreated by AI Studio training)
+data/trained_eta_model.json

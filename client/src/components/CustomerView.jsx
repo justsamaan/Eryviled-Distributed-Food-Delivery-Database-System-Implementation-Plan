@@ -29,9 +29,11 @@ export default function CustomerView() {
     } catch (err) {
       console.warn('Backend offline, using fallback restaurant catalog:', err.message);
       const fallbackRestaurants = [
-        { restaurant_id: 1, name: 'Spice Garden', category_name: 'Indian', rating: 4.8, city: 'New York' },
-        { restaurant_id: 2, name: 'Luigi Pizzeria', category_name: 'Italian', rating: 4.7, city: 'New York' },
-        { restaurant_id: 3, name: 'Tokyo Sushi House', category_name: 'Japanese', rating: 4.9, city: 'New York' }
+        { restaurant_id: 1, name: 'Bella Italia Pizzeria', category_name: 'Italian & Pizza', rating: 4.8, city: 'New York' },
+        { restaurant_id: 2, name: 'Sakura Japanese & Ramen', category_name: 'Asian & Sushi', rating: 4.9, city: 'New York' },
+        { restaurant_id: 3, name: 'The Big Apple Burger Co.', category_name: 'American & Burgers', rating: 4.6, city: 'New York' },
+        { restaurant_id: 4, name: 'Taj Mahal Indian Spice', category_name: 'Indian & Curry', rating: 4.7, city: 'New York' },
+        { restaurant_id: 5, name: 'Green Goddess Bowl Lab', category_name: 'Healthy & Salads', rating: 4.8, city: 'San Francisco' }
       ];
       setRestaurants(fallbackRestaurants);
       setDataSourceInfo({ source: 'REDIS_CACHE (Fallback)', latencyMs: 1.2 });
@@ -50,11 +52,38 @@ export default function CustomerView() {
       setMenuItems(data.data || []);
     } catch (err) {
       console.warn('Backend menu fetch offline, using fallback menu items:', err.message);
-      setMenuItems([
-        { item_id: 1, restaurant_id: restaurant.restaurant_id, item_name: 'Signature Butter Chicken', description: 'Tender chicken in rich creamy tomato gravy with garlic naan', price: 18.99, dish_type: 'NON_VEG', available_stock: 12 },
-        { item_id: 2, restaurant_id: restaurant.restaurant_id, item_name: 'Paneer Tikka Masala', description: 'Grilled cottage cheese cubes in spiced aromatic curry', price: 16.50, dish_type: 'VEG', available_stock: 8 },
-        { item_id: 3, restaurant_id: restaurant.restaurant_id, item_name: 'Artisan Pepperoni Pizza', description: 'Hand-tossed crust with mozzarella and spicy pepperoni', price: 19.99, dish_type: 'NON_VEG', available_stock: 1 }
-      ]);
+      const fallbackMenus = {
+        1: [
+          { item_id: 1, item_name: 'Truffle Mushroom Pizza', description: 'Wood-fired crust, black truffle cream and wild mushrooms', price: 21.99, dish_type: 'VEG', available_stock: 15 },
+          { item_id: 2, item_name: 'Classic Margherita Pizza', description: 'San Marzano tomato, mozzarella and fresh basil', price: 16.50, dish_type: 'VEG', available_stock: 25 },
+          { item_id: 3, item_name: 'Artisanal Pepperoni Pizza', description: 'Spicy pepperoni and aged provolone', price: 18.99, dish_type: 'NON_VEG', available_stock: 1 },
+          { item_id: 4, item_name: 'Creamy Burrata Salad', description: 'Heirloom tomatoes, balsamic glaze and toasted pine nuts', price: 14.00, dish_type: 'VEG', available_stock: 30 }
+        ],
+        2: [
+          { item_id: 5, item_name: 'Tonkotsu Pork Ramen', description: 'Rich pork broth, chashu, egg and bamboo shoots', price: 17.50, dish_type: 'NON_VEG', available_stock: 20 },
+          { item_id: 6, item_name: 'Salmon Nigiri Platter (6pcs)', description: 'Fresh salmon over seasoned sushi rice', price: 19.00, dish_type: 'NON_VEG', available_stock: 12 },
+          { item_id: 7, item_name: 'Spicy Tuna Dragon Roll', description: 'Tuna, avocado, cucumber and spicy mayo', price: 16.00, dish_type: 'NON_VEG', available_stock: 18 },
+          { item_id: 8, item_name: 'Vegetable Gyoza (6pcs)', description: 'Pan-fried cabbage and shiitake dumplings', price: 8.50, dish_type: 'VEGAN', available_stock: 40 }
+        ],
+        3: [
+          { item_id: 9, item_name: 'Double Smash Cheeseburger', description: 'Two Angus patties, cheese and grilled onions', price: 15.99, dish_type: 'NON_VEG', available_stock: 22 },
+          { item_id: 10, item_name: 'Truffle Parmesan Fries', description: 'Hand-cut fries, truffle oil and parmesan', price: 7.50, dish_type: 'VEG', available_stock: 50 },
+          { item_id: 11, item_name: 'Crispy Buffalo Chicken Sandwich', description: 'Crispy chicken, buffalo sauce and blue cheese slaw', price: 14.50, dish_type: 'NON_VEG', available_stock: 14 }
+        ],
+        4: [
+          { item_id: 12, item_name: 'Chicken Tikka Masala', description: 'Tandoori chicken in creamy spiced tomato sauce', price: 18.50, dish_type: 'NON_VEG', available_stock: 28 },
+          { item_id: 13, item_name: 'Paneer Butter Masala', description: 'Cottage cheese in rich cashew tomato gravy', price: 16.00, dish_type: 'VEG', available_stock: 19 },
+          { item_id: 14, item_name: 'Garlic Butter Naan', description: 'Fresh tandoori flatbread with garlic butter', price: 3.99, dish_type: 'VEG', available_stock: 100 },
+          { item_id: 15, item_name: 'Hyderabadi Dum Biryani', description: 'Fragrant basmati rice with spices and tender lamb', price: 20.00, dish_type: 'NON_VEG', available_stock: 10 }
+        ],
+        5: [
+          { item_id: 16, item_name: 'Rainbow Grain Bowl', description: 'Quinoa, greens, roasted vegetables and lemon tahini', price: 16.50, dish_type: 'VEGAN', available_stock: 24 },
+          { item_id: 17, item_name: 'Avocado Sourdough Toast', description: 'Sourdough, smashed avocado, herbs and chilli flakes', price: 13.50, dish_type: 'VEG', available_stock: 18 },
+          { item_id: 18, item_name: 'Peanut Protein Smoothie', description: 'Banana, peanut butter, oat milk and plant protein', price: 9.50, dish_type: 'VEGAN', available_stock: 30 },
+          { item_id: 19, item_name: 'Seasonal Fruit Cup', description: 'Fresh-cut seasonal fruit', price: 7.50, dish_type: 'VEGAN', available_stock: 40 }
+        ]
+      };
+      setMenuItems((fallbackMenus[restaurant.restaurant_id] || []).map(item => ({ ...item, restaurant_id: restaurant.restaurant_id })));
     }
   };
 

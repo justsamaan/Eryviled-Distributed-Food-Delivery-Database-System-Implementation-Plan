@@ -85,7 +85,13 @@ INSERT OR IGNORE INTO menu_items (item_id, restaurant_id, item_name, description
 (12, 4, 'Chicken Tikka Masala', 'Tandoori grilled chicken in creamy spiced tomato sauce', 18.50, 'NON_VEG', 1),
 (13, 4, 'Paneer Butter Masala', 'Cottage cheese cubes in rich cashew tomato gravy', 16.00, 'VEG', 1),
 (14, 4, 'Garlic Butter Naan', 'Freshly baked tandoori flatbread brushed with garlic butter', 3.99, 'VEG', 1),
-(15, 4, 'Hyderabadi Dum Biryani', 'Fragrant basmati rice cooked with whole spices and tender lamb', 20.00, 'NON_VEG', 1);
+(15, 4, 'Hyderabadi Dum Biryani', 'Fragrant basmati rice cooked with whole spices and tender lamb', 20.00, 'NON_VEG', 1),
+
+-- Green Goddess Bowl Lab (Restaurant 5)
+(16, 5, 'Rainbow Grain Bowl', 'Quinoa, leafy greens, roasted seasonal vegetables and lemon tahini', 16.50, 'VEGAN', 1),
+(17, 5, 'Avocado Sourdough Toast', 'Sourdough toast, smashed avocado, herbs and chilli flakes', 13.50, 'VEG', 1),
+(18, 5, 'Peanut Protein Smoothie', 'Banana, peanut butter, oat milk and plant protein', 9.50, 'VEGAN', 1),
+(19, 5, 'Seasonal Fruit Cup', 'Fresh-cut seasonal fruit', 7.50, 'VEGAN', 1);
 
 -- 7. SEED INVENTORY (Stock Control)
 INSERT OR IGNORE INTO inventory (inventory_id, item_id, available_stock, reserved_stock) VALUES
@@ -103,7 +109,11 @@ INSERT OR IGNORE INTO inventory (inventory_id, item_id, available_stock, reserve
 (12, 12, 28, 2),
 (13, 13, 19, 0),
 (14, 14, 100, 0),
-(15, 15, 10, 0);
+(15, 15, 10, 0),
+(16, 16, 24, 0),
+(17, 17, 18, 0),
+(18, 18, 30, 0),
+(19, 19, 40, 0);
 
 -- 8. SEED COUPONS
 INSERT OR IGNORE INTO coupons (coupon_id, code, discount_percentage, max_discount_amount, min_order_amount, valid_until, is_active) VALUES
@@ -185,7 +195,11 @@ INSERT OR IGNORE INTO item_embeddings (item_id, spiciness, healthiness, price_po
 (12, 0.70, 0.45, 0.70, 0.00, 0.80, '[0.70, 0.45, 0.70, 0.00, 0.80]'), -- Chicken Tikka Masala
 (13, 0.50, 0.65, 0.60, 0.20, 0.80, '[0.50, 0.65, 0.60, 0.20, 0.80]'), -- Paneer Butter Masala
 (14, 0.05, 0.40, 0.15, 0.10, 0.70, '[0.05, 0.40, 0.15, 0.10, 0.70]'), -- Garlic Butter Naan
-(15, 0.90, 0.40, 0.75, 0.00, 0.85, '[0.90, 0.40, 0.75, 0.00, 0.85]'); -- Hyderabadi Dum Biryani
+(15, 0.90, 0.40, 0.75, 0.00, 0.85, '[0.90, 0.40, 0.75, 0.00, 0.85]'), -- Hyderabadi Dum Biryani
+(16, 0.10, 0.95, 0.55, 1.00, 0.15, '[0.10, 0.95, 0.55, 1.00, 0.15]'), -- Rainbow Grain Bowl
+(17, 0.20, 0.85, 0.50, 0.25, 0.10, '[0.20, 0.85, 0.50, 0.25, 0.10]'), -- Avocado Sourdough Toast
+(18, 0.05, 0.80, 0.35, 1.00, 0.10, '[0.05, 0.80, 0.35, 1.00, 0.10]'), -- Peanut Protein Smoothie
+(19, 0.00, 1.00, 0.25, 1.00, 0.05, '[0.00, 1.00, 0.25, 1.00, 0.05]'); -- Seasonal Fruit Cup
 
 -- 17. SEED INITIAL AI RECOMMENDATIONS LOG
 INSERT OR IGNORE INTO ai_recommendations (recommendation_id, customer_id, item_id, match_score, reasoning_tag) VALUES

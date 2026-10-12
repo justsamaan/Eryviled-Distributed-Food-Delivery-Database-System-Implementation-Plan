@@ -62,7 +62,7 @@ This project implements an **AI-Powered Distributed Food Delivery Platform** (Sw
 ```
 .
 ├── data/
-│   ├── food_delivery_dataset.csv      # Primary empirical dataset (500 records, 18 features)
+│   ├── food_delivery_dataset.csv      # Synthetic training dataset (500 records, 18 features)
 │   └── generate_dataset.py            # Reproducible dataset generator script
 ├── ai/
 │   └── pipeline.py                    # Standalone Python AI pipeline (Steps 1, 2, and 3)
@@ -118,6 +118,32 @@ Outputs:
 - Step 1 Preprocessed sample feature vector
 - Step 2 NLP-to-SQL query conversion, database record extraction & conversational synthesis
 - Step 3 Predicted delivery ETA, delay risk probability & evaluation metrics ($R^2 = 0.984$, $\text{MAE} = 1.40\text{ min}$)
+
+### 3. Train the ETA model and inspect the dataset
+
+Start the API with the full application, then open **AI Studio → ETA model training & dataset**.
+
+- The source dataset is `data/food_delivery_dataset.csv` (500 generated/synthetic examples; 18 columns). The generator is `data/generate_dataset.py`.
+- **Train ETA model** fits a ridge-regression model from the CSV with numeric standardization and one-hot categorical features.
+- Training uses a deterministic 80/20 train/test split. MAE, RMSE and R² are calculated from the held-out test rows; they are not hard-coded claims.
+- The trained coefficients and scaler are saved by the backend to `data/trained_eta_model.json` and used for subsequent predictions on that backend host.
+- **Download training CSV** downloads the dataset through `GET /api/ai/dataset.csv`.
+- **AI Intelligence Hub** now analyzes review text through `POST /api/ai/analyze-review` and derives its review log and keyword summary from stored database reviews.
+
+New AI endpoints:
+- `GET /api/ai/model-status`
+- `POST /api/ai/train-model`
+- `GET /api/ai/dataset.csv`
+- `POST /api/ai/analyze-review`
+- `GET /api/ai/sentiment-summary`
+- `POST /api/ai/text-to-sql`
+- `GET /api/ai/recommendations/:customerId`
+
+### 4. Connect the public GitHub Pages UI to the backend
+
+GitHub Pages serves static files only; it cannot run the Express/SQLite API itself. Deploy the Node backend somewhere reachable over HTTPS, then enter its **base URL** in the API field in the Eryviled workspace header and select **Save**. The same setting is used by the customer storefront, DBMS Customer App, AI Studio, sentiment analysis, SQL tools, and concierge.
+
+For local development, run `npm run dev`; the UI can use same-origin `/api` calls. For a separately hosted frontend, set the backend URL in the workspace. The backend must allow CORS from the frontend origin. The SQLite database and saved model live on the backend filesystem, so use a host with persistent storage if you need model/database state to survive restarts or redeployments.
 
 ### 3. Launch the Full Web Application
 ```bash

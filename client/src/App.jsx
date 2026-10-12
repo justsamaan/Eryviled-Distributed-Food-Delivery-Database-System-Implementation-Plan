@@ -12,6 +12,23 @@ import AiSentimentHub from './components/AiSentimentHub';
 import DocumentationView from './components/DocumentationView';
 import AiRecommendationLab from './components/AiRecommendationLab';
 
+
+// All React modules share one configurable backend URL. The setting is local to this browser.
+const normalizeApiBase = (value) => { let base = String(value || '').trim(); while (base.endsWith('/')) base = base.slice(0, -1); return base; };
+const getConfiguredApiBase = () => {
+  try { return normalizeApiBase(window.localStorage.getItem('eryviledApiBase') || import.meta.env.VITE_API_BASE_URL || ''); }
+  catch { return normalizeApiBase(import.meta.env.VITE_API_BASE_URL || ''); }
+};
+if (typeof window !== 'undefined' && !window.__eryviledFetchPatched) {
+  const originalFetch = window.fetch.bind(window);
+  window.fetch = (input, init) => {
+    const base = getConfiguredApiBase();
+    if (base && typeof input === 'string' && input.startsWith('/api/')) input = base + input;
+    return originalFetch(input, init);
+  };
+  window.__eryviledFetchPatched = true;
+}
+
 const navigation = [
   { group: 'EXPERIENCE', items: [
     { id: 'storefrontPreview', label: 'Customer storefront', icon: ShoppingBag, description: 'Browse food and place orders' },
@@ -36,7 +53,29 @@ const allItems = navigation.flatMap(group => group.items);
 export default function App() {
   const [activeTab, setActiveTab] = useState('storefrontPreview');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [apiBase, setApiBase] = useState(() => getConfiguredApiBase());
+  const [apiDraft, setApiDraft] = useState(() => getConfiguredApiBase());
+  const [apiMessage, setApiMessage] = useState('');
   const isStorefront = activeTab === 'storefrontPreview';
+  const saveApiBase = async () => {
+    const value = normalizeApiBase(apiDraft);
+    try { window.localStorage.setItem('eryviledApiBase', value); } catch {}
+    window.ERYVILED_API_BASE = value;
+    setApiBase(value);
+    if (!value) {
+      setApiMessage('Backend URL cleared. Relative API requests will be used.');
+      return;
+    }
+    setApiMessage('Checking backend health endpoint…');
+    try {
+      const response = await fetch(value + '/api/health');
+      const result = await response.json();
+      if (!response.ok || result.status !== 'UP') throw new Error(result.error || 'Health check returned HTTP ' + response.status);
+      setApiMessage('Connected to ' + (result.service || 'Eryviled backend') + '. AI, restaurant and menu API calls will use this server.');
+    } catch (error) {
+      setApiMessage('URL saved, but the health check failed: ' + error.message + '. Check the URL, CORS settings and server status.');
+    }
+  };
   const activeItem = allItems.find(item => item.id === activeTab) || allItems[0];
 
   useEffect(() => {
@@ -54,7 +93,7 @@ export default function App() {
     return (
       <iframe
         title="Eryviled customer storefront"
-        src={`${import.meta.env.BASE_URL}eryviled-storefront-preview.html`}
+        src={`${import.meta.env.BASE_URL}eryviled-storefront-preview.html?apiBase=${encodeURIComponent(apiBase)}`}
         style={{ display: 'block', width: '100%', height: '100vh', minHeight: '650px', border: 0, background: '#f8f7f2' }}
       />
     );
@@ -96,9 +135,17 @@ export default function App() {
         <header className="ery-topbar">
           <button className="ery-menu-toggle" onClick={() => setSidebarOpen(true)} aria-label="Open navigation"><span /><span /><span /></button>
           <div className="ery-breadcrumb"><span>ERYVILED</span><span className="ery-breadcrumb-slash">/</span><b>{activeItem.label}</b></div>
-          <div className="ery-topbar-actions"><span className="ery-live-indicator"><i /> PROJECT WORKSPACE</span><button className="ery-home-button" onClick={() => setActiveTab('storefrontPreview')}><ShoppingBag size={15} /> Customer UI</button></div>
+          <div className="ery-topbar-actions">
+            <form className="ery-api-config" onSubmit={event => { event.preventDefault(); saveApiBase(); }}>
+              <label htmlFor="ery-api-base">API</label>
+              <input id="ery-api-base" value={apiDraft} onChange={event => setApiDraft(event.target.value)} placeholder="https://your-backend.example.com" aria-label="Backend API base URL" />
+              <button type="submit">Save</button>
+            </form>
+            <span className="ery-live-indicator"><i /> {apiBase ? 'BACKEND CONFIGURED' : 'BACKEND NOT SET'}</span>
+            <button className="ery-home-button" onClick={() => setActiveTab('storefrontPreview')}><ShoppingBag size={15} /> Customer UI</button>
+          </div>
         </header>
-        <main className="ery-content">
+        <main className="ery-content">{apiMessage && <div className="ery-api-message" role="status">{apiMessage}</div>}
           <div className="ery-page-heading">
             <div><div className="ery-page-eyebrow"><span /> {activeItem.description}</div><h1>{activeItem.label}<span>.</span></h1><p>All your customer experience, database engineering and AI features in one workspace.</p></div>
             <div className="ery-page-index">{String(allItems.findIndex(item => item.id === activeTab) + 1).padStart(2, '0')} <span>/ {String(allItems.length).padStart(2, '0')}</span></div>
