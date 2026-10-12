@@ -28,7 +28,7 @@ export default async function apiFetch(path, options = {}) {
   const contentType = response.headers.get('content-type') || '';
 
   if (!contentType.toLowerCase().includes('application/json')) {
-    const body = (await response.text()).slice(0, 120).replace(/\\s+/g, ' ').trim();
+    const body = (await response.text()).slice(0, 120).replaceAll('\n', ' ').replaceAll('\r', ' ').replaceAll('\t', ' ').trim();
     throw new Error(`API returned non-JSON content (HTTP ${response.status}) for ${path}. ${body.startsWith('<') ? 'This usually means the URL points to the frontend/static host, not the backend API.' : body}`);
   }
 
