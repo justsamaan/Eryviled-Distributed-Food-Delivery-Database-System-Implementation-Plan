@@ -3,12 +3,12 @@ import { Database, Terminal, ShieldAlert, Layers, ShoppingBag, BookOpen, Activit
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
+    { id: 'storefrontPreview', label: 'Storefront Preview', icon: ShoppingBag },
     { id: 'observatory', label: 'Admin Observatory', icon: Database },
     { id: 'aiStudio', label: '✨ AI Studio', icon: Sparkles },
     { id: 'sqlStudio', label: 'SQL Studio & EXPLAIN', icon: Terminal },
     { id: 'concurrencyLab', label: 'Concurrency Lab', icon: ShieldAlert },
     { id: 'partitioning', label: 'Partition Inspector', icon: Layers },
-    { id: 'storefrontPreview', label: 'Storefront Preview', icon: ShoppingBag },
     { id: 'customerApp', label: 'DBMS Customer App', icon: ShoppingBag },
     { id: 'aiHub', label: 'AI Intelligence Hub', icon: BrainCircuit },
     { id: 'documentation', label: 'ERD & Docs', icon: BookOpen },
