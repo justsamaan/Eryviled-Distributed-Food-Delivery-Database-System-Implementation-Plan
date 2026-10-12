@@ -9,21 +9,22 @@ export default function AiSentimentHub() {
   const [reviewLoading, setReviewLoading] = useState(false);
   const [apiError, setApiError] = useState('');
 
-  useEffect(() => {
-    fetch('/api/ai/sentiment-summary')
-      .then(res => res.json())
-      .then(json => {
-        if (!json || json.error) throw new Error(json?.error || 'AI API returned no data');
-        setData(json);
-        setApiError('');
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error(err);
-        setApiError(err.message || 'Could not connect to the AI API.');
-        setLoading(false);
-      });
-  }, []);
+  const loadSummary = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/ai/sentiment-summary');
+      const json = await response.json();
+      if (!response.ok || !json || json.error) throw new Error(json?.error || 'Could not load sentiment summary');
+      setData(json);
+      setApiError('');
+    } catch (error) {
+      setApiError(error.message || 'Could not connect to the AI API.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => { loadSummary(); }, []);
 
   if (loading) return <div className="p-10 text-center animate-pulse text-blue-400">Loading AI Intelligence Models...</div>;
 
@@ -48,14 +49,15 @@ export default function AiSentimentHub() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-700">
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 mb-6" style={{ flexWrap: 'wrap' }}>
         <div className="p-2 bg-blue-500/20 rounded-lg">
           <BrainCircuit className="text-blue-400" size={28} />
         </div>
-        <div>
+        <div style={{ flex: 1 }}>
           <h1 className="text-2xl font-bold text-white">AI Customer Intelligence</h1>
           <p className="text-gray-400 text-sm">Natural Language Processing (NLP) Sentiment Analysis & Keyword Extraction</p>
         </div>
+        <button className="btn" onClick={loadSummary} disabled={loading} style={{ border: '1px solid #e7e5dc', background: '#fffefa', color: '#263328' }}>Refresh review data</button>
       </div>
 
       {apiError && <div className="glass-panel" style={{ padding: '1rem', color: '#c65345' }}>AI API unavailable: {apiError}. Configure the backend URL in the workspace header and make sure the server is running.</div>}
