@@ -25,6 +25,15 @@ export default function App() {
         {activeTab === 'concurrencyLab' && <ConcurrencyLab />}
         {activeTab === 'partitioning' && <PartitionInspector />}
         {activeTab === 'customerApp' && <CustomerView />}
+        {activeTab === 'storefrontPreview' && (
+          <section style={{ width: '100%', margin: '-1.75rem -1.5rem', width: 'calc(100% + 3rem)' }}>
+            <iframe
+              title="Eryviled storefront UI preview"
+              src={`${import.meta.env.BASE_URL}eryviled-storefront-preview.html`}
+              style={{ display: 'block', width: '100%', height: 'calc(100vh - 92px)', minHeight: '720px', border: 0, background: '#fff' }}
+            />
+          </section>
+        )}
         {activeTab === 'aiHub' && <AiSentimentHub />}
         {activeTab === 'documentation' && <DocumentationView />}
       </main>
