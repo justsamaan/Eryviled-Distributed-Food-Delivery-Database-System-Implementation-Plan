@@ -88,7 +88,7 @@ const riders=[{id:'R01',name:'Karthik',vehicle:'Electric scooter',eta:'4 min awa
 let state={view:'home',category:'All',query:'',sort:'recommended',saved:new Set(JSON.parse(localStorage.getItem('eryviledSaved')||'[2,6]')),cart:JSON.parse(localStorage.getItem('eryviledCart')||'[]'),orders:[{id:'ERY-2048',restaurant:'Madras Filter Club',items:'Ghee podi dosa × 1, Filter coffee × 1',total:198,status:'On the way',date:'Today, 7:18 PM',eta:'12–18 min',emoji:'🥞'},{id:'ERY-1984',restaurant:'Little Napoli',items:'Margherita amore × 1, Garlic knots × 1',total:447,status:'Delivered',date:'Yesterday, 8:05 PM',eta:'Delivered at 8:32 PM',emoji:'🍕'},{id:'ERY-1861',restaurant:'The Green Chapter',items:'Rainbow grain bowl × 1',total:284,status:'Delivered',date:'Oct 8, 1:22 PM',eta:'Delivered at 1:51 PM',emoji:'🥗'}],orderFilter:'all',filters:{under30:false,topRated:false,freeDelivery:false}};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 // Set window.ERYVILED_API_BASE to a deployed backend origin when the UI is hosted separately.
-const API_BASE = String(window.ERYVILED_API_BASE || '').replace(/\/+$/, '');
+const API_BASE = (() => { let base = String(window.ERYVILED_API_BASE || new URLSearchParams(window.location.search).get('apiBase') || window.localStorage.getItem('eryviledApiBase') || '').trim(); while (base.endsWith('/')) base = base.slice(0, -1); return base; })();
 const apiUrl = path => API_BASE + path;
 const money=n=>apiMode?'$'+Number(n).toFixed(2):'₹'+Math.round(n).toLocaleString('en-IN');
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),2600)}
