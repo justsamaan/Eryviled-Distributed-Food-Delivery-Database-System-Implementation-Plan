@@ -69,11 +69,16 @@ export default function App() {
     setApiMessage('Checking backend health endpoint…');
     try {
       const response = await fetch(value + '/api/health');
+      const contentType = response.headers.get('content-type') || '';
+      if (!contentType.toLowerCase().includes('application/json')) {
+        const body = (await response.text()).slice(0, 100).replace(/\\s+/g, ' ').trim();
+        throw new Error('Health URL did not return JSON. It may be the frontend/static URL instead of the backend. ' + body);
+      }
       const result = await response.json();
       if (!response.ok || result.status !== 'UP') throw new Error(result.error || 'Health check returned HTTP ' + response.status);
-      setApiMessage('Connected to ' + (result.service || 'Eryviled backend') + '. AI, restaurant and menu API calls will use this server.');
+      setApiMessage('Backend health check passed: ' + (result.service || 'Eryviled backend') + '.');
     } catch (error) {
-      setApiMessage('URL saved, but the health check failed: ' + error.message + '. Check the URL, CORS settings and server status.');
+      setApiMessage('URL saved, but the backend check failed: ' + error.message + ' Confirm the backend base URL, CORS settings and server status.');
     }
   };
   const activeItem = allItems.find(item => item.id === activeTab) || allItems[0];

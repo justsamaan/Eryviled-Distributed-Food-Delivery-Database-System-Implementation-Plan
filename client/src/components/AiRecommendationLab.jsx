@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import apiFetch, { getApiBase } from '../api.js';
 import { 
   Sparkles, Database, FileText, ArrowRight, CheckCircle2, MessageSquare, 
   Send, BrainCircuit, Activity, Sliders, Flame, HeartPulse, DollarSign, 
@@ -61,7 +62,7 @@ export default function AiRecommendationLab() {
 
   const refreshModelStatus = async () => {
     try {
-      const response = await fetch('/api/ai/model-status');
+      const response = await apiFetch('/api/ai/model-status');
       if (!response.ok) throw new Error('Could not read model status (' + response.status + ')');
       setModelStatus(await response.json());
     } catch (error) {
@@ -73,7 +74,7 @@ export default function AiRecommendationLab() {
     setTraining(true);
     setTrainingMessage('');
     try {
-      const response = await fetch('/api/ai/train-model', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) });
+      const response = await apiFetch('/api/ai/train-model', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) });
       const result = await response.json();
       if (!response.ok || !result.success) throw new Error(result.error || 'Training failed.');
       setModelStatus(result);
@@ -88,7 +89,7 @@ export default function AiRecommendationLab() {
 
   const fetchDatasetStats = async () => {
     try {
-      const res = await fetch('/api/ai/dataset-stats');
+      const res = await apiFetch('/api/ai/dataset-stats');
       const data = await res.json();
       setDatasetStats(data);
       // Run initial preprocessing test
@@ -100,7 +101,7 @@ export default function AiRecommendationLab() {
 
   const handlePreprocess = async (input) => {
     try {
-      const res = await fetch('/api/ai/preprocess', {
+      const res = await apiFetch('/api/ai/preprocess', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(input)
@@ -116,7 +117,7 @@ export default function AiRecommendationLab() {
     const q = promptToRun || chatPrompt;
     setChatLoading(true);
     try {
-      const res = await fetch('/api/ai/nlp-to-sql-chatbot', {
+      const res = await apiFetch('/api/ai/nlp-to-sql-chatbot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: q })
@@ -134,7 +135,7 @@ export default function AiRecommendationLab() {
     const p = params || predictParams;
     setPredictLoading(true);
     try {
-      const res = await fetch('/api/ai/predict-eta', {
+      const res = await apiFetch('/api/ai/predict-eta', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(p)
@@ -151,7 +152,7 @@ export default function AiRecommendationLab() {
   const fetchVectorRecommendations = async (prefs = vectorPrefs) => {
     try {
       const queryParams = new URLSearchParams(prefs).toString();
-      const res = await fetch(`/api/ai-recommendations?customerId=1&${queryParams}`);
+      const res = await apiFetch(`/api/ai-recommendations?customerId=1&${queryParams}`);
       const data = await res.json();
       setVectorResult(data);
     } catch (err) {
@@ -233,7 +234,7 @@ export default function AiRecommendationLab() {
                 <RefreshCw size={15} className={training ? 'animate-spin' : ''} /> {training ? 'Training model…' : modelStatus?.trained ? 'Retrain ETA model' : 'Train ETA model'}
               </button>
               <button className="btn" onClick={() => { refreshModelStatus(); fetchDatasetStats(); }} style={{ border: '1px solid var(--border-color)', background: '#f0efe7', color: '#263328' }}>Refresh API & dataset</button>
-              <button className="btn" disabled={!modelStatus?.datasetRowsAvailable} onClick={() => { const base = (window.localStorage.getItem('eryviledApiBase') || import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, ''); if (!base) { setTrainingMessage('Set your backend URL in the top bar before downloading the dataset.'); return; } window.open(base + '/api/ai/dataset.csv', '_blank', 'noopener,noreferrer'); }} style={{ border: '1px solid var(--border-color)', background: '#f0efe7', color: '#263328' }}>
+              <button className="btn" disabled={!modelStatus?.datasetRowsAvailable} onClick={() => { const base = getApiBase(); if (!base) { setTrainingMessage('Set and verify your deployed backend URL in the workspace header before downloading the dataset.'); return; } window.open(base + '/api/ai/dataset.csv', '_blank', 'noopener,noreferrer'); }} style={{ border: '1px solid var(--border-color)', background: '#f0efe7', color: '#263328' }}>
                 <FileText size={15} /> Download training CSV
               </button>
             </div>

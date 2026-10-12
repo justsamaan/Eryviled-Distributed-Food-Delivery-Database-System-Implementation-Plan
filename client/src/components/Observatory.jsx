@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import apiFetch from '../api.js';
 import { Database, Zap, Clock, ShieldCheck, RefreshCw, ShoppingCart, DollarSign, Users, Store, CheckCircle2 } from 'lucide-react';
 
 export default function Observatory() {
@@ -8,7 +9,7 @@ export default function Observatory() {
   const fetchMetrics = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/observatory/metrics');
+      const res = await apiFetch('/api/observatory/metrics');
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setMetrics(data.metrics);

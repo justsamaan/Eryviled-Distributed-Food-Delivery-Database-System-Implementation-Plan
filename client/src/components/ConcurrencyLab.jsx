@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import apiFetch from '../api.js';
 import { ShieldAlert, Play, Lock, Unlock, CheckCircle, AlertTriangle, UserCheck, UserX, RefreshCw } from 'lucide-react';
 
 export default function ConcurrencyLab() {
@@ -8,7 +9,7 @@ export default function ConcurrencyLab() {
   const handleSimulate = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/concurrency/simulate', { method: 'POST' });
+      const res = await apiFetch('/api/concurrency/simulate', { method: 'POST' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setSimulationResult(data);

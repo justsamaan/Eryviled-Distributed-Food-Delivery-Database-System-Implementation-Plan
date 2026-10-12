@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import apiFetch from '../api.js';
 import { Terminal, Play, Cpu, CheckCircle, AlertTriangle, GitCommit, BrainCircuit, Sparkles } from 'lucide-react';
 
 export default function SqlStudio() {
@@ -88,7 +89,7 @@ ORDER BY i.available_stock ASC;`
     if (!aiPrompt.trim()) return;
     setAiLoading(true);
     try {
-      const res = await fetch('/api/ai/text-to-sql', {
+      const res = await apiFetch('/api/ai/text-to-sql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: aiPrompt })
@@ -115,7 +116,7 @@ ORDER BY i.available_stock ASC;`
   const handleRunQuery = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/sql/explain', {
+      const res = await apiFetch('/api/sql/explain', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sql: customSql })

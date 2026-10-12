@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import apiFetch from '../api.js';
 import { Bot, Sparkles, ShoppingCart, Star, MessageSquare } from 'lucide-react';
 
 export default function AiConcierge({ customerId = 1 }) {
@@ -10,7 +11,7 @@ export default function AiConcierge({ customerId = 1 }) {
   ]);
 
   useEffect(() => {
-    fetch(`/api/ai/recommendations/${customerId}`)
+    apiFetch(`/api/ai/recommendations/${customerId}`)
       .then(res => res.json())
       .then(json => {
         setRecommendations(json.data || []);
@@ -31,7 +32,7 @@ export default function AiConcierge({ customerId = 1 }) {
     setChatLog(prev => [...prev, { role: 'user', text: userText }]);
 
     try {
-      const res = await fetch('/api/ai/text-to-sql', {
+      const res = await apiFetch('/api/ai/text-to-sql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: userText })

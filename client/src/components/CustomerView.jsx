@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import apiFetch from '../api.js';
 import { Store, ShoppingBag, Plus, Minus, CheckCircle, Tag, ArrowRight, ShieldCheck } from 'lucide-react';
 import AiConcierge from './AiConcierge';
 
@@ -18,7 +19,7 @@ export default function CustomerView() {
 
   const fetchRestaurants = async () => {
     try {
-      const res = await fetch('/api/restaurants');
+      const res = await apiFetch('/api/restaurants');
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setRestaurants(data.data || []);
@@ -46,7 +47,7 @@ export default function CustomerView() {
     setCart({});
     setOrderResult(null);
     try {
-      const res = await fetch(`/api/restaurants/${restaurant.restaurant_id}/menu`);
+      const res = await apiFetch(`/api/restaurants/${restaurant.restaurant_id}/menu`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setMenuItems(data.data || []);
@@ -119,7 +120,7 @@ export default function CustomerView() {
 
     setLoading(true);
     try {
-      const res = await fetch('/api/orders', {
+      const res = await apiFetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
