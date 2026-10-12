@@ -57,13 +57,24 @@ export default function App() {
   const [apiDraft, setApiDraft] = useState(() => getConfiguredApiBase());
   const [apiMessage, setApiMessage] = useState('');
   const isStorefront = activeTab === 'storefrontPreview';
-  const saveApiBase = () => {
+  const saveApiBase = async () => {
     const value = normalizeApiBase(apiDraft);
     try { window.localStorage.setItem('eryviledApiBase', value); } catch {}
     window.ERYVILED_API_BASE = value;
     setApiBase(value);
-    setApiMessage(value ? 'Backend URL saved for this browser.' : 'Backend URL cleared. Relative API requests will be used.');
-    window.setTimeout(() => setApiMessage(''), 4000);
+    if (!value) {
+      setApiMessage('Backend URL cleared. Relative API requests will be used.');
+      return;
+    }
+    setApiMessage('Checking backend health endpoint…');
+    try {
+      const response = await fetch(value + '/api/health');
+      const result = await response.json();
+      if (!response.ok || result.status !== 'UP') throw new Error(result.error || 'Health check returned HTTP ' + response.status);
+      setApiMessage('Connected to ' + (result.service || 'Eryviled backend') + '. AI, restaurant and menu API calls will use this server.');
+    } catch (error) {
+      setApiMessage('URL saved, but the health check failed: ' + error.message + '. Check the URL, CORS settings and server status.');
+    }
   };
   const activeItem = allItems.find(item => item.id === activeTab) || allItems[0];
 
