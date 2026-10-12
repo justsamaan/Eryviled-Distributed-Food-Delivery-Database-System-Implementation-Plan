@@ -14,9 +14,10 @@ import AiRecommendationLab from './components/AiRecommendationLab';
 
 
 // All React modules share one configurable backend URL. The setting is local to this browser.
+const normalizeApiBase = (value) => { let base = String(value || '').trim(); while (base.endsWith('/')) base = base.slice(0, -1); return base; };
 const getConfiguredApiBase = () => {
-  try { return String(window.localStorage.getItem('eryviledApiBase') || import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\\/+$/, ''); }
-  catch { return String(import.meta.env.VITE_API_BASE_URL || '').trim().replace(/\\/+$/, ''); }
+  try { return normalizeApiBase(window.localStorage.getItem('eryviledApiBase') || import.meta.env.VITE_API_BASE_URL || ''); }
+  catch { return normalizeApiBase(import.meta.env.VITE_API_BASE_URL || ''); }
 };
 if (typeof window !== 'undefined' && !window.__eryviledFetchPatched) {
   const originalFetch = window.fetch.bind(window);
@@ -57,7 +58,7 @@ export default function App() {
   const [apiMessage, setApiMessage] = useState('');
   const isStorefront = activeTab === 'storefrontPreview';
   const saveApiBase = () => {
-    const value = apiDraft.trim().replace(/\\/+$/, '');
+    const value = normalizeApiBase(apiDraft);
     try { window.localStorage.setItem('eryviledApiBase', value); } catch {}
     window.ERYVILED_API_BASE = value;
     setApiBase(value);
