@@ -10,6 +10,9 @@ export default function AiRecommendationLab() {
 
   // --- SUB-TAB 1: DATASET & PREPROCESSING STATE ---
   const [datasetStats, setDatasetStats] = useState(null);
+  const [modelStatus, setModelStatus] = useState(null);
+  const [training, setTraining] = useState(false);
+  const [trainingMessage, setTrainingMessage] = useState('');
   const [preprocessInput, setPreprocessInput] = useState({
     delivery_distance_km: 7.2,
     prep_time_minutes: 18.5,
@@ -50,10 +53,38 @@ export default function AiRecommendationLab() {
   // Initial data loading
   useEffect(() => {
     fetchDatasetStats();
+    refreshModelStatus();
     handleRunChatbot(chatPrompt);
     handlePredict(predictParams);
     fetchVectorRecommendations();
   }, []);
+
+  const refreshModelStatus = async () => {
+    try {
+      const response = await fetch('/api/ai/model-status');
+      if (!response.ok) throw new Error('Could not read model status (' + response.status + ')');
+      setModelStatus(await response.json());
+    } catch (error) {
+      setModelStatus({ trained: false, error: error.message });
+    }
+  };
+
+  const handleTrainModel = async () => {
+    setTraining(true);
+    setTrainingMessage('');
+    try {
+      const response = await fetch('/api/ai/train-model', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) });
+      const result = await response.json();
+      if (!response.ok || !result.success) throw new Error(result.error || 'Training failed.');
+      setModelStatus(result);
+      setTrainingMessage('Training complete. Metrics below were calculated on a held-out test split.');
+      handlePredict(predictParams);
+    } catch (error) {
+      setTrainingMessage('Training unavailable: ' + error.message + '. Check the API URL setting and backend logs.');
+    } finally {
+      setTraining(false);
+    }
+  };
 
   const fetchDatasetStats = async () => {
     try {
@@ -183,6 +214,37 @@ export default function AiRecommendationLab() {
             >
               <Sliders size={14} /> 5D Vector Recommender
             </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="glass-panel" style={{ padding: '1.25rem', marginTop: '0.25rem' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ minWidth: '220px', flex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
+              <Database size={18} color="#4c7255" />
+              <h3 style={{ fontSize: '1.05rem', margin: 0 }}>ETA model training & dataset</h3>
+            </div>
+            <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', marginBottom: '0.8rem' }}>
+              Train a ridge-regression model from the repository CSV. The API fits the model, evaluates it on a held-out split, saves the coefficients on the backend host, and uses those coefficients for subsequent ETA predictions.
+            </p>
+            <div style={{ display: 'flex', gap: '0.55rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              <button className="btn btn-primary" onClick={handleTrainModel} disabled={training} style={{ opacity: training ? 0.65 : 1 }}>
+                <RefreshCw size={15} className={training ? 'animate-spin' : ''} /> {training ? 'Training model…' : modelStatus?.trained ? 'Retrain ETA model' : 'Train ETA model'}
+              </button>
+              <button className="btn" onClick={refreshModelStatus} style={{ border: '1px solid var(--border-color)', background: '#f0efe7', color: '#263328' }}>Refresh status</button>
+              <button className="btn" disabled={!modelStatus?.datasetRowsAvailable} onClick={() => { const base = (window.localStorage.getItem('eryviledApiBase') || import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, ''); if (!base) { setTrainingMessage('Set your backend URL in the top bar before downloading the dataset.'); return; } window.open(base + '/api/ai/dataset.csv', '_blank', 'noopener,noreferrer'); }} style={{ border: '1px solid var(--border-color)', background: '#f0efe7', color: '#263328' }}>
+                <FileText size={15} /> Download training CSV
+              </button>
+            </div>
+            {trainingMessage && <p role="status" style={{ fontSize: '0.8rem', marginTop: '0.75rem', color: trainingMessage.startsWith('Training complete') ? '#4c7255' : '#c65345' }}>{trainingMessage}</p>}
+            {modelStatus?.error && <p style={{ fontSize: '0.75rem', color: '#c65345', marginTop: '0.5rem' }}>API status unavailable: {modelStatus.error}</p>}
+          </div>
+          <div style={{ minWidth: '190px', borderRadius: '11px', padding: '1rem', background: '#f2f0e8', border: '1px solid #e7e5dc' }}>
+            <span className="badge" style={{ background: modelStatus?.trained ? '#e1eddb' : '#f4e8d7', color: modelStatus?.trained ? '#35543a' : '#895a2b' }}>{modelStatus?.trained ? 'MODEL TRAINED' : 'MODEL NOT TRAINED'}</span>
+            <p style={{ fontSize: '0.76rem', color: '#72796e', marginTop: '0.7rem' }}>Dataset records</p>
+            <strong style={{ fontSize: '1.65rem', color: '#263328' }}>{modelStatus?.datasetRowsAvailable ?? datasetStats?.totalRecords ?? '—'}</strong>
+            {modelStatus?.trained && <><p style={{ fontSize: '0.76rem', color: '#72796e', marginTop: '0.55rem' }}>Held-out MAE / RMSE</p><strong style={{ color: '#263328' }}>{modelStatus.metrics?.maeMinutes} / {modelStatus.metrics?.rmseMinutes} min</strong><p style={{ fontSize: '0.76rem', color: '#72796e', marginTop: '0.45rem' }}>R² {modelStatus.metrics?.r2Score} · {modelStatus.testCount} test rows</p><p style={{ fontSize: '0.68rem', color: '#8c9185', marginTop: '0.35rem' }}>Trained {modelStatus.trainedAt ? new Date(modelStatus.trainedAt).toLocaleString() : '—'}</p></>}
           </div>
         </div>
       </div>
