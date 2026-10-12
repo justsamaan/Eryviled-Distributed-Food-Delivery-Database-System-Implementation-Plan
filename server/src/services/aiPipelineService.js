@@ -6,49 +6,186 @@ const { query } = require('../db/connection');
 const datasetPath = path.join(__dirname, '..', '..', '..', 'data', 'food_delivery_dataset.csv');
 let cachedDataset = [];
 
+function parseCsvLine(line) {
+  const values = [];
+  let value = '';
+  let quoted = false;
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    if (char === '"') {
+      if (quoted && line[i + 1] === '"') { value += '"'; i++; }
+      else quoted = !quoted;
+    } else if (char === ',' && !quoted) {
+      values.push(value);
+      value = '';
+    } else value += char;
+  }
+  values.push(value);
+  return values;
+}
+
 function loadDataset() {
   if (cachedDataset.length > 0) return cachedDataset;
   if (!fs.existsSync(datasetPath)) return [];
-
-  const raw = fs.readFileSync(datasetPath, 'utf-8');
-  const lines = raw.trim().split('\n');
+  const raw = fs.readFileSync(datasetPath, 'utf-8').replace(/^\uFEFF/, '').trim();
+  const lines = raw.split(/\r?\n/);
   if (lines.length < 2) return [];
-
-  const headers = lines[0].split(',').map(h => h.trim());
-  const records = [];
-
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i];
-    if (!line.trim()) continue;
-
-    // Handle quoted fields
-    const match = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g) || line.split(',');
-    const values = line.split(','); // standard parse for non-nested
-    
-    records.push({
-      order_id: Number(values[0]),
-      customer_id: Number(values[1]),
-      restaurant_id: Number(values[2]),
-      restaurant_name: values[3],
-      cuisine_type: values[4],
-      order_value_usd: Number(values[5]),
-      num_items: Number(values[6]),
-      prep_time_minutes: Number(values[7]),
-      delivery_distance_km: Number(values[8]),
-      weather_condition: values[9],
-      traffic_density: values[10],
-      vehicle_type: values[11],
-      driver_experience_years: Number(values[12]),
-      time_of_day: values[13],
-      delivery_time_minutes: Number(values[14]),
-      is_delayed: Number(values[15]),
-      customer_rating: Number(values[16]),
-      customer_review: values.slice(17).join(',').replace(/^"|"$/g, '')
-    });
-  }
-
-  cachedDataset = records;
+  const headers = parseCsvLine(lines[0]).map(h => h.trim());
+  cachedDataset = lines.slice(1).filter(line => line.trim()).map(line => {
+    const values = parseCsvLine(line);
+    const row = {};
+    headers.forEach((header, index) => { row[header] = values[index] ?? ''; });
+    return {
+      order_id: Number(row.order_id),
+      customer_id: Number(row.customer_id),
+      restaurant_id: Number(row.restaurant_id),
+      restaurant_name: row.restaurant_name,
+      cuisine_type: row.cuisine_type,
+      order_value_usd: Number(row.order_value_usd),
+      num_items: Number(row.num_items),
+      prep_time_minutes: Number(row.prep_time_minutes),
+      delivery_distance_km: Number(row.delivery_distance_km),
+      weather_condition: row.weather_condition,
+      traffic_density: row.traffic_density,
+      vehicle_type: row.vehicle_type,
+      driver_experience_years: Number(row.driver_experience_years),
+      time_of_day: row.time_of_day,
+      delivery_time_minutes: Number(row.delivery_time_minutes),
+      is_delayed: Number(row.is_delayed),
+      customer_rating: Number(row.customer_rating),
+      customer_review: row.customer_review || ''
+    };
+  }).filter(row => Number.isFinite(row.delivery_time_minutes) && Number.isFinite(row.delivery_distance_km));
   return cachedDataset;
+}
+
+const modelPath = path.join(__dirname, '..', '..', '..', 'data', 'trained_eta_model.json');
+let trainedModel = null;
+function getSavedModel() {
+  if (trainedModel) return trainedModel;
+  try {
+    if (fs.existsSync(modelPath)) trainedModel = JSON.parse(fs.readFileSync(modelPath, 'utf-8'));
+  } catch (error) {
+    console.warn('Could not load saved ETA model:', error.message);
+  }
+  return trainedModel;
+}
+
+const FEATURE_CATEGORIES = {
+  weather_condition: ['Rainy', 'Foggy', 'Stormy'],
+  traffic_density: ['Medium', 'High', 'Jam'],
+  vehicle_type: ['Scooter', 'Electric_Bicycle', 'Car'],
+  time_of_day: ['Lunch', 'Afternoon', 'Dinner', 'Late_Night']
+};
+const NUMERIC_FEATURES = ['delivery_distance_km', 'prep_time_minutes', 'num_items', 'driver_experience_years'];
+
+function featureRow(record, model) {
+  const values = [1];
+  NUMERIC_FEATURES.forEach(key => {
+    const raw = Number(record[key] ?? 0);
+    values.push((raw - model.scaler[key].mean) / model.scaler[key].std);
+  });
+  Object.entries(FEATURE_CATEGORIES).forEach(([key, categories]) => {
+    categories.forEach(category => values.push(String(record[key] || '') === category ? 1 : 0));
+  });
+  return values;
+}
+
+function solveLinearSystem(matrix, vector) {
+  const a = matrix.map((row, i) => [...row, vector[i]]);
+  const n = vector.length;
+  for (let col = 0; col < n; col++) {
+    let pivot = col;
+    for (let row = col + 1; row < n; row++) {
+      if (Math.abs(a[row][col]) > Math.abs(a[pivot][col])) pivot = row;
+    }
+    if (Math.abs(a[pivot][col]) < 1e-10) throw new Error('Training matrix is singular; add more varied training records.');
+    [a[col], a[pivot]] = [a[pivot], a[col]];
+    const divisor = a[col][col];
+    for (let j = col; j <= n; j++) a[col][j] /= divisor;
+    for (let row = 0; row < n; row++) {
+      if (row === col) continue;
+      const factor = a[row][col];
+      for (let j = col; j <= n; j++) a[row][j] -= factor * a[col][j];
+    }
+  }
+  return a.map(row => row[n]);
+}
+
+function trainEtaModel() {
+  const data = loadDataset();
+  if (data.length < 30) throw new Error('At least 30 valid dataset rows are required to train the ETA model.');
+  const train = data.filter((_, index) => index % 5 !== 0);
+  const test = data.filter((_, index) => index % 5 === 0);
+  const scaler = {};
+  NUMERIC_FEATURES.forEach(key => {
+    const vals = train.map(row => Number(row[key]) || 0);
+    const mean = vals.reduce((sum, value) => sum + value, 0) / vals.length;
+    const variance = vals.reduce((sum, value) => sum + ((value - mean) ** 2), 0) / vals.length;
+    scaler[key] = { mean, std: Math.sqrt(variance) || 1 };
+  });
+  const draft = { scaler };
+  const trainX = train.map(row => featureRow(row, draft));
+  const trainY = train.map(row => Number(row.delivery_time_minutes));
+  const width = trainX[0].length;
+  const xtx = Array.from({ length: width }, () => Array(width).fill(0));
+  const xty = Array(width).fill(0);
+  trainX.forEach((x, i) => {
+    for (let a = 0; a < width; a++) {
+      xty[a] += x[a] * trainY[i];
+      for (let b = 0; b < width; b++) xtx[a][b] += x[a] * x[b];
+    }
+  });
+  // Small ridge penalty improves stability; do not penalize the intercept.
+  for (let i = 1; i < width; i++) xtx[i][i] += 0.01;
+  const coefficients = solveLinearSystem(xtx, xty);
+  const model = {
+    algorithm: 'Ridge regression (one-hot categorical features)',
+    target: 'delivery_time_minutes',
+    featureNames: ['intercept', ...NUMERIC_FEATURES.map(key => key + '_z'), ...Object.entries(FEATURE_CATEGORIES).flatMap(([key, cats]) => cats.map(category => key + '=' + category))],
+    scaler,
+    categories: FEATURE_CATEGORIES,
+    coefficients,
+    sampleCount: data.length,
+    trainCount: train.length,
+    testCount: test.length,
+    trainedAt: new Date().toISOString(),
+    datasetPath: 'data/food_delivery_dataset.csv'
+  };
+  const predictions = test.map(row => {
+    const x = featureRow(row, model);
+    return x.reduce((sum, value, index) => sum + value * coefficients[index], 0);
+  });
+  const actual = test.map(row => Number(row.delivery_time_minutes));
+  const mean = actual.reduce((sum, value) => sum + value, 0) / actual.length;
+  const mae = actual.reduce((sum, value, i) => sum + Math.abs(value - predictions[i]), 0) / actual.length;
+  const rmse = Math.sqrt(actual.reduce((sum, value, i) => sum + ((value - predictions[i]) ** 2), 0) / actual.length);
+  const totalVariance = actual.reduce((sum, value) => sum + ((value - mean) ** 2), 0);
+  const residualVariance = actual.reduce((sum, value, i) => sum + ((value - predictions[i]) ** 2), 0);
+  model.metrics = {
+    maeMinutes: Number(mae.toFixed(3)),
+    rmseMinutes: Number(rmse.toFixed(3)),
+    r2Score: Number((totalVariance ? 1 - residualVariance / totalVariance : 0).toFixed(4))
+  };
+  fs.writeFileSync(modelPath, JSON.stringify(model, null, 2) + '\n', 'utf-8');
+  trainedModel = model;
+  return getModelStatus();
+}
+
+function getModelStatus() {
+  const model = getSavedModel();
+  return {
+    trained: Boolean(model && Array.isArray(model.coefficients)),
+    algorithm: model?.algorithm || 'Not trained yet',
+    target: model?.target || 'delivery_time_minutes',
+    sampleCount: model?.sampleCount || 0,
+    trainCount: model?.trainCount || 0,
+    testCount: model?.testCount || 0,
+    trainedAt: model?.trainedAt || null,
+    metrics: model?.metrics || null,
+    dataset: 'data/food_delivery_dataset.csv',
+    datasetRowsAvailable: loadDataset().length
+  };
 }
 
 // -----------------------------------------------------------------------------
@@ -261,67 +398,77 @@ Based on the retrieved operational data, orders fulfilling under this criteria e
 // -----------------------------------------------------------------------------
 // STEP 3: PREDICTION OR OUTPUT MODULE
 // -----------------------------------------------------------------------------
-function predictDeliveryTime(params) {
-  const distance = Math.max(0.5, Number(params.distance_km || 5.0));
-  const prepTime = Math.max(5.0, Number(params.prep_time_min || 18.0));
-  const numItems = Math.max(1, Number(params.num_items || 2));
-  const weather = params.weather || "Clear";
-  const traffic = params.traffic || "Medium";
-  const vehicle = params.vehicle || "Bike";
+function predictDeliveryTime(params = {}) {
+  const model = getSavedModel();
+  const record = {
+    delivery_distance_km: Math.max(0.1, Number(params.distance_km ?? params.delivery_distance_km ?? 5)),
+    prep_time_minutes: Math.max(1, Number(params.prep_time_min ?? params.prep_time_minutes ?? 18)),
+    num_items: Math.max(1, Number(params.num_items ?? 2)),
+    driver_experience_years: Math.max(0, Number(params.driver_experience_years ?? 2)),
+    weather_condition: params.weather_condition || params.weather || 'Clear',
+    traffic_density: params.traffic_density || params.traffic || 'Medium',
+    vehicle_type: params.vehicle_type || params.vehicle || 'Bike',
+    time_of_day: params.time_of_day || 'Dinner'
+  };
 
-  const trafficMultipliers = { Low: 1.0, Medium: 1.25, High: 1.65, Jam: 2.20 };
-  const weatherMultipliers = { Clear: 1.0, Rainy: 1.30, Foggy: 1.18, Stormy: 1.70 };
-  const vehicleSpeedsKmh = { Car: 22.0, Electric_Bicycle: 18.0, Bike: 20.0, Scooter: 25.0 };
-
-  const speedKmh = vehicleSpeedsKmh[vehicle] || 20.0;
-  const trafficMult = trafficMultipliers[traffic] || 1.25;
-  const weatherMult = weatherMultipliers[weather] || 1.0;
-
-  // Physics-calibrated transit estimation (Transit = (Distance / Speed) * Traffic * Weather * 60)
-  const transitMinutes = (distance / speedKmh) * trafficMult * weatherMult * 60.0;
-  const handoverMinutes = 3.5;
-
-  const predictedDeliveryMinutes = Number((prepTime + transitMinutes + handoverMinutes).toFixed(1));
-
-  // Delay probability calculation (Sigmoid centered at 42 mins)
-  const delayLogit = 0.12 * (predictedDeliveryMinutes - 42.0);
-  const delayProbability = Number(((1.0 / (1.0 + Math.exp(-delayLogit))) * 100).toFixed(1));
-
-  let riskCategory = "Low Risk";
-  let riskColor = "#34d399";
-  if (delayProbability > 65.0) {
-    riskCategory = "High Risk";
-    riskColor = "#f87171";
-  } else if (delayProbability > 35.0) {
-    riskCategory = "Moderate Risk";
-    riskColor = "#fbbf24";
+  let predictedDeliveryMinutes;
+  let algorithm;
+  let featureBreakdown;
+  if (model && Array.isArray(model.coefficients)) {
+    const x = featureRow(record, model);
+    predictedDeliveryMinutes = Math.max(1, x.reduce((sum, value, index) => sum + value * model.coefficients[index], 0));
+    algorithm = model.algorithm;
+    featureBreakdown = {
+      kitchenPreparationMinutes: Number(record.prep_time_minutes.toFixed(1)),
+      distanceKm: Number(record.delivery_distance_km.toFixed(2)),
+      numItems: record.num_items,
+      weather: record.weather_condition,
+      traffic: record.traffic_density,
+      vehicle: record.vehicle_type,
+      timeOfDay: record.time_of_day
+    };
+  } else {
+    const trafficMultipliers = { Low: 1, Medium: 1.25, High: 1.65, Jam: 2.2 };
+    const weatherMultipliers = { Clear: 1, Rainy: 1.3, Foggy: 1.18, Stormy: 1.7 };
+    const vehicleSpeeds = { Car: 22, Electric_Bicycle: 18, Bike: 20, Scooter: 25 };
+    const speed = vehicleSpeeds[record.vehicle_type] || 20;
+    predictedDeliveryMinutes = record.prep_time_minutes + (record.delivery_distance_km / speed) * 60 *
+      (trafficMultipliers[record.traffic_density] || 1.25) * (weatherMultipliers[record.weather_condition] || 1);
+    algorithm = 'Physics baseline (ML model not trained yet)';
+    featureBreakdown = {
+      kitchenPreparationMinutes: Number(record.prep_time_minutes.toFixed(1)),
+      pureTransitTravelMinutes: Number(((record.delivery_distance_km / speed) * 60).toFixed(1)),
+      traffic: record.traffic_density,
+      weather: record.weather_condition,
+      vehicle: record.vehicle_type
+    };
   }
 
-  // Feature contribution breakdown (in minutes)
-  const baselineTransit = (distance / speedKmh) * 60.0;
-  const trafficDelayImpact = Number((baselineTransit * (trafficMult - 1.0)).toFixed(1));
-  const weatherDelayImpact = Number((baselineTransit * trafficMult * (weatherMult - 1.0)).toFixed(1));
-
+  predictedDeliveryMinutes = Number(predictedDeliveryMinutes.toFixed(1));
+  const delayProbability = Number((100 / (1 + Math.exp(-0.12 * (predictedDeliveryMinutes - 42)))).toFixed(1));
+  const riskCategory = delayProbability > 65 ? 'High Risk' : delayProbability > 35 ? 'Moderate Risk' : 'Low Risk';
   return {
     prediction: {
       predictedDeliveryTimeMinutes: predictedDeliveryMinutes,
       delayProbabilityPct: delayProbability,
       delayRiskLevel: riskCategory,
-      riskColor
+      riskColor: riskCategory === 'High Risk' ? '#c65345' : riskCategory === 'Moderate Risk' ? '#f36b3f' : '#4c7255'
     },
-    featureBreakdown: {
-      kitchenPreparationMinutes: Number(prepTime.toFixed(1)),
-      pureTransitTravelMinutes: Number(baselineTransit.toFixed(1)),
-      trafficCongestionDelayMinutes: trafficDelayImpact,
-      weatherPrecipitationPenaltyMinutes: weatherDelayImpact,
-      driverHandoverMinutes: handoverMinutes
-    },
-    modelMetrics: {
-      algorithm: "Physics-Informed Ridge & Gradient Ensemble Regressor",
-      maeMinutes: 1.40,
-      rmseMinutes: 1.82,
-      r2Score: 0.984,
-      trainingDatasetSize: 500
+    featureBreakdown,
+    modelMetrics: model?.metrics ? {
+      algorithm,
+      ...model.metrics,
+      trainingDatasetSize: model.sampleCount,
+      trained: true,
+      trainedAt: model.trainedAt
+    } : {
+      algorithm,
+      maeMinutes: null,
+      rmseMinutes: null,
+      r2Score: null,
+      trainingDatasetSize: 0,
+      trained: false,
+      note: 'Select Train ETA Model to fit and evaluate a model on the bundled dataset.'
     }
   };
 }
@@ -331,5 +478,7 @@ module.exports = {
   getDatasetStats,
   preprocessSample,
   executeNlpToSqlChatbot,
-  predictDeliveryTime
+  predictDeliveryTime,
+  trainEtaModel,
+  getModelStatus
 };
