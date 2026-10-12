@@ -160,7 +160,7 @@ export default function AiSentimentHub() {
                   <td className="py-3 px-2 text-right" style={{ color: '#858a7e' }}>{(review.key_themes || []).join(', ') || '—'}</td>
                 </tr>
               )) : <tr><td colSpan={4} className="py-5 px-2" style={{ color: '#858a7e' }}>No stored customer reviews yet. Add reviews through the database to populate this live log.</td></tr>}
-            </tbody>    </tbody>
+            </tbody>
           </table>
         </div>
       </div>
