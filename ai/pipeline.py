@@ -169,42 +169,36 @@ LIMIT 5;"""
 # --- STEP 3: PREDICTION MODULE (Delivery Time ETA Regressor) ---
 class DeliveryTimePredictor:
     def __init__(self):
-        # Trained Ridge Regression weights on standardized features
-        self.weights = {
-            "intercept": 22.4,
-            "distance_coef": 4.12,   # minutes per km
-            "prep_time_coef": 1.15,  # minutes per prep min
-            "items_coef": 1.20,      # minutes per dish item
-            "traffic_penalties": {"Low": 0.0, "Medium": 5.2, "High": 14.8, "Jam": 26.5},
-            "weather_penalties": {"Clear": 0.0, "Rainy": 7.4, "Foggy": 4.8, "Stormy": 19.2},
-            "vehicle_offsets": {"Bike": 0.0, "Scooter": -2.1, "Electric_Bicycle": 1.8, "Car": 2.5}
-        }
+        self.traffic_map = {"Low": 1.0, "Medium": 1.25, "High": 1.65, "Jam": 2.20}
+        self.weather_map = {"Clear": 1.0, "Rainy": 1.30, "Foggy": 1.18, "Stormy": 1.70}
+        self.speed_map = {"Car": 22.0, "Electric_Bicycle": 18.0, "Bike": 20.0, "Scooter": 25.0}
+        self.handover = 3.5
 
     def predict(self, distance_km, prep_time_min, num_items, weather="Clear", traffic="Medium", vehicle="Bike"):
-        eta = (
-            self.weights["intercept"]
-            + (distance_km * self.weights["distance_coef"])
-            + (prep_time_min * self.weights["prep_time_coef"] * 0.4)
-            + (num_items * self.weights["items_coef"])
-            + self.weights["traffic_penalties"].get(traffic, 5.0)
-            + self.weights["weather_penalties"].get(weather, 0.0)
-            + self.weights["vehicle_offsets"].get(vehicle, 0.0)
-        )
+        spd = self.speed_map.get(vehicle, 20.0)
+        t_mult = self.traffic_map.get(traffic, 1.25)
+        w_mult = self.weather_map.get(weather, 1.0)
         
-        eta = max(12.0, round(eta, 1))
+        base_transit = (distance_km / spd) * 60.0
+        congested_transit = base_transit * t_mult * w_mult
+        eta = round(prep_time_min + congested_transit + self.handover, 1)
+        
         delay_prob = 1.0 / (1.0 + math.exp(-0.12 * (eta - 42.0))) # Sigmoid probability
         delay_category = "High Risk" if delay_prob > 0.65 else ("Moderate Risk" if delay_prob > 0.35 else "Low Risk")
+
+        traffic_impact = round(base_transit * (t_mult - 1.0), 1)
+        weather_impact = round(base_transit * t_mult * (w_mult - 1.0), 1)
 
         return {
             "predicted_delivery_time_minutes": eta,
             "delay_probability_pct": round(delay_prob * 100, 1),
             "delay_risk_level": delay_category,
             "feature_contributions": {
-                "Base Handover & Routing": self.weights["intercept"],
-                "Distance Contribution": round(distance_km * self.weights["distance_coef"], 1),
-                "Kitchen Prep Load": round(prep_time_min * 0.4 + num_items * self.weights["items_coef"], 1),
-                "Traffic Delay Impact": self.weights["traffic_penalties"].get(traffic, 0.0),
-                "Weather Penalty": self.weights["weather_penalties"].get(weather, 0.0)
+                "Kitchen Prep Duration": prep_time_min,
+                "Base Transit Time": round(base_transit, 1),
+                "Traffic Delay Impact": traffic_impact,
+                "Weather Precipitation Penalty": weather_impact,
+                "Handover & Parking Delay": self.handover
             }
         }
 
