@@ -3,7 +3,7 @@ import { Database, Terminal, ShieldAlert, Layers, ShoppingBag, BookOpen, Activit
 
 export default function Navbar({ activeTab, setActiveTab }) {
   const navItems = [
-    { id: 'storefrontPreview', label: 'Storefront Preview', icon: ShoppingBag },
+    { id: 'storefrontPreview', label: 'Customer Storefront', icon: ShoppingBag },
     { id: 'observatory', label: 'Admin Observatory', icon: Database },
     { id: 'aiStudio', label: '✨ AI Studio', icon: Sparkles },
     { id: 'sqlStudio', label: 'SQL Studio & EXPLAIN', icon: Terminal },
