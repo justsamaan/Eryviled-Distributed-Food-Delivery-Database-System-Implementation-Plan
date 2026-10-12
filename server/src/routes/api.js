@@ -9,6 +9,7 @@ const { simulateRaceCondition } = require('../services/concurrencyService');
 const aiRecommendationService = require('../services/aiRecommendationService');
 const aiPipelineService = require('../services/aiPipelineService');
 const aiSentimentService = require('../services/aiSentimentService');
+const aiSqlService = require('../services/aiSqlService');
 
 
 // 1. HEALTH CHECK
@@ -279,6 +280,29 @@ router.post('/ai/predict-eta', (req, res) => {
   }
 });
 
+
+/* Shared AI endpoints used by SQL Studio and the in-store concierge. */
+router.post('/ai/text-to-sql', async (req, res) => {
+  try {
+    const prompt = String(req.body?.prompt || '').trim();
+    if (!prompt) return res.status(400).json({ error: 'Prompt is required.' });
+    const translated = aiSqlService.translateToSql(prompt);
+    const result = await query(translated.sql);
+    res.json({ sql: translated.sql, explanation: translated.explanation, rows: result.rows, rowCount: result.rows.length, executionTimeMs: Number(result.executionTimeMs.toFixed(2)), source: 'SQLITE_DATABASE' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get('/ai/recommendations/:customerId', async (req, res) => {
+  try {
+    const customerId = Math.max(1, Number(req.params.customerId) || 1);
+    const result = await aiRecommendationService.getAiRecommendationsForCustomer(customerId);
+    res.json({ data: result.topRecommendations.map(item => ({ ...item, ai_match_score: item.matchPercentage })), algorithm: result.algorithm, latencyMs: result.latencyMs, customerId });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 /* AI MODEL OPERATIONS — training is explicit and returns held-out evaluation metrics. */
 router.get('/ai/model-status', (req, res) => {
