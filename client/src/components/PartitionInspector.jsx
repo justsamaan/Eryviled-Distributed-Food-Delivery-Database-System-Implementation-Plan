@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import apiFetch from '../api.js';
 import { Layers, Database, Filter, CheckCircle, ArrowRight } from 'lucide-react';
 
 export default function PartitionInspector() {
   const [partitions, setPartitions] = useState([]);
 
   useEffect(() => {
-    fetch('/api/observatory/metrics')
+    apiFetch('/api/observatory/metrics')
       .then(res => res.json())
       .then(data => {
         if (data.partitions) setPartitions(data.partitions);
