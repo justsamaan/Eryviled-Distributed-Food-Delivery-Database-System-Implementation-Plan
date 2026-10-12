@@ -292,3 +292,12 @@ body { background:#f8f7f2; color:#263328; font-family:'DM Sans',Inter,system-ui,
 @media(max-width:1200px) { .ery-sidebar { width:245px; } .ery-main { margin-left:245px; } .ery-content { padding:27px 25px 18px; } .ery-topbar { padding:0 25px; } .ery-nav-copy small { display:none; } }
 @media(max-width:850px) { .ery-sidebar { transform:translateX(-101%); transition:transform .22s ease; width:280px; box-shadow:none; } .ery-sidebar.is-open { transform:translateX(0); box-shadow:12px 0 40px #20291f18; } .ery-main { margin-left:0; } .ery-menu-toggle { display:flex; flex-direction:column; justify-content:center; gap:4px; width:35px; height:35px; border:1px solid #e7e5dc; border-radius:8px; background:#fffefa; padding:8px; } .ery-menu-toggle span { height:2px; width:100%; background:#4d5d4a; border-radius:3px; } .ery-mobile-scrim { display:block; position:fixed; z-index:60; inset:0; border:0; background:#1d2b2155; } .ery-topbar { min-height:62px; padding:0 16px; gap:11px; } .ery-live-indicator { display:none; } .ery-content { padding:23px 16px 16px; } .ery-page-heading { margin-bottom:21px; } .ery-page-heading p { max-width:470px; line-height:1.6; } }
 @media(max-width:520px) { .ery-breadcrumb>span:first-child,.ery-breadcrumb-slash { display:none; } .ery-breadcrumb { flex:1; } .ery-breadcrumb b { max-width:150px; } .ery-home-button { padding:9px; font-size:0; } .ery-home-button svg { width:17px; height:17px; } .ery-page-index { display:none; } }
+
+.ery-api-config { display:flex; align-items:center; gap:5px; padding:4px; border:1px solid #e3e1d7; border-radius:9px; background:#fffefa; }
+.ery-api-config label { padding:0 3px 0 5px; color:#899083; font-size:9px; font-weight:800; letter-spacing:.6px; }
+.ery-api-config input { width:175px; min-width:0; border:0; outline:none; background:transparent; color:#3d493b; font:10px 'DM Sans',sans-serif; }
+.ery-api-config input::placeholder { color:#b0b1a7; }
+.ery-api-config button { border:0; border-radius:6px; padding:6px 8px; background:#e7eadd; color:#38523a; font-size:9px; font-weight:800; cursor:pointer; }
+.ery-api-message { margin-bottom:15px; padding:10px 13px; border:1px solid #dce4d5; border-radius:9px; background:#edf1e7; color:#38523a; font-size:11px; }
+@media(max-width:1100px) { .ery-api-config input { width:120px; } }
+@media(max-width:850px) { .ery-api-config { display:none; } }
