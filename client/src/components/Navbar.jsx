@@ -8,7 +8,8 @@ export default function Navbar({ activeTab, setActiveTab }) {
     { id: 'sqlStudio', label: 'SQL Studio & EXPLAIN', icon: Terminal },
     { id: 'concurrencyLab', label: 'Concurrency Lab', icon: ShieldAlert },
     { id: 'partitioning', label: 'Partition Inspector', icon: Layers },
-    { id: 'customerApp', label: 'Food Delivery App', icon: ShoppingBag },
+    { id: 'storefrontPreview', label: 'Storefront Preview', icon: ShoppingBag },
+    { id: 'customerApp', label: 'DBMS Customer App', icon: ShoppingBag },
     { id: 'aiHub', label: 'AI Intelligence Hub', icon: BrainCircuit },
     { id: 'documentation', label: 'ERD & Docs', icon: BookOpen },
   ];
