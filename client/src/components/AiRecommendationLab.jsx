@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import apiFetch from '../api.js';
+import apiFetch, { getApiBase } from '../api.js';
 import { 
   Sparkles, Database, FileText, ArrowRight, CheckCircle2, MessageSquare, 
   Send, BrainCircuit, Activity, Sliders, Flame, HeartPulse, DollarSign, 
@@ -234,7 +234,7 @@ export default function AiRecommendationLab() {
                 <RefreshCw size={15} className={training ? 'animate-spin' : ''} /> {training ? 'Training model…' : modelStatus?.trained ? 'Retrain ETA model' : 'Train ETA model'}
               </button>
               <button className="btn" onClick={() => { refreshModelStatus(); fetchDatasetStats(); }} style={{ border: '1px solid var(--border-color)', background: '#f0efe7', color: '#263328' }}>Refresh API & dataset</button>
-              <button className="btn" disabled={!modelStatus?.datasetRowsAvailable} onClick={() => { const base = (window.localStorage.getItem('eryviledApiBase') || import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, ''); if (!base) { setTrainingMessage('Set your backend URL in the top bar before downloading the dataset.'); return; } window.open(base + '/api/ai/dataset.csv', '_blank', 'noopener,noreferrer'); }} style={{ border: '1px solid var(--border-color)', background: '#f0efe7', color: '#263328' }}>
+              <button className="btn" disabled={!modelStatus?.datasetRowsAvailable} onClick={() => { const base = getApiBase(); if (!base) { setTrainingMessage('Set and verify your deployed backend URL in the workspace header before downloading the dataset.'); return; } window.open(base + '/api/ai/dataset.csv', '_blank', 'noopener,noreferrer'); }} style={{ border: '1px solid var(--border-color)', background: '#f0efe7', color: '#263328' }}>
                 <FileText size={15} /> Download training CSV
               </button>
             </div>
