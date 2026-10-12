@@ -10,7 +10,7 @@ import DocumentationView from './components/DocumentationView';
 import AiRecommendationLab from './components/AiRecommendationLab';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('observatory');
+  const [activeTab, setActiveTab] = useState('storefrontPreview');
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--bg-dark)' }}>
