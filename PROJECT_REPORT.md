@@ -142,8 +142,21 @@ ORDER BY (dot_product / (u_norm * i_norm)) DESC
 LIMIT 5;
 ```
 
-### 3. Real-Time Recommendation Studio & Inference Workflow:
-- Customers can interactively fine-tune vector sliders in the **AI Studio UI**.
-- Inference calculations execute in **~3.6 ms** via optimized SQL CTE expressions and pre-indexed vector lookup.
-- Results generate explicit reasoning tags (e.g., *"99% Match based on Strict Vegan & High Healthiness preferences"*).
+---
 
+## 7. AI-Driven Database Intelligence & Optimization
+The system integrates an **AI-Based Database Index Recommendation & Query Optimization Engine** directly into the SQL Studio Observatory:
+- **AI-Based Database Index Advisor**: Parses AST patterns in user queries to recommend missing B-Tree or composite index structures.
+- **AI-Based SQL Query Optimizer**: Analyzes execution plans to recommend query rewrites (injecting `LIMIT`, substituting subqueries).
+- **AI Review Sentiment Analysis**: Automatically scores review sentiments in the `reviews` table.
+
+---
+
+## 8. Complete 6–7 Page Academic Research Report
+For the complete empirical investigation covering the **3-Stage AI Pipeline** ($\text{Dataset Ingestion} \to \text{Preprocessing} \to \text{NLP-to-SQL RAG Chatbot} \to \text{Physics-Informed ETA Regression}$), refer to:  
+👉 **`AI_FOOD_DELIVERY_PROJECT_REPORT.md`**
+
+---
+
+## 9. Conclusion
+Eryviled demonstrates that a modern food delivery platform requires more than simple CRUD operations. By combining **Normalized Schema Design (3NF/BCNF)**, **ACID Transactions**, **High-Performance Indexing**, **Redis Caching**, **Table Partitioning**, and a **Multi-Stage AI Subsystem**, we have built a production-grade, highly reliable, and intelligent database architecture.

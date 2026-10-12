@@ -5,6 +5,7 @@ import SqlStudio from './components/SqlStudio';
 import ConcurrencyLab from './components/ConcurrencyLab';
 import PartitionInspector from './components/PartitionInspector';
 import CustomerView from './components/CustomerView';
+import AiSentimentHub from './components/AiSentimentHub';
 import DocumentationView from './components/DocumentationView';
 import AiRecommendationLab from './components/AiRecommendationLab';
 
@@ -24,6 +25,7 @@ export default function App() {
         {activeTab === 'concurrencyLab' && <ConcurrencyLab />}
         {activeTab === 'partitioning' && <PartitionInspector />}
         {activeTab === 'customerApp' && <CustomerView />}
+        {activeTab === 'aiHub' && <AiSentimentHub />}
         {activeTab === 'documentation' && <DocumentationView />}
       </main>
 
