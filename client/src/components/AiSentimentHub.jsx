@@ -4,21 +4,44 @@ import { BrainCircuit, MessageSquare, TrendingUp, TrendingDown, Minus, Quote, Za
 export default function AiSentimentHub() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [reviewText, setReviewText] = useState('The food was fresh and delicious, but delivery was slow.');
+  const [reviewResult, setReviewResult] = useState(null);
+  const [reviewLoading, setReviewLoading] = useState(false);
+  const [apiError, setApiError] = useState('');
 
   useEffect(() => {
     fetch('/api/ai/sentiment-summary')
       .then(res => res.json())
       .then(json => {
+        if (!json || json.error) throw new Error(json?.error || 'AI API returned no data');
         setData(json);
+        setApiError('');
         setLoading(false);
       })
       .catch(err => {
         console.error(err);
+        setApiError(err.message || 'Could not connect to the AI API.');
         setLoading(false);
       });
   }, []);
 
   if (loading) return <div className="p-10 text-center animate-pulse text-blue-400">Loading AI Intelligence Models...</div>;
+
+  const analyzeReview = async () => {
+    if (!reviewText.trim()) return;
+    setReviewLoading(true);
+    setReviewResult(null);
+    try {
+      const response = await fetch('/api/ai/analyze-review', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: reviewText }) });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Sentiment analysis failed');
+      setReviewResult(result);
+    } catch (error) {
+      setReviewResult({ error: error.message });
+    } finally {
+      setReviewLoading(false);
+    }
+  };
 
   const distribution = data?.distribution || [];
   const topKeywords = data?.topKeywords || [];
@@ -33,6 +56,18 @@ export default function AiSentimentHub() {
           <h1 className="text-2xl font-bold text-white">AI Customer Intelligence</h1>
           <p className="text-gray-400 text-sm">Natural Language Processing (NLP) Sentiment Analysis & Keyword Extraction</p>
         </div>
+      </div>
+
+      {apiError && <div className="glass-panel" style={{ padding: '1rem', color: '#c65345' }}>AI API unavailable: {apiError}. Configure the backend URL in the workspace header and make sure the server is running.</div>}
+
+      <div className="glass-panel" style={{ padding: '1.25rem' }}>
+        <h3 style={{ marginBottom: '0.45rem', fontSize: '1.05rem', color: '#263328' }}>Try sentiment analysis on a review</h3>
+        <p style={{ marginBottom: '0.8rem', color: '#72796e', fontSize: '0.8rem' }}>Submits your text to the backend sentiment service and shows its actual prediction and detected themes.</p>
+        <form onSubmit={event => { event.preventDefault(); analyzeReview(); }} style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
+          <input value={reviewText} onChange={event => setReviewText(event.target.value)} aria-label="Review text" style={{ flex: '1 1 280px', minWidth: 0, padding: '0.75rem', border: '1px solid #deded3', borderRadius: '9px', background: '#fffefa', color: '#263328' }} />
+          <button className="btn btn-primary" type="submit" disabled={reviewLoading}>{reviewLoading ? 'Analyzing…' : 'Analyze review'}</button>
+        </form>
+        {reviewResult && <div role="status" style={{ marginTop: '0.85rem', padding: '0.9rem', borderRadius: '9px', background: '#f2f0e8', color: '#263328' }}>{reviewResult.error ? <span style={{ color: '#c65345' }}>{reviewResult.error}</span> : <><strong>{reviewResult.label}</strong> · Score {reviewResult.score} · Themes: {(reviewResult.themes || []).join(', ') || 'none detected'}<p style={{ color: '#858a7e', fontSize: '0.7rem', marginTop: '0.35rem' }}>Source: {reviewResult.source}</p></>}</div>}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -101,7 +136,7 @@ export default function AiSentimentHub() {
       <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-800 bg-gray-800/30">
           <h3 className="text-gray-300 font-semibold text-sm flex items-center gap-2">
-            <Quote size={16} className="text-blue-400" /> Live AI Inference Log (reviews × ai_review_insights)
+            <Quote size={16} className="text-blue-400" /> Live AI Inference Log (customer reviews analyzed by the backend)
           </h3>
         </div>
         <div className="p-4 overflow-x-auto">
@@ -115,25 +150,15 @@ export default function AiSentimentHub() {
               </tr>
             </thead>
             <tbody className="text-gray-300 divide-y divide-gray-800">
-              <tr className="hover:bg-white/5 transition-colors">
-                <td className="py-3 px-2 text-green-400">POSITIVE</td>
-                <td className="py-3 px-2 font-mono text-blue-400">0.90</td>
-                <td className="py-3 px-2 text-gray-400 italic">"The truffle mushroom pizza was absolutely delicious! Best pizza in New York."</td>
-                <td className="py-3 px-2 text-right text-gray-500">pizza, delicious</td>
-              </tr>
-              <tr className="hover:bg-white/5 transition-colors">
-                <td className="py-3 px-2 text-red-400">NEGATIVE</td>
-                <td className="py-3 px-2 font-mono text-blue-400">-0.60</td>
-                <td className="py-3 px-2 text-gray-400 italic">"Delivery was extremely slow and the ramen broth arrived cold. Very disappointing."</td>
-                <td className="py-3 px-2 text-right text-gray-500">slow, cold</td>
-              </tr>
-              <tr className="hover:bg-white/5 transition-colors">
-                <td className="py-3 px-2 text-gray-400">NEUTRAL</td>
-                <td className="py-3 px-2 font-mono text-blue-400">0.10</td>
-                <td className="py-3 px-2 text-gray-400 italic">"Great burger, but the truffle fries were a bit too salty for my taste."</td>
-                <td className="py-3 px-2 text-right text-gray-500">burger, salty</td>
-              </tr>
-            </tbody>
+              {(data?.reviews || []).length ? data.reviews.map(review => (
+                <tr key={review.review_id}>
+                  <td className="py-3 px-2" style={{ color: review.sentiment_label === 'POSITIVE' ? '#4c7255' : review.sentiment_label === 'NEGATIVE' ? '#c65345' : '#858a7e' }}>{review.sentiment_label}</td>
+                  <td className="py-3 px-2 font-mono" style={{ color: '#4c7255' }}>{Number(review.sentiment_score).toFixed(2)}</td>
+                  <td className="py-3 px-2" style={{ color: '#72796e' }}>{review.comment || '—'}</td>
+                  <td className="py-3 px-2 text-right" style={{ color: '#858a7e' }}>{(review.key_themes || []).join(', ') || '—'}</td>
+                </tr>
+              )) : <tr><td colSpan={4} className="py-5 px-2" style={{ color: '#858a7e' }}>No stored customer reviews yet. Add reviews through the database to populate this live log.</td></tr>}
+            </tbody>    </tbody>
           </table>
         </div>
       </div>
