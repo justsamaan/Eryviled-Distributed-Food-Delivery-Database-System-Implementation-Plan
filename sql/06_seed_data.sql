@@ -9,7 +9,11 @@ INSERT OR IGNORE INTO restaurant_categories (category_id, category_name, descrip
 (2, 'Asian & Sushi', 'Fresh sushi rolls, ramen bowls, and Dim Sum', 'utensils'),
 (3, 'American & Burgers', 'Gourmet smash burgers, fries, and shakes', 'hamburger'),
 (4, 'Indian & Curry', 'Authentic biryanis, tikka masalas, and garlic naan', 'bowl-rice'),
-(5, 'Healthy & Salads', 'Organic grain bowls, fresh smoothies, and salads', 'leaf');
+(5, 'Healthy & Salads', 'Organic grain bowls, fresh smoothies, and salads', 'leaf'),
+(6, 'South Indian', 'Dosas, idlis, filter coffee and regional favourites', 'utensils'),
+(7, 'Street Food & Snacks', 'Chaat, rolls and Indian street-food favourites', 'utensils'),
+(8, 'Desserts & Bakery', 'Cakes, pastries and fresh bakery treats', 'cake'),
+(9, 'Seafood & Coastal', 'Seafood bowls, coastal curries and grilled fish', 'fish');
 
 -- 2. SEED USERS (Customers, Restaurant Owners, Delivery Partners)
 -- Customer Users (IDs 1-6)
@@ -60,7 +64,12 @@ INSERT OR IGNORE INTO restaurants (restaurant_id, owner_id, name, category_id, c
 (2, 8, 'Sakura Japanese & Ramen', 2, 'New York', '112 East 23rd St', 40.739800, -73.986200, 4.9, 1, 10.0),
 (3, 9, 'The Big Apple Burger Co.', 3, 'New York', '78 West 8th St', 40.732400, -73.996800, 4.6, 1, 7.0),
 (4, 10, 'Taj Mahal Indian Spice', 4, 'New York', '315 Lexington Ave', 40.746100, -73.978200, 4.7, 1, 9.0),
-(5, 11, 'Green Goddess Bowl Lab', 5, 'San Francisco', '450 Mission St', 37.790500, -122.398100, 4.8, 1, 6.5);
+(5, 11, 'Green Goddess Bowl Lab', 5, 'San Francisco', '450 Mission St', 37.790500, -122.398100, 4.8, 1, 6.5),
+(6, 7, 'Madras Filter Club', 6, 'Chennai', '12 Pondy Bazaar', 13.041800, 80.233700, 4.9, 1, 8.0),
+(7, 8, 'Little Napoli', 1, 'Chennai', '24 Cathedral Road', 13.040100, 80.254300, 4.6, 1, 8.0),
+(8, 9, 'Chennai Chaat House', 7, 'Chennai', '8 Usman Road', 13.043100, 80.234800, 4.5, 1, 6.0),
+(9, 10, 'Sweet Theory Patisserie', 8, 'Chennai', '31 Wallace Garden', 13.058700, 80.249400, 4.7, 1, 7.0),
+(10, 11, 'Coastal Catch Kitchen', 9, 'Chennai', '17 RK Mutt Road', 13.031100, 80.269700, 4.6, 1, 8.0);
 
 -- 6. SEED MENU ITEMS
 INSERT OR IGNORE INTO menu_items (item_id, restaurant_id, item_name, description, price, dish_type, is_available) VALUES
@@ -91,7 +100,28 @@ INSERT OR IGNORE INTO menu_items (item_id, restaurant_id, item_name, description
 (16, 5, 'Rainbow Grain Bowl', 'Quinoa, leafy greens, roasted seasonal vegetables and lemon tahini', 16.50, 'VEGAN', 1),
 (17, 5, 'Avocado Sourdough Toast', 'Sourdough toast, smashed avocado, herbs and chilli flakes', 13.50, 'VEG', 1),
 (18, 5, 'Peanut Protein Smoothie', 'Banana, peanut butter, oat milk and plant protein', 9.50, 'VEGAN', 1),
-(19, 5, 'Seasonal Fruit Cup', 'Fresh-cut seasonal fruit', 7.50, 'VEGAN', 1);
+(19, 5, 'Seasonal Fruit Cup', 'Fresh-cut seasonal fruit', 7.50, 'VEGAN', 1),
+(20, 6, 'Ghee Podi Dosa', 'Crisp dosa, ghee and house podi', 5.50, 'VEG', 1),
+(21, 6, 'Mini Idli Sambar', 'Soft idlis with sambar and chutneys', 4.25, 'VEG', 1),
+(22, 6, 'Masala Dosa', 'Golden dosa filled with potato masala', 5.95, 'VEG', 1),
+(23, 6, 'Filter Coffee', 'Traditional strong coffee with steamed milk', 2.25, 'VEG', 1),
+(24, 7, 'Margherita Amore', 'Tomato, mozzarella and basil on thin crust', 12.50, 'VEG', 1),
+(25, 7, 'Garlic Knots', 'Baked dough knots with garlic butter', 4.50, 'VEG', 1),
+(26, 7, 'Creamy Alfredo Pasta', 'Penne in parmesan cream sauce', 13.50, 'VEG', 1),
+(27, 7, 'Spicy Chicken Pizza', 'Roast chicken, peppers and chilli oil', 15.50, 'NON_VEG', 1),
+(28, 8, 'Pani Puri (6 pcs)', 'Crisp puris with spiced mint water', 3.25, 'VEGAN', 1),
+(29, 8, 'Paneer Kathi Roll', 'Spiced paneer and crunchy salad in a wrap', 5.75, 'VEG', 1),
+(30, 8, 'Samosa Duo', 'Crispy pastry with potato and peas', 2.95, 'VEGAN', 1),
+(31, 8, 'Dahi Puri', 'Puris, yoghurt, chutneys and sev', 3.75, 'VEG', 1),
+(32, 9, 'Belgian Chocolate Cake', 'Dark chocolate sponge and ganache', 6.95, 'VEG', 1),
+(33, 9, 'Pistachio Croissant', 'Flaky croissant with pistachio cream', 4.75, 'VEG', 1),
+(34, 9, 'Classic Butter Cookies', 'Shortbread-style cookies baked daily', 3.50, 'VEG', 1),
+(35, 9, 'Strawberry Cheesecake', 'Creamy cheesecake with strawberry compote', 6.50, 'VEG', 1),
+(36, 10, 'Pepper Garlic Prawns', 'Prawns tossed with pepper, garlic and curry leaves', 14.50, 'NON_VEG', 1),
+(37, 10, 'Coastal Fish Curry Rice', 'Tangy coastal curry served with rice', 12.50, 'NON_VEG', 1),
+(38, 10, 'Grilled Fish Bowl', 'Grilled fish, rice and fresh vegetables', 15.50, 'NON_VEG', 1),
+(39, 10, 'Coconut Payasam', 'Traditional coconut milk and jaggery dessert', 4.25, 'VEG', 1),
+(40, 3, 'Chocolate Brownie', 'Warm fudge brownie with chocolate sauce', 6.50, 'VEG', 1);
 
 -- 7. SEED INVENTORY (Stock Control)
 INSERT OR IGNORE INTO inventory (inventory_id, item_id, available_stock, reserved_stock) VALUES
@@ -113,7 +143,12 @@ INSERT OR IGNORE INTO inventory (inventory_id, item_id, available_stock, reserve
 (16, 16, 24, 0),
 (17, 17, 18, 0),
 (18, 18, 30, 0),
-(19, 19, 40, 0);
+(19, 19, 40, 0),
+(20, 20, 30, 0), (21, 21, 35, 0), (22, 22, 25, 0), (23, 23, 50, 0),
+(24, 24, 20, 0), (25, 25, 40, 0), (26, 26, 18, 0), (27, 27, 15, 0),
+(28, 28, 35, 0), (29, 29, 20, 0), (30, 30, 40, 0), (31, 31, 25, 0),
+(32, 32, 12, 0), (33, 33, 18, 0), (34, 34, 30, 0), (35, 35, 10, 0),
+(36, 36, 16, 0), (37, 37, 18, 0), (38, 38, 14, 0), (39, 39, 20, 0), (40, 40, 24, 0);
 
 -- 8. SEED COUPONS
 INSERT OR IGNORE INTO coupons (coupon_id, code, discount_percentage, max_discount_amount, min_order_amount, valid_until, is_active) VALUES
