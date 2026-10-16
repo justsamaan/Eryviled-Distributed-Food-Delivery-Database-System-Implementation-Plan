@@ -154,7 +154,7 @@ async function loadDemoCatalog(){
     const payload = await response.json();
     if(!Array.isArray(payload.restaurants)||!payload.restaurants.length) throw new Error('Catalog is empty');
     if(!apiMode) restaurants = payload.restaurants.map((r,index)=>({
-      id:Number(r.restaurant_id),apiId:Number(r.restaurant_id),name:r.name,cuisine:r.category_name,
+      id:Number(r.restaurant_id),apiId:Number(r.restaurant_id),name:r.name,cuisine:({'Italian & Pizza':'Pizza','Asian & Sushi':'Asian','Burgers & American':'Burgers','Indian & Curry':'Biryani','Healthy & Salads':'Healthy','South Indian':'South Indian','Pizza & Italian':'Pizza','Street Food & Snacks':'Asian','Desserts & Bakery':'Desserts','Seafood & Coastal':'Asian'}[r.category_name]||r.category_name),
       rating:Number(r.rating)||4.5,mins:Number(r.delivery_minutes)||25,fee:Number(r.delivery_fee)||0,
       price:r.price_band||'$',emoji:r.emoji||'🍽️',bg:r.background||cuisineBackgrounds[index%cuisineBackgrounds.length],
       tag:r.tag||'DEMO MENU',desc:r.description||'A demo menu from the Eryviled catalog.',
