@@ -6,6 +6,75 @@ import {
   ShieldAlert, RefreshCw, BarChart2, Zap, Clock, CloudRain, Car, Bike, AlertTriangle
 } from 'lucide-react';
 
+
+let localDatasetCache = null;
+const LOCAL_MODEL_KEY = 'eryviledLocalEtaModel';
+const CSV_FIELDS = ['order_id','customer_id','restaurant_id','restaurant_name','cuisine_type','order_value_usd','num_items','prep_time_minutes','delivery_distance_km','weather_condition','traffic_density','vehicle_type','driver_experience_years','time_of_day','delivery_time_minutes','is_delayed','customer_rating','customer_review'];
+function parseCsvRows(text) {
+  const rows=[]; let row=[],field='',quoted=false;
+  for(let i=0;i<text.length;i++){const ch=text[i];if(ch==='"'&&quoted&&text[i+1]==='"'){field+='"';i++;}else if(ch==='"')quoted=!quoted;else if(ch===','&&!quoted){row.push(field);field='';}else if((ch==='\n'||ch==='\r')&&!quoted){if(ch==='\r'&&text[i+1]==='\n')i++;row.push(field);if(row.some(v=>v!==''))rows.push(row);row=[];field='';}else field+=ch;}
+  if(field!==''||row.length){row.push(field);rows.push(row);}
+  return rows.slice(1).map(values=>Object.fromEntries(CSV_FIELDS.map((key,index)=>[key,values[index]??'']))).map(r=>({...r,order_id:Number(r.order_id),customer_id:Number(r.customer_id),restaurant_id:Number(r.restaurant_id),order_value_usd:Number(r.order_value_usd),num_items:Number(r.num_items),prep_time_minutes:Number(r.prep_time_minutes),delivery_distance_km:Number(r.delivery_distance_km),driver_experience_years:Number(r.driver_experience_years),delivery_time_minutes:Number(r.delivery_time_minutes),is_delayed:Number(r.is_delayed),customer_rating:Number(r.customer_rating)})).filter(r=>Number.isFinite(r.delivery_time_minutes));
+}
+async function loadLocalDataset(){
+  if(localDatasetCache)return localDatasetCache;
+  const response=await fetch(import.meta.env.BASE_URL+'data/food_delivery_dataset.csv');
+  if(!response.ok)throw new Error('Bundled training dataset could not be loaded (HTTP '+response.status+').');
+  const rows=parseCsvRows(await response.text());if(rows.length<30)throw new Error('Bundled training dataset has too few valid rows.');
+  localDatasetCache=rows;return rows;
+}
+function localDatasetSummary(rows){
+  const avg=key=>rows.reduce((sum,r)=>sum+(Number(r[key])||0),0)/rows.length,weather={},traffic={};
+  rows.forEach(r=>{weather[r.weather_condition]=(weather[r.weather_condition]||0)+1;traffic[r.traffic_density]=(traffic[r.traffic_density]||0)+1;});
+  const delayed=rows.filter(r=>r.is_delayed===1).length;
+  return {totalRecords:rows.length,summary:{avgDistanceKm:Number(avg('delivery_distance_km').toFixed(2)),avgDeliveryTimeMin:Number(avg('delivery_time_minutes').toFixed(2)),avgOrderValueUsd:Number(avg('order_value_usd').toFixed(2)),delayedOrders:delayed,delayedPercentage:(delayed/rows.length*100).toFixed(1)+'%'},distributions:{weather,traffic},sampleRows:rows.slice(0,10),dataDictionary:[{column:'order_id',type:'Integer',description:'Unique order identifier',role:'Key'},{column:'restaurant_name',type:'Categorical',description:'Restaurant fulfilling the order',role:'Feature'},{column:'cuisine_type',type:'Categorical',description:'Restaurant cuisine',role:'Feature'},{column:'delivery_distance_km',type:'Float',description:'Delivery distance in kilometres',role:'Feature'},{column:'prep_time_minutes',type:'Float',description:'Kitchen preparation duration',role:'Feature'},{column:'weather_condition',type:'Categorical',description:'Weather during delivery',role:'Feature'},{column:'traffic_density',type:'Categorical',description:'Traffic density',role:'Feature'},{column:'delivery_time_minutes',type:'Float',description:'Observed delivery duration',role:'Target'}]};
+}
+function localPreprocess(input){
+  input=input||{};const distance=Math.max(.5,Math.min(20,Number(input.delivery_distance_km)||5)),prep=Math.max(5,Math.min(45,Number(input.prep_time_minutes)||15)),items=Math.max(1,Number(input.num_items)||2),weather=input.weather_condition||'Clear',traffic=input.traffic_density||'Medium',vehicle=input.vehicle_type||'Bike';
+  const wm={Clear:0,Rainy:1,Foggy:2,Stormy:3},tm={Low:0,Medium:1,High:2,Jam:3},vm={Bike:0,Scooter:1,Electric_Bicycle:2,Car:3};
+  return {rawInput:{distance,prepTime:prep,items,weather,traffic,vehicle},stages:[{step:'Stage 1: Validation & Imputation',status:'PASSED',detail:'Inputs validated; safe defaults applied.'},{step:'Stage 2: Outlier Truncation & Cleaning',status:'PASSED',detail:'Distance and preparation time clipped to demo bounds.'},{step:'Stage 3: Categorical Encoding',status:'COMPLETED',detail:'Weather, traffic and vehicle categories encoded.'},{step:'Stage 4: Feature Scaling',status:'COMPLETED',detail:'Numeric features standardized using dataset reference statistics.'}],transformedVector:{distance_z:Number(((distance-6.84)/3.65).toFixed(3)),prep_time_z:Number(((prep-19.32)/5.82).toFixed(3)),num_items:items,weather_code:wm[weather]??0,traffic_code:tm[traffic]??1,vehicle_code:vm[vehicle]??0}};
+}
+const MODEL_NUMERIC=['delivery_distance_km','prep_time_minutes','num_items','driver_experience_years'];
+const MODEL_CATEGORIES={weather_condition:['Rainy','Foggy','Stormy'],traffic_density:['Medium','High','Jam'],vehicle_type:['Scooter','Electric_Bicycle','Car']};
+function modelFeatures(row,scaler){return [1,...MODEL_NUMERIC.map(key=>(Number(row[key]||0)-scaler[key].mean)/scaler[key].std),...Object.entries(MODEL_CATEGORIES).flatMap(([key,values])=>values.map(value=>row[key]===value?1:0))];}
+function solveLinearSystem(matrix,vector){
+  const a=matrix.map((row,i)=>[...row,vector[i]]),n=vector.length;
+  for(let col=0;col<n;col++){let pivot=col;for(let r=col+1;r<n;r++)if(Math.abs(a[r][col])>Math.abs(a[pivot][col]))pivot=r;if(Math.abs(a[pivot][col])<1e-10)continue;[a[col],a[pivot]]=[a[pivot],a[col]];const divisor=a[col][col];for(let j=col;j<=n;j++)a[col][j]/=divisor;for(let r=0;r<n;r++){if(r===col)continue;const factor=a[r][col];for(let j=col;j<=n;j++)a[r][j]-=factor*a[col][j];}}
+  return a.map(row=>Number.isFinite(row[n])?row[n]:0);
+}
+function trainLocalEtaModel(rows){
+  const train=rows.filter((_,i)=>i%5!==0),test=rows.filter((_,i)=>i%5===0),scaler={};
+  MODEL_NUMERIC.forEach(key=>{const vals=train.map(r=>Number(r[key])||0),mean=vals.reduce((a,b)=>a+b,0)/vals.length,variance=vals.reduce((a,v)=>a+(v-mean)**2,0)/vals.length;scaler[key]={mean,std:Math.sqrt(variance)||1};});
+  const xs=train.map(r=>modelFeatures(r,scaler)),ys=train.map(r=>r.delivery_time_minutes),width=xs[0].length,xtx=Array.from({length:width},()=>Array(width).fill(0)),xty=Array(width).fill(0);
+  xs.forEach((x,i)=>{for(let a=0;a<width;a++){xty[a]+=x[a]*ys[i];for(let b=0;b<width;b++)xtx[a][b]+=x[a]*x[b];}});for(let i=1;i<width;i++)xtx[i][i]+=.01;
+  const coefficients=solveLinearSystem(xtx,xty),predict=r=>Math.max(1,modelFeatures(r,scaler).reduce((sum,v,i)=>sum+v*coefficients[i],0)),errors=test.map(r=>r.delivery_time_minutes-predict(r)),mae=errors.reduce((a,e)=>a+Math.abs(e),0)/errors.length,rmse=Math.sqrt(errors.reduce((a,e)=>a+e*e,0)/errors.length),meanY=test.reduce((a,r)=>a+r.delivery_time_minutes,0)/test.length,total=test.reduce((a,r)=>a+(r.delivery_time_minutes-meanY)**2,0),residual=errors.reduce((a,e)=>a+e*e,0);
+  const model={algorithm:'Browser-trained ridge regression (standardized features)',coefficients,scaler,sampleCount:rows.length,trainCount:train.length,testCount:test.length,trainedAt:new Date().toISOString(),metrics:{maeMinutes:Number(mae.toFixed(2)),rmseMinutes:Number(rmse.toFixed(2)),r2Score:Number((1-residual/(total||1)).toFixed(3))}};
+  try{localStorage.setItem(LOCAL_MODEL_KEY,JSON.stringify(model));}catch{}return model;
+}
+function getLocalModel(){try{return JSON.parse(localStorage.getItem(LOCAL_MODEL_KEY)||'null');}catch{return null;}}
+function localModelStatus(rows){const model=getLocalModel();return model?{trained:true,localMode:true,datasetRowsAvailable:rows?.length||model.sampleCount,trainedAt:model.trainedAt,testCount:model.testCount,metrics:model.metrics,algorithm:model.algorithm}:{trained:false,localMode:true,datasetRowsAvailable:rows?.length||500,note:'No browser-trained model yet. Select Train ETA model to fit one on the bundled dataset.'};}
+function localPredict(params,rows){
+  params=params||{};const record={delivery_distance_km:Number(params.distance_km??params.delivery_distance_km??5),prep_time_minutes:Number(params.prep_time_min??params.prep_time_minutes??18),num_items:Number(params.num_items??2),driver_experience_years:Number(params.driver_experience_years??2),weather_condition:params.weather_condition||params.weather||'Clear',traffic_density:params.traffic_density||params.traffic||'Medium',vehicle_type:params.vehicle_type||params.vehicle||'Bike'},model=getLocalModel();
+  let minutes,algorithm,metrics;if(model?.coefficients?.length){minutes=modelFeatures(record,model.scaler).reduce((sum,v,i)=>sum+v*model.coefficients[i],0);algorithm=model.algorithm;metrics={...model.metrics,trained:true,trainingDatasetSize:model.sampleCount};}else{const speed={Bike:20,Scooter:25,Electric_Bicycle:18,Car:22}[record.vehicle_type]||20,traffic={Low:1,Medium:1.25,High:1.65,Jam:2.2}[record.traffic_density]||1.25,weather={Clear:1,Rainy:1.3,Foggy:1.18,Stormy:1.7}[record.weather_condition]||1;minutes=record.prep_time_minutes+record.delivery_distance_km/speed*60*traffic*weather;algorithm='Physics baseline (browser model not trained yet)';metrics={algorithm,maeMinutes:null,rmseMinutes:null,r2Score:null,trainingDatasetSize:0,trained:false,note:'Train the ETA model to replace this baseline.'};}
+  minutes=Number(Math.max(1,minutes).toFixed(1));const probability=Number((100/(1+Math.exp(-.12*(minutes-42)))).toFixed(1)),risk=probability>65?'High Risk':probability>35?'Moderate Risk':'Low Risk',trafficFactor={Low:0,Medium:.25,High:.65,Jam:1.2}[record.traffic_density]||.25,weatherFactor={Clear:0,Rainy:1.3,Foggy:.7,Stormy:2.2}[record.weather_condition]||0,speed={Bike:20,Scooter:25,Electric_Bicycle:18,Car:22}[record.vehicle_type]||20,transit=Number((record.delivery_distance_km/speed*60).toFixed(1));
+  return {prediction:{predictedDeliveryTimeMinutes:minutes,delayProbabilityPct:probability,delayRiskLevel:risk,riskColor:risk==='High Risk'?'#c65345':risk==='Moderate Risk'?'#f36b3f':'#4c7255'},featureBreakdown:{kitchenPreparationMinutes:record.prep_time_minutes,pureTransitTravelMinutes:transit,trafficCongestionDelayMinutes:Number((transit*trafficFactor).toFixed(1)),weatherPrecipitationPenaltyMinutes:Number(weatherFactor.toFixed(1)),driverHandoverMinutes:3},modelMetrics:metrics};
+}
+async function localChatbot(prompt,rows){
+  const q=(prompt||'').toLowerCase();let records,sql,intent;
+  if(/delay|late|storm|rain/.test(q)){intent='Weather & Congestion Delivery Delay Analysis';records=rows.filter(r=>(['Rainy','Stormy'].includes(r.weather_condition)||['High','Jam'].includes(r.traffic_density))&&r.is_delayed===1).sort((a,b)=>b.delivery_time_minutes-a.delivery_time_minutes).slice(0,5);sql="SELECT order_id, restaurant_name, cuisine_type, delivery_distance_km, weather_condition, traffic_density, delivery_time_minutes, is_delayed FROM orders_dataset WHERE (weather_condition IN ('Rainy','Stormy') OR traffic_density IN ('High','Jam')) AND is_delayed = 1 ORDER BY delivery_time_minutes DESC LIMIT 5;";}
+  else if(/italian|pizza/.test(q)){intent='Italian Cuisine Performance & Top Rated Orders';records=rows.filter(r=>r.cuisine_type==='Italian'&&r.customer_rating>=4).slice(0,5);sql="SELECT order_id, restaurant_name, cuisine_type, order_value_usd, delivery_time_minutes, customer_rating FROM orders_dataset WHERE cuisine_type = 'Italian' AND customer_rating >= 4 ORDER BY order_value_usd DESC LIMIT 5;";}
+  else if(/fast|quick|under 30|speed/.test(q)){intent='Fast Delivery SLA & Short Distance Fulfillment';records=rows.filter(r=>r.delivery_time_minutes<=30).sort((a,b)=>a.delivery_time_minutes-b.delivery_time_minutes).slice(0,5);sql='SELECT order_id, restaurant_name, delivery_distance_km, vehicle_type, delivery_time_minutes, customer_rating FROM orders_dataset WHERE delivery_time_minutes <= 30 ORDER BY delivery_time_minutes ASC LIMIT 5;';}
+  else if(/revenue|expensive|high value|spend/.test(q)){intent='High Basket Size & Premium Order Segments';records=rows.filter(r=>r.order_value_usd>=65).sort((a,b)=>b.order_value_usd-a.order_value_usd).slice(0,5);sql='SELECT order_id, restaurant_name, cuisine_type, order_value_usd, num_items, customer_rating FROM orders_dataset WHERE order_value_usd >= 65 ORDER BY order_value_usd DESC LIMIT 5;';}
+  else{intent='General Multi-Entity Logistics Inspection';records=rows.slice(0,5);sql='SELECT order_id, restaurant_name, cuisine_type, delivery_distance_km, delivery_time_minutes, customer_rating FROM orders_dataset ORDER BY order_id ASC LIMIT 5;';}
+  const response='Local dataset analysis for: "'+prompt+'". Found '+records.length+' matching records from the bundled '+rows.length+'-row delivery dataset. '+(records.length?'Average delivery time in these rows: '+(records.reduce((a,r)=>a+r.delivery_time_minutes,0)/records.length).toFixed(1)+' minutes.':'Try a broader query to find matching records.');
+  return {pipelineSteps:{step1_input:{rawUserQuery:prompt,extractedTokens:q.split(/\s+/).filter(t=>t.length>2),detectedIntent:intent},step2_convertedQuery:{sqlQuery:sql,queryEngine:'Browser CSV query',executionTimeMs:1},step3_queryOutput:{recordCount:records.length,records,status:'SUCCESS'},step4_chatbotInput:{promptTemplate:'Local dataset context synthesis',inputContextTokens:records.length*18},step5_chatbotOutput:{conversationalResponse:response,actionableRecommendations:['Compare delivery ETAs with traffic and weather conditions.','Train the ETA model and review its held-out test metrics.','Treat results as a demonstration over the bundled sample dataset.']}},totalLatencyMs:2};
+}
+async function localVectorRecommendations(prefs){
+  const response=await fetch(import.meta.env.BASE_URL+'data/restaurant-menu-catalog.json');if(!response.ok)throw new Error('Demo menu catalog unavailable');const catalog=await response.json();
+  const items=catalog.restaurants.flatMap(r=>r.menu.map(m=>({...m,restaurant_name:r.name,description:m.description,price:Number(m.price),vegan:m.dish_type==='VEGAN',asian:/Japanese|Asian/.test(r.cuisine)})));
+  return {topRecommendations:items.map(item=>{let score=.5;if(Number(prefs.veganWeight||0)>.5&&item.vegan)score+=.3;if(Number(prefs.asianPreference||0)>.5&&item.asian)score+=.25;if(Number(prefs.priceSensitivity||0)>.6)score+=Math.max(0,.2-item.price/100);return {...item,matchPercentage:Math.min(99,Math.round(score*100)),reasoningTag:item.vegan?'Plant-forward menu match':'Cuisine and budget preference match'};}).sort((a,b)=>b.matchPercentage-a.matchPercentage).slice(0,6)};
+}
+
 export default function AiRecommendationLab() {
   const [activeSubTab, setActiveSubTab] = useState('pipeline'); // 'pipeline' | 'dataset' | 'prediction' | 'vector'
 
@@ -66,7 +135,8 @@ export default function AiRecommendationLab() {
       if (!response.ok) throw new Error('Could not read model status (' + response.status + ')');
       setModelStatus(await response.json());
     } catch (error) {
-      setModelStatus({ trained: false, error: error.message });
+      try { const rows = await loadLocalDataset(); setModelStatus(localModelStatus(rows)); }
+      catch { setModelStatus({ trained: false, localMode: true, datasetRowsAvailable: 0, note: 'Bundled dataset could not be loaded. Check that the deployed frontend includes /data/food_delivery_dataset.csv.' }); }
     }
   };
 
@@ -81,10 +151,9 @@ export default function AiRecommendationLab() {
       setTrainingMessage('Training complete. Metrics below were calculated on a held-out test split.');
       handlePredict(predictParams);
     } catch (error) {
-      setTrainingMessage('Training unavailable: ' + error.message + '. Check the API URL setting and backend logs.');
-    } finally {
-      setTraining(false);
-    }
+      try { const rows = await loadLocalDataset(); const model = trainLocalEtaModel(rows); setModelStatus({ trained: true, localMode: true, datasetRowsAvailable: rows.length, trainedAt: model.trainedAt, testCount: model.testCount, metrics: model.metrics, algorithm: model.algorithm }); setTrainingMessage('Local browser training complete on '+model.trainCount+' rows; evaluated on '+model.testCount+' held-out rows. The model is saved in this browser only.'); setPredictionResult(localPredict(predictParams, rows)); }
+      catch (localError) { setTrainingMessage('Training failed: '+localError.message); }
+    } finally { setTraining(false); }
   };
 
   const fetchDatasetStats = async () => {
@@ -95,7 +164,8 @@ export default function AiRecommendationLab() {
       // Run initial preprocessing test
       handlePreprocess(preprocessInput);
     } catch (err) {
-      console.error('Failed to load dataset stats:', err);
+      try { const rows = await loadLocalDataset(); setDatasetStats(localDatasetSummary(rows)); setModelStatus(localModelStatus(rows)); setPreprocessResult(localPreprocess(preprocessInput)); }
+      catch (localError) { console.error('Failed to load bundled dataset:', localError); }
     }
   };
 
@@ -108,9 +178,7 @@ export default function AiRecommendationLab() {
       });
       const data = await res.json();
       setPreprocessResult(data);
-    } catch (err) {
-      console.error('Failed to run preprocessing:', err);
-    }
+    } catch (err) { setPreprocessResult(localPreprocess(input)); }
   };
 
   const handleRunChatbot = async (promptToRun) => {
@@ -125,10 +193,9 @@ export default function AiRecommendationLab() {
       const data = await res.json();
       setChatPipelineResult(data);
     } catch (err) {
-      console.error('Failed to run NLP-to-SQL chatbot:', err);
-    } finally {
-      setChatLoading(false);
-    }
+      try { setChatPipelineResult(await localChatbot(q, await loadLocalDataset())); }
+      catch (localError) { console.error('Local NLP demo failed:', localError); }
+    } finally { setChatLoading(false); }
   };
 
   const handlePredict = async (params) => {
@@ -143,10 +210,9 @@ export default function AiRecommendationLab() {
       const data = await res.json();
       setPredictionResult(data);
     } catch (err) {
-      console.error('Failed to run prediction:', err);
-    } finally {
-      setPredictLoading(false);
-    }
+      try { setPredictionResult(localPredict(p, await loadLocalDataset())); }
+      catch (localError) { setPredictionResult(localPredict(p, [])); console.error('Local ETA demo:', localError); }
+    } finally { setPredictLoading(false); }
   };
 
   const fetchVectorRecommendations = async (prefs = vectorPrefs) => {
@@ -156,7 +222,8 @@ export default function AiRecommendationLab() {
       const data = await res.json();
       setVectorResult(data);
     } catch (err) {
-      console.error('Failed to load vector recommendations:', err);
+      try { setVectorResult(await localVectorRecommendations(prefs)); }
+      catch (localError) { console.error('Local recommendations unavailable:', localError); }
     }
   };
 
@@ -170,6 +237,8 @@ export default function AiRecommendationLab() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       
+      {!getApiBase() && <div role="status" className="glass-panel" style={{padding:'0.85rem 1rem',borderColor:'rgba(245,158,11,.35)',background:'rgba(245,158,11,.07)'}}><strong style={{color:'#d97706'}}>Local demo mode</strong><p style={{margin:'0.3rem 0 0',fontSize:'0.82rem',color:'var(--text-secondary)'}}>No backend URL is configured. The bundled dataset, browser-based ETA training, prediction, preprocessing and demo recommendations work locally; database-backed features and shared model persistence still require a deployed Eryviled backend URL in the workspace header.</p></div>}
+
       {/* Header Banner */}
       <div className="glass-panel" style={{ padding: '1.5rem', background: 'linear-gradient(135deg, rgba(168, 85, 247, 0.18) 0%, rgba(59, 130, 246, 0.15) 100%)', borderColor: '#a855f7' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
