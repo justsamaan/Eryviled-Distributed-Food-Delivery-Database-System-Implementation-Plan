@@ -28,7 +28,22 @@ export default function CustomerView() {
         selectRestaurant(data.data[0]);
       }
     } catch (err) {
-      console.warn('Backend offline, using fallback restaurant catalog:', err.message);
+      console.warn('Backend offline, using bundled demo restaurant catalog:', err.message);
+      try {
+        const catalogResponse = await fetch(import.meta.env.BASE_URL + 'data/restaurant-menu-catalog.json');
+        if (!catalogResponse.ok) throw new Error('Bundled catalog HTTP ' + catalogResponse.status);
+        const catalog = await catalogResponse.json();
+        const fallbackRestaurants = catalog.restaurants.map(r => ({
+          restaurant_id: Number(r.restaurant_id), name: r.name, category_name: r.category_name,
+          rating: Number(r.rating) || 4.5, city: r.city || 'Demo city', icon_name: r.emoji || 'utensils'
+        }));
+        setRestaurants(fallbackRestaurants);
+        setDataSourceInfo({ source: 'BUNDLED DEMO CATALOG', latencyMs: 0.1 });
+        await selectRestaurant(fallbackRestaurants[0]);
+        return;
+      } catch (catalogError) {
+        console.warn('Bundled catalog unavailable; using compact fallback:', catalogError.message);
+      }
       const fallbackRestaurants = [
         { restaurant_id: 1, name: 'Bella Italia Pizzeria', category_name: 'Italian & Pizza', rating: 4.8, city: 'New York' },
         { restaurant_id: 2, name: 'Sakura Japanese & Ramen', category_name: 'Asian & Sushi', rating: 4.9, city: 'New York' },
@@ -37,7 +52,7 @@ export default function CustomerView() {
         { restaurant_id: 5, name: 'Green Goddess Bowl Lab', category_name: 'Healthy & Salads', rating: 4.8, city: 'San Francisco' }
       ];
       setRestaurants(fallbackRestaurants);
-      setDataSourceInfo({ source: 'REDIS_CACHE (Fallback)', latencyMs: 1.2 });
+      setDataSourceInfo({ source: 'FALLBACK DEMO CATALOG', latencyMs: 1.2 });
       selectRestaurant(fallbackRestaurants[0]);
     }
   };
@@ -52,7 +67,19 @@ export default function CustomerView() {
       const data = await res.json();
       setMenuItems(data.data || []);
     } catch (err) {
-      console.warn('Backend menu fetch offline, using fallback menu items:', err.message);
+      console.warn('Backend menu fetch offline, reading bundled menu catalog:', err.message);
+      try {
+        const catalogResponse = await fetch(import.meta.env.BASE_URL + 'data/restaurant-menu-catalog.json');
+        if (!catalogResponse.ok) throw new Error('Bundled menu catalog HTTP ' + catalogResponse.status);
+        const catalog = await catalogResponse.json();
+        const match = catalog.restaurants.find(r => Number(r.restaurant_id) === Number(restaurant.restaurant_id));
+        if (match) {
+          setMenuItems(match.menu.map(item => ({ ...item, restaurant_id: Number(restaurant.restaurant_id) })));
+          return;
+        }
+      } catch (catalogError) {
+        console.warn('Bundled menu unavailable; using compact fallback:', catalogError.message);
+      }
       const fallbackMenus = {
         1: [
           { item_id: 1, item_name: 'Truffle Mushroom Pizza', description: 'Wood-fired crust, black truffle cream and wild mushrooms', price: 21.99, dish_type: 'VEG', available_stock: 15 },
