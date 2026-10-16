@@ -59,7 +59,9 @@
           "emoji": "🥗",
           "available_stock": 20
         }
-      ]
+      ],
+      "demo_popularity_score": 96,
+      "popularity_basis": "Simulated demo engagement score; not real customer/order analytics."
     },
     {
       "restaurant_id": 2,
@@ -116,7 +118,9 @@
           "emoji": "🥟",
           "available_stock": 40
         }
-      ]
+      ],
+      "demo_popularity_score": 92,
+      "popularity_basis": "Simulated demo engagement score; not real customer/order analytics."
     },
     {
       "restaurant_id": 3,
@@ -173,7 +177,9 @@
           "emoji": "🍫",
           "available_stock": 24
         }
-      ]
+      ],
+      "demo_popularity_score": 89,
+      "popularity_basis": "Simulated demo engagement score; not real customer/order analytics."
     },
     {
       "restaurant_id": 4,
@@ -230,7 +236,9 @@
           "emoji": "🍚",
           "available_stock": 10
         }
-      ]
+      ],
+      "demo_popularity_score": 94,
+      "popularity_basis": "Simulated demo engagement score; not real customer/order analytics."
     },
     {
       "restaurant_id": 5,
@@ -287,7 +295,9 @@
           "emoji": "🍓",
           "available_stock": 40
         }
-      ]
+      ],
+      "demo_popularity_score": 88,
+      "popularity_basis": "Simulated demo engagement score; not real customer/order analytics."
     },
     {
       "restaurant_id": 6,
@@ -344,7 +354,9 @@
           "emoji": "☕",
           "available_stock": 50
         }
-      ]
+      ],
+      "demo_popularity_score": 98,
+      "popularity_basis": "Simulated demo engagement score; not real customer/order analytics."
     },
     {
       "restaurant_id": 7,
@@ -401,7 +413,9 @@
           "emoji": "🍕",
           "available_stock": 15
         }
-      ]
+      ],
+      "demo_popularity_score": 87,
+      "popularity_basis": "Simulated demo engagement score; not real customer/order analytics."
     },
     {
       "restaurant_id": 8,
@@ -458,7 +472,9 @@
           "emoji": "🥙",
           "available_stock": 25
         }
-      ]
+      ],
+      "demo_popularity_score": 91,
+      "popularity_basis": "Simulated demo engagement score; not real customer/order analytics."
     },
     {
       "restaurant_id": 9,
@@ -515,7 +531,9 @@
           "emoji": "🍓",
           "available_stock": 10
         }
-      ]
+      ],
+      "demo_popularity_score": 90,
+      "popularity_basis": "Simulated demo engagement score; not real customer/order analytics."
     },
     {
       "restaurant_id": 10,
@@ -572,7 +590,9 @@
           "emoji": "🥥",
           "available_stock": 20
         }
-      ]
+      ],
+      "demo_popularity_score": 86,
+      "popularity_basis": "Simulated demo engagement score; not real customer/order analytics."
     }
   ]
 }
