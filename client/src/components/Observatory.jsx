@@ -19,8 +19,8 @@ export default function Observatory() {
         totalOrders: 28450,
         totalRevenue: '89420.50',
         totalCustomers: 1240,
-        totalRestaurants: 48,
-        totalMenuItems: 620,
+        totalRestaurants: 10,
+        totalMenuItems: 40,
         cacheMetrics: {
           hitRate: '94.8%',
           hits: 1420,
@@ -51,10 +51,15 @@ export default function Observatory() {
               Real-time monitoring of transactions, query latency, Redis cache hits, and database integrity metrics.
             </p>
           </div>
+          <div style={{display:'flex',gap:'0.6rem',flexWrap:'wrap'}}>
+          <button onClick={() => window.parent.postMessage({ type: 'eryviled:navigate', tab: 'storefrontPreview' }, '*')} className="btn" style={{ padding: '0.5rem 1rem', border: '1px solid var(--border-color)' }}>
+            <Store size={16} /> Browse Food Catalog
+          </button>
           <button onClick={fetchMetrics} className="btn btn-primary" style={{ padding: '0.5rem 1rem' }}>
             <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
             <span>Refresh Observatory</span>
           </button>
+          </div>
         </div>
       </div>
 
