@@ -65,14 +65,14 @@ let restaurants = [
  {id:5,name:'Green Goddess Bowl Lab',cuisine:'Healthy & Salads',rating:4.8,mins:22,fee:1.99,price:'$',emoji:'🥗',bg:'#cddfc7',tag:'FRESH & LIGHT',desc:'Colourful bowls, plant-forward bites and fresh smoothies.',apiId:5,items:[['Rainbow Grain Bowl','Quinoa, leafy greens, roasted vegetables and lemon tahini',16.50,'🥗',16],['Avocado Sourdough Toast','Sourdough, smashed avocado, herbs and chilli flakes',13.50,'🥑',17],['Peanut Protein Smoothie','Banana, peanut butter, oat milk and plant protein',9.50,'🥤',18],['Seasonal Fruit Cup','Fresh-cut seasonal fruit',7.50,'🍓',19]]}
 ];
 const riders=[{id:'R01',name:'Karthik',vehicle:'Electric scooter',eta:'4 min away',status:'On the move',x:30,y:31},{id:'R02',name:'Meena',vehicle:'Bicycle',eta:'6 min away',status:'Available',x:69,y:24},{id:'R03',name:'Arun',vehicle:'Electric scooter',eta:'3 min away',status:'On the move',x:78,y:66},{id:'R04',name:'Priya',vehicle:'Electric scooter',eta:'8 min away',status:'Available',x:22,y:68},{id:'R05',name:'Vijay',vehicle:'Motorbike',eta:'5 min away',status:'On the move',x:56,y:79},{id:'R06',name:'Nisha',vehicle:'Bicycle',eta:'7 min away',status:'Available',x:43,y:20},{id:'R07',name:'Sanjay',vehicle:'Motorbike',eta:'9 min away',status:'On the move',x:87,y:43},{id:'R08',name:'Divya',vehicle:'Electric scooter',eta:'4 min away',status:'Available',x:14,y:47}];
-let state={view:'home',category:'All',query:'',sort:'recommended',saved:new Set(JSON.parse(localStorage.getItem('eryviledSaved')||'[2,6]')),cart:JSON.parse(localStorage.getItem('eryviledCart')||'[]'),orders:[{id:'ERY-2048',restaurant:'Madras Filter Club',items:'Ghee podi dosa × 1, Filter coffee × 1',total:198,status:'On the way',date:'Today, 7:18 PM',eta:'12–18 min',emoji:'🥞'},{id:'ERY-1984',restaurant:'Little Napoli',items:'Margherita amore × 1, Garlic knots × 1',total:447,status:'Delivered',date:'Yesterday, 8:05 PM',eta:'Delivered at 8:32 PM',emoji:'🍕'},{id:'ERY-1861',restaurant:'The Green Chapter',items:'Rainbow grain bowl × 1',total:284,status:'Delivered',date:'Oct 8, 1:22 PM',eta:'Delivered at 1:51 PM',emoji:'🥗'}],orderFilter:'all',filters:{under30:false,topRated:false,freeDelivery:false}};
+let state={view:'home',category:'All',query:'',sort:'recommended',saved:new Set(JSON.parse(localStorage.getItem('eryviledSaved')||'[2,6]')),cart:JSON.parse(localStorage.getItem('eryviledCart')||'[]'),orders:JSON.parse(localStorage.getItem('eryviledOrders')||JSON.stringify([{id:'ERY-2048',restaurant:'Madras Filter Club',items:'Ghee podi dosa × 1, Filter coffee × 1',total:198,status:'On the way',date:'Today, 7:18 PM',eta:'12–18 min',emoji:'🥞'},{id:'ERY-1984',restaurant:'Little Napoli',items:'Margherita amore × 1, Garlic knots × 1',total:447,status:'Delivered',date:'Yesterday, 8:05 PM',eta:'Delivered at 8:32 PM',emoji:'🍕'},{id:'ERY-1861',restaurant:'The Green Chapter',items:'Rainbow grain bowl × 1',total:284,status:'Delivered',date:'Oct 8, 1:22 PM',eta:'Delivered at 1:51 PM',emoji:'🥗'}])),orderFilter:'all',filters:{under30:false,topRated:false,freeDelivery:false}};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 // Set window.ERYVILED_API_BASE to a deployed backend origin when the UI is hosted separately.
 const API_BASE = (() => { let base = String(window.ERYVILED_API_BASE || new URLSearchParams(window.location.search).get('apiBase') || window.localStorage.getItem('eryviledApiBase') || '').trim(); while (base.endsWith('/')) base = base.slice(0, -1); return base; })();
 const apiUrl = path => API_BASE + path;
 const money=n=>apiMode?'$'+Number(n).toFixed(2):'₹'+Math.round(n).toLocaleString('en-IN');
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.classList.remove('show'),2600)}
-function saveLocal(){localStorage.setItem('eryviledSaved',JSON.stringify([...state.saved]));localStorage.setItem('eryviledCart',JSON.stringify(state.cart))}
+function saveLocal(){localStorage.setItem('eryviledSaved',JSON.stringify([...state.saved]));localStorage.setItem('eryviledCart',JSON.stringify(state.cart));localStorage.setItem('eryviledOrders',JSON.stringify(state.orders))}
 async function loadLiveRestaurants(){
   try {
     const response = await fetch(apiUrl('/api/restaurants'));
@@ -96,7 +96,7 @@ async function loadLiveRestaurants(){
       items: [],
       itemsLoaded: false
     }));
-    state.orders = [];
+    // Preserve order history when the restaurant API connects; clearing this array made My Orders appear empty.
     state.cart = state.cart.filter(item => item.apiItemId);
     saveLocal();
     const pill = document.querySelector('.live-pill');
