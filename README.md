@@ -159,3 +159,12 @@ npm run dev
 A comprehensive academic research paper is available directly in the project root:  
 👉 **[`AI_FOOD_DELIVERY_PROJECT_REPORT.md`](AI_FOOD_DELIVERY_PROJECT_REPORT.md)**  
 Includes mathematical derivations, data dictionaries, loss functions, error metrics, and architectural proofs.
+
+
+## Demo Restaurant Catalog & Offline AI Studio
+
+The customer storefront ships with a **fictional demo catalog** at `client/public/data/restaurant-menu-catalog.json`: 10 illustrative restaurants and 40 menu items with prices, categories, availability, and map positions. The same catalog is used by the DBMS Customer App when the API is unavailable. The backend seed script `sql/06_seed_data.sql` includes the matching restaurant and menu rows.
+
+The ETA model's 500-row training dataset is bundled at `client/public/data/food_delivery_dataset.csv`. If the workspace has no reachable backend URL, AI Studio can still read this CSV, run preprocessing and demo NLP queries, train a ridge-regression ETA model in the browser, make predictions, and show menu-based recommendations. A browser-trained model is stored only in that browser; it is not shared with the backend or other users.
+
+For database-backed orders, shared model persistence, and live SQL/observatory features, deploy the Node backend and set its base URL in the workspace header. Verify that `<backend-base-url>/api/health` returns JSON with `{ "status": "UP" }`. Do not enter the frontend's GitHub Pages or static-host URL in that field.
