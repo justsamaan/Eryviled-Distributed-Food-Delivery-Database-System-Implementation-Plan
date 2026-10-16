@@ -52,6 +52,7 @@ const allItems = navigation.flatMap(group => group.items);
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('storefrontPreview');
+  const [storefrontSearch, setStorefrontSearch] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [apiBase, setApiBase] = useState(() => getConfiguredApiBase());
   const [apiDraft, setApiDraft] = useState(() => getConfiguredApiBase());
@@ -86,6 +87,7 @@ export default function App() {
   useEffect(() => {
     const handleStorefrontNavigation = (event) => {
       if (event.data?.type === 'eryviled:navigate' && allItems.some(item => item.id === event.data.tab)) {
+        if (event.data.tab === 'storefrontPreview') setStorefrontSearch(String(event.data.search || ''));
         setActiveTab(event.data.tab);
         setSidebarOpen(false);
       }
@@ -98,7 +100,7 @@ export default function App() {
     return (
       <iframe
         title="Eryviled customer storefront"
-        src={`${import.meta.env.BASE_URL}eryviled-storefront-preview.html?apiBase=${encodeURIComponent(apiBase)}`}
+        src={`${import.meta.env.BASE_URL}eryviled-storefront-preview.html?apiBase=${encodeURIComponent(apiBase)}&search=${encodeURIComponent(storefrontSearch)}`}
         style={{ display: 'block', width: '100%', height: '100vh', minHeight: '650px', border: 0, background: '#f8f7f2' }}
       />
     );
